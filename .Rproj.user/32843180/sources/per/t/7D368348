@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1517759610078.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2938858732",
+    "id" : "7D368348",
+    "lastKnownWriteTime" : 1517751446,
+    "last_content_update" : 1517751446,
+    "path" : "~/GitHub/tcselection/DISTR_RANDOMIZED_SELECTION.R",
+    "project_path" : "DISTR_RANDOMIZED_SELECTION.R",
+    "properties" : {
+        "cursorPosition" : "13,4",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
