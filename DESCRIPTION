@@ -1,11 +1,11 @@
-Package: tcselection
+Package: TestContR
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Select Test and Control groups
 Version: 0.1.0
 Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Maintainer: The package maintainer <alfredo.g.marquez@gmail.com>
+Description: This code selects a random list of test group and provides the best matching group for a control.  
+    Currently, only numeric values are excepted since Euclidian distance is used for the pairing.  Categorical variables coming later.
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
