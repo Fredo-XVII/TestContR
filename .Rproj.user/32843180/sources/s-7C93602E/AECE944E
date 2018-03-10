@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1520714674483.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "AECE944E",
+    "lastKnownWriteTime" : 1520717072,
+    "last_content_update" : 1520717072023,
+    "path" : "~/GitHub/TestContR/match_numeric.R",
+    "project_path" : "match_numeric.R",
+    "properties" : {
+        "cursorPosition" : "60,28",
+        "scrollLine" : "34"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
