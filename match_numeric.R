@@ -3,9 +3,9 @@
 # CREATE A RANKED LIST OF MATCHES BASED ON DISTANCE.
 
 # Libraries loaded in BUILD_METRICS.R script
-library(reshape2)
-library(tidyverse)
-library(random)
+require(reshape2)
+require(tidyverse)
+require(random)
 
 df <- datasets::iris # needs to have stores/unit as rownames
 df$flower_num <- as.integer(rownames(df))

@@ -5,15 +5,15 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "0",
+    "hash" : "2248901043",
     "id" : "AECE944E",
-    "lastKnownWriteTime" : 1520783609,
-    "last_content_update" : 1520783609261,
+    "lastKnownWriteTime" : 1520783765,
+    "last_content_update" : 1520783765087,
     "path" : "~/GitHub/TestContR/match_numeric.R",
     "project_path" : "match_numeric.R",
     "properties" : {
-        "cursorPosition" : "60,4",
-        "scrollLine" : "31"
+        "cursorPosition" : "1,0",
+        "scrollLine" : "0"
     },
     "relative_order" : 3,
     "source_on_save" : false,
