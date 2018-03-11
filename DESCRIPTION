@@ -2,10 +2,12 @@ Package: TestContR
 Type: Package
 Title: Select Test and Control groups
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: alfredo.g.marquez@gmail.com
-Description: This code selects a random list of test group and provides the best matching group for a control.  
+Author: Alfredo G Marquez
+Maintainer: Alfredo G Marquez <alfredo.g.marquez@gmail.com>
+Depends: R (>= 3.1.0), random (>= 0.2.6), tidyverse (>= 1.2.1), reshape2 (>= 1.4.3)
+Description: Select a random list of test group and provides the best matching group for a control based on a dataframe of metrics for the subjects.  
     Currently, only numeric values are excepted since Euclidian distance is used for the pairing.  Categorical variables coming later.
-License: What license is it under?
-Encoding: UTF-8
+License: MIT
+Copyright: all rights reservedS
 LazyData: true
+BuildVignettes: FALSE
