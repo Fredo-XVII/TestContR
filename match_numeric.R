@@ -16,8 +16,8 @@ function ( input_data ) {
 
     # Prep for Distance: Convert column #1 to rownames and scale the dataset
 
-    rownames(df) <- df[1]
-    df_scaled <- scale(df[-1])
+    rownames(df) <- df[,1]
+    df_scaled <- scale(df[,-1])
 
     #---- Build the Distant Matrix----
     DF_DIST <- dist(df_scaled , method = "euclidian")
@@ -50,8 +50,8 @@ function ( input_data ) {
 
     # Test and Control List
 
-    CONTROL_STR_LIST <- DF_DIST_FINAL %>% filter(!CONTROL %in% (DF_TEST[1])) %>%
-      filter(TEST %in% (DF_TEST[1])) %>%
+    CONTROL_STR_LIST <- DF_DIST_FINAL %>% filter(!CONTROL %in% (DF_TEST[,1])) %>%
+      filter(TEST %in% (DF_TEST[,1])) %>%
       group_by(TEST) %>%
       mutate(DIST_RANK = min_rank(DIST_Q)) %>%
       filter(DIST_RANK == 1) %>%
