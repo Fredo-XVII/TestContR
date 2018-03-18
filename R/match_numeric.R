@@ -12,7 +12,7 @@
 #df <- select(df, flower_num, everything()) %>% select(-Species)
 
 
-function ( input_data ) {
+match_numeric <- function ( input_data ) {
 
     # Prep for Distance: Convert column #1 to rownames and scale the dataset
 

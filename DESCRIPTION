@@ -1,13 +1,18 @@
 Package: TestContR
-Type: Package
-Title: Select Test and Control groups
-Version: 0.1.0
-Author: Alfredo G Marquez
-Maintainer: Alfredo G Marquez <alfredo.g.marquez@gmail.com>
-Depends: R (>= 3.1.0), random (>= 0.2.6), tidyverse (>= 1.2.1), reshape2 (>= 1.4.3)
+Version: 0.0.0.9000
+Title: Randomly Select Test and Control Groups
 Description: Select a random list of test group and provides the best matching group for a control based on a dataframe of metrics for the subjects.  
     Currently, only numeric values are excepted since Euclidian distance is used for the pairing.  Categorical variables coming later.
-License: MIT
-Copyright: all rights reservedS
+Authors@R: person("First", "Last", , "Alfredo.G.Marquez@gmail.com", c("aut", "cre"))
+License: MIT + file LICENSE
+Encoding: UTF-8
 LazyData: true
-BuildVignettes: FALSE
+ByteCompile: true
+Imports: 
+    random,
+    tidyverse,
+    reshape2
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
