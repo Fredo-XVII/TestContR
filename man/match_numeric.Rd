@@ -2,17 +2,17 @@
 % Please edit documentation in R/match_numeric.R
 \name{match_numeric}
 \alias{match_numeric}
-\title{Match_Numeric}
+\title{Matches groups by using numeric variables}
 \usage{
-match_numeric(input_data, n = 10)
+match_numeric(df, n = 10)
 }
 \arguments{
-\item{n}{size of the test group, and matching control group.}
-
 \item{df}{data frame of numeric inputs. First column has group names, 1 line per group.}
+
+\item{n}{size of the test group, and matching control group.}
 }
 \value{
-List of test groups with matching control groups, 1 to 1 match.
+Outputs a list of test groups with matching control groups, 1 to 1 match.
 }
 \description{
 Matches groups by using numeric variables
