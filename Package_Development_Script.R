@@ -14,6 +14,9 @@ use_package( "random", type = "Import")
 use_package( "tidyverse", type = "Import")
 use_package( "reshape2", type = "Import")
 
+# After adding roxygen2 params to function in R folder
+devtools::document()
+
 use_tidy_versions()
 use_vignette("Group Selection")
 use_readme_rmd()

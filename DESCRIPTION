@@ -3,17 +3,18 @@ Version: 0.0.0.9000
 Title: Randomly Select Test and Control Groups
 Description: Select a random list of test group and provides the best matching group for a control based on a dataframe of metrics for the subjects.  
     Currently, only numeric values are excepted since Euclidian distance is used for the pairing.  Categorical variables coming later.
-Authors@R: person("First", "Last", , "Alfredo.G.Marquez@gmail.com", c("aut", "cre"))
+Authors@R: person("Alfredo", "Marquez", , "Alfredo.G.Marquez@gmail.com", c("aut", "cre"))
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 ByteCompile: true
-Imports: 
-    random,
-    tidyverse,
-    reshape2
-Suggests: 
-    knitr,
-    rmarkdown,
-    testthat
+Imports:
+    random (>= 0.2.6),
+    tidyverse (>= 1.2.1),
+    reshape2 (>= 1.4.3)
+Suggests:
+    knitr (>= 1.20),
+    rmarkdown (>= 1.9),
+    testthat (>= 2.0.0)
 VignetteBuilder: knitr
+RoxygenNote: 6.0.1
