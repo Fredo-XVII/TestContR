@@ -18,7 +18,7 @@ use_package( "reshape2", type = "Import")
 devtools::document()
 
 use_tidy_versions()
-use_vignette("Group Selection")
+use_vignette("Group Selection") # use datasets::USArrests
 use_readme_rmd()
 use_testthat()
 
