@@ -59,11 +59,14 @@ match_numeric <- function ( df, n = 10 ) {
 
     # Test and Control List
 
-    CONTROL_STR_LIST <- DF_DIST_FINAL %>% dplyr::filter(!CONTROL %in% (DF_TEST[,1])) %>%
+    CONTROL_STR_TOP5 <- DF_DIST_FINAL %>% dplyr::filter(!CONTROL %in% (DF_TEST[,1])) %>%
       dplyr::filter(TEST %in% (DF_TEST[,1])) %>%
       dplyr::group_by(TEST) %>%
       dplyr::mutate(DIST_RANK = min_rank(DIST_Q)) %>%
-      dplyr::filter(DIST_RANK <= 5) %>%
+      dplyr::filter(DIST_RANK <= 5)
+
+    CONTROL_STR_LIST <- CONTROL_STR_TOP5 %>%
+      dplyr::filter(DIST_RANK <= 1) %>%
       dplyr::select(-DIST_RANK) %>%
       dplyr::ungroup() %>%
       dplyr::mutate(GROUP = row_number())
