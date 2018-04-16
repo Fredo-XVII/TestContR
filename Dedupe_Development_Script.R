@@ -27,10 +27,6 @@ while (nrow(DUPES_LIST) > 0) {
     mutate(CONTROL = if_else(is.na(rank) == TRUE, CONTROL, NULL),
            DIST_Q = if_else(is.na(rank) == TRUE, DIST_Q,NULL))
 
-
-  CONTROL_STR_LIST_TEMP$CONTROL <- ifelse(!is.na(CONTROL_STR_LIST_TEMP$rank), '', CONTROL_STR_LIST_TEMP$CONTROL)
-  CONTROL_STR_LIST_TEMP$DIST_Q <- ifelse(!is.na(CONTROL_STR_LIST_TEMP$rank), '', CONTROL_STR_LIST_TEMP$DIST_Q)
-
   # Remove the duplicate from remaining distance list
 
   CONTROL_STR_TOP5_TEMP <- CONTROL_STR_TOP5 %>% anti_join(rank_dupes, by = "CONTROL")
