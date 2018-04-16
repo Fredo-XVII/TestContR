@@ -37,8 +37,9 @@ while (nrow(DUPES_LIST) > 0) {
     inner_join(DF_RANK_BASE_FULL_1, by = 'TEST') %>%
     filter(CONTROL != rank_dupes$CONTROL) %>%
     group_by(TEST) %>%
-    arrange(DIST_Q)
-
+    arrange(DIST_Q) %>%
+    mutate(rank = min_rank(DIST_Q)) %>%
+    filter(rank == 1)
 
   # Add new control to test stores with missing controls stores
 
