@@ -34,6 +34,14 @@ match_numeric <- function ( df, n = 10 ) {
     # Convert to Matrix
     DF_RANK_BASE <- as.matrix(DF_DIST)
 
+    # Keep the full matrix for addressing duplicates: Force NA diaganol of 0's
+    DF_RANK_BASE_FULL <- DF_RANK_BASE
+    diag(DF_RANK_BASE_FULL) <- NA
+    DF_RANK_BASE_FULL_1 <- reshape2::melt(DF_RANK_BASE_FULL)
+    names(DF_RANK_BASE_FULL_1) <- c("CONTROL","TEST","DIST_Q")
+    DF_RANK_BASE_FULL_FINAL <- DF_RANK_BASE_FULL_1 %>% na.omit() %>%
+      dplyr::arrange(TEST,DIST_Q,CONTROL)
+
     # Force NA on upper triangle and diagnol of 0's
     DF_RANK_BASE[upper.tri(DF_RANK_BASE)] <- NA
     diag(DF_RANK_BASE) <- NA
@@ -59,7 +67,7 @@ match_numeric <- function ( df, n = 10 ) {
 
     # Test and Control List
 
-    CONTROL_STR_TOP5 <- DF_DIST_FINAL %>% dplyr::filter(!CONTROL %in% (DF_TEST[,1])) %>%
+    CONTROL_STR_TOP5 <- DF_RANK_BASE_FULL_FINAL %>% dplyr::filter(!CONTROL %in% (DF_TEST[,1])) %>%
       dplyr::filter(TEST %in% (DF_TEST[,1])) %>%
       dplyr::group_by(TEST) %>%
       dplyr::mutate(DIST_RANK = min_rank(DIST_Q)) %>%

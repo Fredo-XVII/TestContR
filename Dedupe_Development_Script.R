@@ -33,6 +33,13 @@ while (nrow(DUPES_LIST) > 0) {
 
   # select new minimum from the remaining list
 
+  DIST_REMAINING <- CONTROL_STR_LIST_TEMP %>% filter(is.na(DIST_Q)) %>% select(TEST) %>%
+    inner_join(DF_RANK_BASE_FULL_1, by = 'TEST') %>%
+    filter(CONTROL != rank_dupes$CONTROL) %>%
+    group_by(TEST) %>%
+    arrange(DIST_Q)
+
+
   # Add new control to test stores with missing controls stores
 
   # re-build the Dupes_list
