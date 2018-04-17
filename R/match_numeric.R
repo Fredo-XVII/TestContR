@@ -99,7 +99,7 @@ match_numeric <- function ( df, n = 10 ) {
       # select new minimum from the remaining list
 
       DIST_REMAINING <- CONTROL_STR_LIST_TEMP %>% filter(is.na(DIST_Q)) %>% select(TEST) %>%
-        inner_join(DF_RANK_BASE_FULL_1, by = 'TEST') %>%
+        inner_join(DF_DIST_FINAL, by = 'TEST') %>%
         filter(CONTROL != rank_dupes$CONTROL) %>%
         group_by(TEST) %>%
         arrange(DIST_Q) %>%
@@ -125,7 +125,7 @@ match_numeric <- function ( df, n = 10 ) {
         summarise(control_cnt = n()) %>%
         filter(control_cnt > 1)
 
-      # end if dupe list is nrow() = 0
+      # ends when DUPES_LIST is nrow() = 0
 
     }
 
