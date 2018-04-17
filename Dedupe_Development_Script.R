@@ -18,6 +18,10 @@ while (nrow(DUPES_LIST) > 0) {
     group_by(CONTROL) %>% mutate(rank = min_rank(DIST_Q)) %>%
     filter(rank > 1)
 
+  # Remove the duplicate from remaining distance list
+
+  DF_DIST_FINAL_TEMP <- DF_DIST_FINAL %>% anti_join(rank_dupes, by = "CONTROL")
+
   # Remove the duplicate from CONTROL_STR_LIST distance list
 
   CONTROL_STR_LIST_TEMP <-
@@ -26,10 +30,6 @@ while (nrow(DUPES_LIST) > 0) {
   CONTROL_STR_LIST_TEMP <- CONTROL_STR_LIST_TEMP %>%
     mutate(CONTROL = if_else(is.na(rank) == TRUE, CONTROL, NULL),
            DIST_Q = if_else(is.na(rank) == TRUE, DIST_Q,NULL))
-
-  # Remove the duplicate from remaining distance list
-
-  CONTROL_STR_TOP5_TEMP <- CONTROL_STR_TOP5 %>% anti_join(rank_dupes, by = "CONTROL")
 
   # select new minimum from the remaining list
 
@@ -43,10 +43,8 @@ while (nrow(DUPES_LIST) > 0) {
 
   # Add new control to test stores with missing controls stores
 
-  CONTROL_STR_LIST_TEMP2 <- CONTROL_STR_LIST_TEMP %>%
-    left_join(DIST_REMAINING, by = 'TEST', copy = FALSE)
-
-  CONTROL_STR_LIST_TEMP2 %>%
+  CONTROL_STR_LIST <- CONTROL_STR_LIST_TEMP %>%
+    left_join(DIST_REMAINING, by = 'TEST', copy = FALSE) %>%
     mutate( CONTROL = coalesce(CONTROL.x, CONTROL.y),
             DIST_Q  = coalesce(DIST_Q.x, DIST_Q.y)
           ) %>%
@@ -63,4 +61,3 @@ while (nrow(DUPES_LIST) > 0) {
 }
 
 
-}

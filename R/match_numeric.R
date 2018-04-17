@@ -34,16 +34,7 @@ match_numeric <- function ( df, n = 10 ) {
     # Convert to Matrix
     DF_RANK_BASE <- as.matrix(DF_DIST)
 
-    # Keep the full matrix for addressing duplicates: Force NA diaganol of 0's
-    DF_RANK_BASE_FULL <- DF_RANK_BASE
-    diag(DF_RANK_BASE_FULL) <- NA
-    DF_RANK_BASE_FULL_1 <- reshape2::melt(DF_RANK_BASE_FULL)
-    names(DF_RANK_BASE_FULL_1) <- c("CONTROL","TEST","DIST_Q")
-    DF_RANK_BASE_FULL_FINAL <- DF_RANK_BASE_FULL_1 %>% na.omit() %>%
-      dplyr::arrange(TEST,DIST_Q,CONTROL)
-
-    # Force NA on upper triangle and diagnol of 0's
-    DF_RANK_BASE[upper.tri(DF_RANK_BASE)] <- NA
+    # Keep the full matrix for addressing duplicates: Force NA to diagonal
     diag(DF_RANK_BASE) <- NA
 
     #----Produce list of one to one distance Metric----
@@ -67,18 +58,78 @@ match_numeric <- function ( df, n = 10 ) {
 
     # Test and Control List
 
-    CONTROL_STR_TOP5 <- DF_RANK_BASE_FULL_FINAL %>% dplyr::filter(!CONTROL %in% (DF_TEST[,1])) %>%
+    CONTROL_STR_LIST <- DF_DIST_FINAL %>% dplyr::filter(!CONTROL %in% (DF_TEST[,1])) %>%
       dplyr::filter(TEST %in% (DF_TEST[,1])) %>%
       dplyr::group_by(TEST) %>%
       dplyr::mutate(DIST_RANK = min_rank(DIST_Q)) %>%
-      dplyr::filter(DIST_RANK <= 5)
-
-    CONTROL_STR_LIST <- CONTROL_STR_TOP5 %>%
       dplyr::filter(DIST_RANK <= 1) %>%
       dplyr::select(-DIST_RANK) %>%
       dplyr::ungroup() %>%
       dplyr::mutate(GROUP = row_number())
 
+    # Create list of Dupes
+    DUPES_LIST <- CONTROL_STR_LIST %>% dplyr::group_by(CONTROL) %>%
+      summarise(control_cnt = n()) %>%
+      filter(control_cnt > 1)
+
+    # Run While loop over the list of duplicates, until no more dupes remain
+
+    while (nrow(DUPES_LIST) > 0) {
+
+      # rank the duplicate control stores and keep the minimum rank
+
+      rank_dupes <- DUPES_LIST %>% inner_join(CONTROL_STR_LIST) %>%
+        group_by(CONTROL) %>% mutate(rank = min_rank(DIST_Q)) %>%
+        filter(rank > 1)
+
+      # Remove the duplicate from remaining distance list
+
+      DF_DIST_FINAL_TEMP <- DF_DIST_FINAL %>% anti_join(CONTROL_STR_LIST, by = 'TEST') %>%
+        anti_join(rank_dupes, by = "CONTROL")
+
+      # Remove the duplicate from CONTROL_STR_LIST distance list
+
+      CONTROL_STR_LIST_TEMP <-
+        CONTROL_STR_LIST %>% left_join(rank_dupes)
+
+      CONTROL_STR_LIST_TEMP <- CONTROL_STR_LIST_TEMP %>%
+        mutate(CONTROL = if_else(is.na(rank) == TRUE, CONTROL, NULL),
+               DIST_Q = if_else(is.na(rank) == TRUE, DIST_Q,NULL))
+
+      # select new minimum from the remaining list
+
+      DIST_REMAINING <- CONTROL_STR_LIST_TEMP %>% filter(is.na(DIST_Q)) %>% select(TEST) %>%
+        inner_join(DF_RANK_BASE_FULL_1, by = 'TEST') %>%
+        filter(CONTROL != rank_dupes$CONTROL) %>%
+        group_by(TEST) %>%
+        arrange(DIST_Q) %>%
+        mutate(rank = min_rank(DIST_Q)) %>%
+        filter(rank == 1)
+
+      # Add new control to test stores with missing controls stores
+
+      CONTROL_STR_LIST <- CONTROL_STR_LIST_TEMP %>%
+        left_join(DIST_REMAINING, by = 'TEST', copy = FALSE) %>%
+        mutate( CONTROL = coalesce(CONTROL.x, CONTROL.y),
+                DIST_Q  = coalesce(DIST_Q.x, DIST_Q.y)
+        ) %>%
+        select(CONTROL, TEST, DIST_Q, GROUP)
+
+      # re-move all test and control stores from the current dist df
+      DF_DIST_FINAL <- DF_DIST_FINAL_TEMP %>% anti_join(CONTROL_STR_LIST, by = 'TEST') %>%
+        anti_join(CONTROL_STR_LIST, by = "CONTROL")
+
+      # re-build the Dupes_list
+
+      DUPES_LIST <- CONTROL_STR_LIST %>% dplyr::group_by(CONTROL) %>%
+        summarise(control_cnt = n()) %>%
+        filter(control_cnt > 1)
+
+      # end if dupe list is nrow() = 0
+
+    }
+
+    # Output list of Test and Controls
     return(CONTROL_STR_LIST)
       # assign( CONTROL_STR_LIST, paste0("Randomized Selection_seed_",rand_num), envir = .GlobalEnv #)
   }
