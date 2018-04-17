@@ -103,25 +103,27 @@ match_numeric <- function ( df, n = 10 ) {
 
       # select new minimum from the remaining list
 
-      DIST_REMAINING <- CONTROL_STR_LIST_TEMP %>% filter(is.na(DIST_Q)) %>% select(TEST) %>%
-        inner_join(DF_DIST_FINAL_TEMP, by = 'TEST') %>%
+      TEST_DUPES_TEMP <- CONTROL_STR_LIST_TEMP %>% filter(is.na(DIST_Q)) %>% select(TEST)
+      CONT_DUPES_TEMP <- CONTROL_STR_LIST_TEMP %>% filter(!is.na(CONTROL)) %>% select(CONTROL)
+
+      DIST_REMAINING <- DF_DIST_FINAL_TEMP %>% inner_join(TEST_DUPES_TEMP, by = 'TEST') %>%
+        anti_join(CONT_DUPES_TEMP, by = 'CONTROL') %>%
         group_by(TEST) %>%
-        arrange(DIST_Q) %>%
+        arrange(TEST, DIST_Q) %>%
         mutate(rank = min_rank(DIST_Q)) %>%
         filter(rank == 1)
 
       # Add new control to test stores with missing controls stores
 
       CONTROL_STR_LIST <- CONTROL_STR_LIST_TEMP %>%
-        left_join(DIST_REMAINING, by = 'TEST', copy = FALSE) %>%
+        left_join(DIST_REMAINING, by = 'TEST') %>%
         mutate( CONTROL = coalesce(CONTROL.x, CONTROL.y),
                 DIST_Q  = coalesce(DIST_Q.x, DIST_Q.y)
         ) %>%
         select(CONTROL, TEST, DIST_Q, GROUP)
 
       # re-move all test and control stores from the current dist df
-      DF_DIST_FINAL <- DF_DIST_FINAL_TEMP %>% anti_join(CONTROL_STR_LIST, by = 'TEST') %>%
-        anti_join(CONTROL_STR_LIST, by = "CONTROL")
+      DF_DIST_FINAL <- DF_DIST_FINAL_TEMP %>% anti_join(CONTROL_STR_LIST, by = "CONTROL")
 
       # re-build the Dupes_list
 
