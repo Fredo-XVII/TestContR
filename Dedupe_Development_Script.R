@@ -43,20 +43,24 @@ while (nrow(DUPES_LIST) > 0) {
 
   # Add new control to test stores with missing controls stores
 
+  CONTROL_STR_LIST_TEMP2 <- CONTROL_STR_LIST_TEMP %>%
+    left_join(DIST_REMAINING, by = 'TEST', copy = FALSE)
+
+  CONTROL_STR_LIST_TEMP2 %>%
+    mutate( CONTROL = coalesce(CONTROL.x, CONTROL.y),
+            DIST_Q  = coalesce(DIST_Q.x, DIST_Q.y)
+          ) %>%
+    select(CONTROL, TEST, DIST_Q, GROUP)
+
   # re-build the Dupes_list
+
+  DUPES_LIST <- CONTROL_STR_LIST %>% dplyr::group_by(CONTROL) %>%
+    summarise(control_cnt = n()) %>%
+    filter(control_cnt > 1)
 
   # end of dupe list is nrow() = 0
 
-
-
 }
 
-for (i in rnow(CONTROL_STR_LIST)) {
-  if (nrow(DUPES_LIST) == 0) {
-      print("No Dupes Detected in the Control")
-    break
-  } else {
-
-  }
 
 }
