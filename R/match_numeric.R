@@ -58,8 +58,10 @@ match_numeric <- function ( df, n = 10 ) {
 
     # Test and Control List
 
-    CONTROL_STR_LIST <- DF_DIST_FINAL %>% dplyr::filter(!CONTROL %in% (DF_TEST[,1])) %>%
-      dplyr::filter(TEST %in% (DF_TEST[,1])) %>%
+    DF_DIST_REDUCED <- DF_DIST_FINAL %>% dplyr::filter(!CONTROL %in% (DF_TEST[,1])) %>%
+      dplyr::filter(TEST %in% (DF_TEST[,1]))
+
+    CONTROL_STR_LIST <- DF_DIST_REDUCED %>%
       dplyr::group_by(TEST) %>%
       dplyr::mutate(DIST_RANK = min_rank(DIST_Q)) %>%
       dplyr::filter(DIST_RANK <= 1) %>%
@@ -87,9 +89,8 @@ match_numeric <- function ( df, n = 10 ) {
 
       # Remove the duplicate from remaining distance list
 
-      DF_DIST_FINAL_TEMP <- DF_DIST_FINAL %>% anti_join(CONTROL_STR_LIST, by = 'TEST') %>%
-        anti_join(rank_dupes, by = "CONTROL") %>%
-        filter(!CONTROL %in% CONTROL_STR_LIST$TEST)
+      DF_DIST_FINAL_TEMP <- DF_DIST_REDUCED %>%
+        anti_join(rank_dupes, by = "CONTROL")
 
       # Remove the duplicate from CONTROL_STR_LIST distance list
 
@@ -103,8 +104,7 @@ match_numeric <- function ( df, n = 10 ) {
       # select new minimum from the remaining list
 
       DIST_REMAINING <- CONTROL_STR_LIST_TEMP %>% filter(is.na(DIST_Q)) %>% select(TEST) %>%
-        inner_join(DF_DIST_FINAL, by = 'TEST') %>%
-        filter(CONTROL != rank_dupes$CONTROL) %>%
+        inner_join(DF_DIST_FINAL_TEMP, by = 'TEST') %>%
         group_by(TEST) %>%
         arrange(DIST_Q) %>%
         mutate(rank = min_rank(DIST_Q)) %>%
