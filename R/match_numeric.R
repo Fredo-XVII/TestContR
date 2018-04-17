@@ -73,8 +73,11 @@ match_numeric <- function ( df, n = 10 ) {
       filter(control_cnt > 1)
 
     # Run While loop over the list of duplicates, until no more dupes remain
+    i = 0
 
     while (nrow(DUPES_LIST) > 0) {
+      # Count the number of iterations
+      i = i + 1
 
       # rank the duplicate control stores and keep the minimum rank
 
@@ -85,7 +88,8 @@ match_numeric <- function ( df, n = 10 ) {
       # Remove the duplicate from remaining distance list
 
       DF_DIST_FINAL_TEMP <- DF_DIST_FINAL %>% anti_join(CONTROL_STR_LIST, by = 'TEST') %>%
-        anti_join(rank_dupes, by = "CONTROL")
+        anti_join(rank_dupes, by = "CONTROL") %>%
+        filter(!CONTROL %in% CONTROL_STR_LIST$TEST)
 
       # Remove the duplicate from CONTROL_STR_LIST distance list
 
@@ -126,6 +130,7 @@ match_numeric <- function ( df, n = 10 ) {
         filter(control_cnt > 1)
 
       # ends when DUPES_LIST is nrow() = 0
+      sprintf("The %sth iteration complete.", i)
 
     }
 
