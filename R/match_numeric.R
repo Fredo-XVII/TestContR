@@ -9,8 +9,6 @@
 
 
 
-
-
 ##----PART #1---------------------------------------------------------
 
 # CREATE A RANKED LIST OF MATCHES BASED ON DISTANCE.
@@ -80,7 +78,7 @@ match_numeric <- function ( df, n = 10 ) {
     while (nrow(DUPES_LIST) > 0) {
       # Count the number of iterations
       i = i + 1
-      print(sprintf("The %sth iteration started", i))
+      print(sprintf("The %sth de-duping iteration started", i))
       # rank the duplicate control stores and keep the minimum rank
 
       rank_dupes <- DUPES_LIST %>%
@@ -130,10 +128,33 @@ match_numeric <- function ( df, n = 10 ) {
         dplyr::filter(control_cnt > 1)
 
       # ends when DUPES_LIST is nrow() = 0
-      print(sprintf("The %sth iteration complete.", i))
+      print(sprintf("The %sth de-duping iteration complete.", i))
 
     }
-    print(sprintf("The %sth iteration complete.", i))
+
+    # Add series of test to ensure there are no duplicates in the data set below.
+    CONTROL_GROUP <- CONTROL_STR_LIST %>% dplyr::select(CONTROL) %>% dplyr::arrange(CONTROL)
+    TEST_GROUP <- CONTROL_STR_LIST %>% dplyr::select(TEST) %>% dplyr::arrange(TEST)
+
+
+
+    CONTROL_DUPES_TEST <- nrow(CONTROL_STR_LIST %>%
+                                 dplyr::select(CONTROL) %>%
+                                 dplyr::group_by(CONTROL) %>%
+                                 dplyr::mutate(n = n()) %>%
+                                 dplyr::filter(n > 1))
+    TEST_DUPES_TEST <- nrow(CONTROL_STR_LIST %>%
+                                 dplyr::select(TEST) %>%
+                                 dplyr::group_by(TEST) %>%
+                                 dplyr::mutate(n = n()) %>%
+                                 dplyr::filter(n > 1))
+    if( CONTROL_DUPES_TEST == 0 ) {print("No duplicates in the control group.")}
+      else { print('Duplicates found in the control group, dupes test failed.')}
+    if( TEST_DUPES_TEST == 0 ) {print("No duplicates in the test group")}
+      else { print('Duplicates found in the test group, dupes test failed.')}
+
+
+
     # Output list of Test and Controls
     return(CONTROL_STR_LIST)
       # assign( CONTROL_STR_LIST, paste0("Randomized Selection_seed_",rand_num), envir = .GlobalEnv #)
