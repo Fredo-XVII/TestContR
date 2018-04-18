@@ -7,4 +7,6 @@ df <- USArrests %>% mutate(state = row.names(USArrests)) %>%
       select(state, everything())
 df <- readRDS('data/sales.rds')
 
-DF_DIST_FINAL <- df %>% dplyr::arrange(TEST,DIST_Q,CONTROL)
+list_test <- tribble(~TEST, 1102, 2605, 847, 1375 )
+list_test <- tribble(~TEST )
+

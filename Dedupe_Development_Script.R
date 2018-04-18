@@ -4,7 +4,10 @@ library(tidyverse)
 library(dplyr)
 library(random)
 
-n <- 500
+n <- 100
+
+
+list <- list_test
 
 DUPES_LIST <- CONTROL_STR_LIST %>% dplyr::group_by(CONTROL) %>%
               summarise(control_cnt = n()) %>%
