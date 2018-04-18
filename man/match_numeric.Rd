@@ -4,7 +4,7 @@
 \alias{match_numeric}
 \title{Matches groups by using numeric variables}
 \usage{
-match_numeric(df, n = 10)
+match_numeric(df, n = 10, list = NULL)
 }
 \arguments{
 \item{df}{data frame of numeric inputs. First column has group names, 1 line per group.}
