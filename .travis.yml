@@ -1,1 +1,2 @@
-# Continous integration
+language: r
+cache: packages
