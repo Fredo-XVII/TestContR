@@ -5,7 +5,7 @@ library(dplyr)
 library(random)
 
 n <- 100
-
+list <- NULL
 
 list <- list_test
 
