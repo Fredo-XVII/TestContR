@@ -19,6 +19,12 @@ If a data frame is supplied to the "test_list" parameter, 1 to 1 matching contro
 }
 \description{
 Matches groups/individuals by using Euclidean distance on scaled numeric variables.  The data frame must contain the group/individual labels in the first column and must be in levels, in other words not scaled.
-In the case where duplicates in the Control arise, the function iterates through the control_test_list until there are no duplicates in the Control.  In each iteration, it re-ranks the remaining possible control
-groups/individuals and matches on the lowest distance.
+In the case where duplicates arise in the Control, the function iterates through the test control list until there are no duplicates in the Control.  In each iteration, it re-ranks the remaining possible control
+groups/individuals and matches to the test on the lowest distance.
+}
+\examples{
+df <- datasets::USArrests \%>\% dplyr::mutate(state = base::row.names(USArrests)) \%>\%
+                              dplyr::select(state, everything())
+
+TEST_CONTROL_LIST <- TestContR::match_numeric(df, n = 15)
 }
