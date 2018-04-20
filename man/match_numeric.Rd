@@ -2,18 +2,23 @@
 % Please edit documentation in R/match_numeric.R
 \name{match_numeric}
 \alias{match_numeric}
-\title{Matches groups by using numeric variables}
+\title{Test and Control Selector for Groups/Individuals.}
 \usage{
-match_numeric(df, n = 10, list = NULL)
+match_numeric(df, n = 10, test_list = NULL)
 }
 \arguments{
 \item{df}{data frame of numeric inputs. First column has group names, 1 line per group.}
 
-\item{n}{size of the test group, and matching control group.}
+\item{n}{size of the test group, and matching control group. Defaults to 10.}
+
+\item{test_list}{df with one column named "TEST." This has a list of members in the current test. Defaults to NULL.}
 }
 \value{
-Outputs a list of test groups with matching control groups, 1 to 1 match.
+If the "n" parameter is used, the function outputs a data frame with a list of randomized test groups/individuals from the supplied df with matching control groups/individuals, a 1 to 1 match.
+If a data frame is supplied to the "test_list" parameter, 1 to 1 matching control stores will be created for the groups/individuals in the "TEST" column supplied to the "test_list" parameter.
 }
 \description{
-Matches groups by using numeric variables
+Matches groups/individuals by using Euclidean distance on scaled numeric variables.  The data frame must contain the group/individual labels in the first column and must be in levels, in other words not scaled.
+In the case where duplicates in the Control arise, the function iterates through the control_test_list until there are no duplicates in the Control.  In each iteration, it re-ranks the remaining possible control
+groups/individuals and matches on the lowest distance.
 }
