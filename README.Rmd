@@ -4,7 +4,7 @@ output: github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-```{r setup, include = FALSE}
+```{r setup, include = FALSE, results='hide'}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 ```
 # TestContR
 
-The goal of TestContR is to select and match Test and Control Groups/Individuals (aka Stores) from a randomized sample.  
+The primary goal of TestContR is to select randomized Test groups/individuals and matched them with Control groups/individuals using Euclidian distance.  
 
 # NOTES:
   - https://cran.r-project.org/doc/manuals/r-release/R-exts.html#The-DESCRIPTION-file
