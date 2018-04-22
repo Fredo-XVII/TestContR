@@ -20,6 +20,7 @@
 #' @return If the "n" parameter is used, the function outputs a data frame with a list of randomized test groups/individuals from the supplied df with matching control groups/individuals, a 1 to 1 match.
 #' If a data frame is supplied to the "test_list" parameter, 1 to 1 matching control stores will be created for the groups/individuals in the "TEST" column supplied to the "test_list" parameter.
 #' @examples
+#' library(tidyverse)
 #' df <- datasets::USArrests %>% dplyr::mutate(state = base::row.names(USArrests)) %>%
 #'                               dplyr::select(state, everything())
 #'

@@ -18,9 +18,19 @@ If the "n" parameter is used, the function outputs a data frame with a list of r
 If a data frame is supplied to the "test_list" parameter, 1 to 1 matching control stores will be created for the groups/individuals in the "TEST" column supplied to the "test_list" parameter.
 }
 \description{
-Matches groups/individuals by using Euclidean distance on scaled numeric variables.  The data frame must contain the group/individual labels in the first column and must be in levels, in other words not scaled.
-In the case where duplicates arise in the Control, the function iterates through the test control list until there are no duplicates in the Control.  In each iteration, it re-ranks the remaining possible control
-groups/individuals and matches to the test on the lowest distance.
+Randomly select test groups/individuals and create matching control
+groups/individuals by using Euclidean distance on scaled numeric variables.
+The data frame must contain the group/individual labels in the first column
+named 'TEST' and must be in levels, in other words not scaled.
+''
+In the case where duplicates arise in the Control, the function iterates
+through the test control list until there are no duplicates in the Control.
+In each iteration, it re-ranks the remaining possible control groups/individuals
+and matches to the test on the lowest distance.
+}
+\details{
+You can provide a list of pre-selected test groups/individuals and the function
+will provide you with a list of control groups/individuals.
 }
 \examples{
 df <- datasets::USArrests \%>\% dplyr::mutate(state = base::row.names(USArrests)) \%>\%
