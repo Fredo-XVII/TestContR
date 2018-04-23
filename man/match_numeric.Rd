@@ -7,7 +7,7 @@
 match_numeric(df, n = 10, test_list = NULL)
 }
 \arguments{
-\item{df}{data frame of numeric inputs. First column has group names, 1 line per group.}
+\item{df}{data frame of numeric inputs. First column must have group/individuals names, 1 line per group/individuals.}
 
 \item{n}{size of the test group, and matching control group. Defaults to 10.}
 
@@ -21,18 +21,19 @@ If a data frame is supplied to the "test_list" parameter, 1 to 1 matching contro
 Randomly select test groups/individuals and create matching control
 groups/individuals by using Euclidean distance on scaled numeric variables.
 The data frame must contain the group/individual labels in the first column
-named 'TEST' and must be in levels, in other words not scaled.
-''
+and the other variables must be in levels, in other words not scaled.
+}
+\details{
 In the case where duplicates arise in the Control, the function iterates
 through the test control list until there are no duplicates in the Control.
 In each iteration, it re-ranks the remaining possible control groups/individuals
 and matches to the test on the lowest distance.
-}
-\details{
-You can provide a list of pre-selected test groups/individuals and the function
+
+You can provide a data frame of pre-selected test groups/individuals and the function
 will provide you with a list of control groups/individuals.
 }
 \examples{
+library(tidyverse)
 df <- datasets::USArrests \%>\% dplyr::mutate(state = base::row.names(USArrests)) \%>\%
                               dplyr::select(state, everything())
 

@@ -3,18 +3,18 @@
 #' Randomly select test groups/individuals and create matching control
 #' groups/individuals by using Euclidean distance on scaled numeric variables.
 #' The data frame must contain the group/individual labels in the first column
-#' named 'TEST' and must be in levels, in other words not scaled.
-#' ''
-#' In the case where duplicates arise in the Control, the function iterates
+#' and the other variables must be in levels, in other words not scaled.
+#'
+#' @details In the case where duplicates arise in the Control, the function iterates
 #' through the test control list until there are no duplicates in the Control.
 #' In each iteration, it re-ranks the remaining possible control groups/individuals
 #' and matches to the test on the lowest distance.
 #'
-#' You can provide a list of pre-selected test groups/individuals and the function
-#' will provide you with a list of control groups/individuals.
+#' You can supply a data frame of pre-selected test groups/individuals to the
+#' parameter test_list and the function will provide you with a list of control
+#' groups/individuals.
 #'
-#'
-#' @param df data frame of numeric inputs. First column has group names, 1 line per group.
+#' @param df data frame of numeric inputs. First column must have group/individuals names, 1 line per group/individuals.
 #' @param n size of the test group, and matching control group. Defaults to 10.
 #' @param test_list df with one column named "TEST." This has a list of members in the current test. Defaults to NULL.
 #' @return If the "n" parameter is used, the function outputs a data frame with a list of randomized test groups/individuals from the supplied df with matching control groups/individuals, a 1 to 1 match.
