@@ -7,6 +7,13 @@ library(random)
 n <- 100
 list <- NULL
 
+df <- USArrests %>% mutate(state = row.names(USArrests)) %>%
+      select(state, everything())
+df <- readRDS('data/sales.rds')
+
+list_test <- tribble(~TEST, 1102, 2605, 847, 1375 )
+list_test <- tribble(~TEST )
+
 list <- list_test
 
 DUPES_LIST <- CONTROL_STR_LIST %>% dplyr::group_by(CONTROL) %>%

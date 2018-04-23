@@ -34,9 +34,9 @@ df <- datasets::USArrests %>% dplyr::mutate(state = base::row.names(USArrests)) 
                                dplyr::select(state, everything())
 ```
 
-Expected data set layout with labels/names/id in the first column:
+**Expected data set layout with labels/names/id in the first column:**
 ```{r}
-knitr::kable(df)
+knitr::kable(head(df, n = 10))
 ```
 
 ```{r}
@@ -44,11 +44,13 @@ set.seed(99)
 TEST_CONTROL_LIST <- TestContR::match_numeric(df)
 ```
 
-Results of random selection option:
+**Results of random selection option:**
 ```{r}
 knitr::kable(TEST_CONTROL_LIST)
 ```
 <br></br>
+
+***
 
 ### Providing a list of Test Groups/Individuals
 ```{r}
@@ -56,7 +58,7 @@ TEST_GRP <- tribble(~'TEST','Colorado','Minnesota','Florida','South Carolina')
 
 ```
 
-Example of data frame for the test input parameter:
+**Example of data frame for the "test_list" input parameter:**
 ```{r}
 knitr::kable(TEST_GRP)
 ```
@@ -67,7 +69,9 @@ set.seed(99)
 TEST_CONTROL_LIST <- TestContR::match_numeric(df, test_list = TEST_GRP)
 ```
 
+**Results for the "test_list" input parameter:**
 ```{r}
 knitr::kable(TEST_CONTROL_LIST)
 ```
 
+***

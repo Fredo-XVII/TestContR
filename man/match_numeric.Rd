@@ -29,8 +29,9 @@ through the test control list until there are no duplicates in the Control.
 In each iteration, it re-ranks the remaining possible control groups/individuals
 and matches to the test on the lowest distance.
 
-You can provide a data frame of pre-selected test groups/individuals and the function
-will provide you with a list of control groups/individuals.
+You can supply a data frame of pre-selected test groups/individuals to the
+parameter test_list and the function will provide you with a list of control
+groups/individuals.
 }
 \examples{
 library(tidyverse)
