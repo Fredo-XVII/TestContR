@@ -29,24 +29,38 @@ library(TestContR)
 ```
 
 ### Random Selection of Test and Control groups/individuals
-```{r example}
-set.seed(99)
+```{r example, warning=FALSE}
 df <- datasets::USArrests %>% dplyr::mutate(state = base::row.names(USArrests)) %>%
                                dplyr::select(state, everything())
+```
 
-TEST_CONTROL_LIST <- TestContR::match_numeric(df)
+Expected data set layout with labels/names/id in the first column:
+```{r}
+knitr::kable(df)
 ```
 
 ```{r}
-TEST_CONTROL_LIST
+set.seed(99)
+TEST_CONTROL_LIST <- TestContR::match_numeric(df)
+```
+
+Results of random selection option:
+```{r}
+knitr::kable(TEST_CONTROL_LIST)
 ```
 <br></br>
 
 ### Providing a list of Test Groups/Individuals
 ```{r}
 TEST_GRP <- tribble(~'TEST','Colorado','Minnesota','Florida','South Carolina')
-TEST_GRP
+
 ```
+
+Example of data frame for the test input parameter:
+```{r}
+knitr::kable(TEST_GRP)
+```
+
 
 ```{r}
 set.seed(99)
@@ -54,6 +68,6 @@ TEST_CONTROL_LIST <- TestContR::match_numeric(df, test_list = TEST_GRP)
 ```
 
 ```{r}
-TEST_CONTROL_LIST
+knitr::kable(TEST_CONTROL_LIST)
 ```
 
