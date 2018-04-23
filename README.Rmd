@@ -12,18 +12,48 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 ```
+
 # TestContR
 
-The primary goal of TestContR is to select randomized Test groups/individuals and matched them with Control groups/individuals using Euclidian distance.  
+The primary goal of TestContR is to select randomized Test groups/individuals and matched them with Control groups/individuals using Euclidian distance. You also have the option to provide a list of test groups/individuals where by you can generate a list of control groups/individuals.
 
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+R contains a crime data set for the all 50 states.  This data set contains data on murder rates, assaults, urban 
+population and the occurances of rape.  The TestContR can be used to match states that have similar crime rates.
 
-```{r example}
-## basic example code
+```{r, results='hide', message=FALSE}
+library(tidyverse)
+library(TestContR)
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+### Random Selection of Test and Control groups/individuals
+```{r example}
+set.seed(99)
+df <- datasets::USArrests %>% dplyr::mutate(state = base::row.names(USArrests)) %>%
+                               dplyr::select(state, everything())
+
+TEST_CONTROL_LIST <- TestContR::match_numeric(df)
+```
+
+```{r}
+TEST_CONTROL_LIST
+```
+<br></br>
+
+### Providing a list of Test Groups/Individuals
+```{r}
+TEST_GRP <- tribble(~'TEST','Colorado','Minnesota','Florida','South Carolina')
+TEST_GRP
+```
+
+```{r}
+set.seed(99)
+TEST_CONTROL_LIST <- TestContR::match_numeric(df, test_list = TEST_GRP)
+```
+
+```{r}
+TEST_CONTROL_LIST
+```
 
