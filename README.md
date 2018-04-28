@@ -1,6 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-![GitHub Logo](TestContr.png)
+![GitHub Logo](TestContR.png)
 
 TestContR
 =========
