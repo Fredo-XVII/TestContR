@@ -1,7 +1,9 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-TestContR ![GitHub Logo](TestContR_80x80_50perc.png)
-====================================================
+![GitHub Logo](TestContR_150w.png)
+
+TestContR
+=========
 
 The primary goal of TestContR is to select randomized Test groups/individuals and matched them with Control groups/individuals using Euclidian distance. You also have the option to provide a list of test groups/individuals where by you can generate a list of control groups/individuals.
 
