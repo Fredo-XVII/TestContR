@@ -1,5 +1,5 @@
 Package: TestContR
-Version: 1.0.0
+Version: 1.0.1
 Title: Randomly Select Test and Control Groups
 Description: Select a random list of test group/individuals and provides the best matching 
   group/individuals for a control based on a dataframe of metrics for the subjects. Or you 
@@ -13,6 +13,7 @@ LazyData: true
 ByteCompile: true
 Imports:
     tidyverse (>= 1.2.1),
+    dplyr(>= 0.7.4),
     reshape2 (>= 1.4.3)
 Suggests:
     knitr (>= 1.20),
