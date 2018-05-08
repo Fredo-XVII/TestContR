@@ -12,7 +12,6 @@ Encoding: UTF-8
 LazyData: true
 ByteCompile: true
 Imports:
-    random (>= 0.2.6),
     tidyverse (>= 1.2.1),
     reshape2 (>= 1.4.3)
 Suggests:
