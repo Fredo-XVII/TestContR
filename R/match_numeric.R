@@ -66,8 +66,6 @@ match_numeric <- function ( df, n = 10 , test_list = NULL ) {
 
     # RANDOMLY SELECT THE LIST/DF OF THE TEST AND CONTROL GROUPS
 
-    # Select random number for seed from random.org
-
     #set.seed(17)
     if( is.null(test_list)) {
       DF_TEST <- df %>% dplyr::sample_n(size = n) # Need to include a InputSelector, sample size of test
