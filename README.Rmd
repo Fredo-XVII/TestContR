@@ -53,9 +53,9 @@ knitr::kable(TEST_CONTROL_LIST)
 ```
 <br></br>
 
-***
+---
 
-### Providing a list of Test Groups/Individuals
+#### Providing a list of Test Groups/Individuals
 ```{r}
 TEST_GRP <- tribble(~'TEST','Colorado','Minnesota','Florida','South Carolina')
 
@@ -77,6 +77,7 @@ TEST_CONTROL_LIST <- TestContR::match_numeric(df, test_list = TEST_GRP)
 knitr::kable(TEST_CONTROL_LIST)
 ```
 
+***
 ***
 
 ### topn_numeric(): Select Top N Controls for a group or individual

@@ -80,7 +80,7 @@ knitr::kable(TEST_CONTROL_LIST)
 
 ------------------------------------------------------------------------
 
-### Providing a list of Test Groups/Individuals
+#### Providing a list of Test Groups/Individuals
 
 ``` r
 TEST_GRP <- tribble(~'TEST','Colorado','Minnesota','Florida','South Carolina')
@@ -116,6 +116,8 @@ knitr::kable(TEST_CONTROL_LIST)
 | New Mexico  | Florida        |  1.2965798|      2|
 | Wisconsin   | Minnesota      |  0.4940832|      3|
 | Mississippi | South Carolina |  0.7865674|      4|
+
+------------------------------------------------------------------------
 
 ------------------------------------------------------------------------
 
