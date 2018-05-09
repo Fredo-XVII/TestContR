@@ -11,10 +11,7 @@ topn_numeric(df, n = 5, test_list = NULL)
 
 \item{n}{size of the top "N" of groups/individuals that match the test group/individuals. Defaults to 5.}
 
-\item{test_list}{df with one column named "TEST." This is 1 group or individual in a dataframe, which is 1x1. Defaults to NULL.}
-}
-\value{
-**NEED TO WRITE**
+\item{test_list}{df with one column named "TEST," and one row with the label for one group/individual (one row), thus a 1x1 df. Defaults to NULL.}
 }
 \description{
 Selects n nearest control groups/individuals for 1 test group/individual

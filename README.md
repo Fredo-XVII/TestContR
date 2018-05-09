@@ -14,12 +14,10 @@ R contains a crime data set for the all 50 states. This data set contains data o
 
 ``` r
 library(tidyverse)
-#> Warning: package 'stringr' was built under R version 3.4.4
-#> Warning: package 'forcats' was built under R version 3.4.4
 library(TestContR)
 ```
 
-### Random Selection of Test and Control groups/individuals
+### match\_numeric(): Random Selection of Test and Control groups/individuals
 
 ``` r
 df <- datasets::USArrests %>% dplyr::mutate(state = base::row.names(USArrests)) %>%
@@ -44,6 +42,8 @@ knitr::kable(head(df, n = 10))
 | Delaware    |     5.9|      238|        72|  15.8|
 | Florida     |    15.4|      335|        80|  31.9|
 | Georgia     |    17.4|      211|        60|  25.8|
+
+**Build Test and Control list**
 
 ``` r
 set.seed(99)
@@ -116,5 +116,41 @@ knitr::kable(TEST_CONTROL_LIST)
 | New Mexico  | Florida        |  1.2965798|      2|
 | Wisconsin   | Minnesota      |  0.4940832|      3|
 | Mississippi | South Carolina |  0.7865674|      4|
+
+------------------------------------------------------------------------
+
+### topn\_numeric(): Select Top N Controls for a group or individual
+
+Topn\_numeric() is used in the situation where you have 1 test group/individual and you are looking for Top N nearest matches using Euclidian distance. - Note: You can provide more than one group, but the function does not remove duplicates in the control list for the more than 1 group or individual. First, create a dataframe (1x1) as below with the label of the group/individual of interest.
+
+``` r
+test_list <- tribble(~"TEST","Colorado")
+```
+
+**Build the list of Top N matches ** Provide the test\_list dataframe to the test\_list parameter in the function as below.
+
+``` r
+TOPN_CONTROL_LIST <- TestContR::topn_numeric(df, n = 10, test_list = test_list)
+```
+
+**Results of Top N selection option:**
+
+``` r
+knitr::kable(TOPN_CONTROL_LIST)
+```
+
+| CONTROL    | TEST     |   DIST\_Q|  DIST\_RANK|
+|:-----------|:---------|---------:|-----------:|
+| Michigan   | Colorado |  1.236311|           1|
+| California | Colorado |  1.287618|           2|
+| Missouri   | Colorado |  1.312741|           3|
+| Arizona    | Colorado |  1.365031|           4|
+| Nevada     | Colorado |  1.398859|           5|
+| Oregon     | Colorado |  1.533198|           6|
+| New Mexico | Colorado |  1.546744|           7|
+| New York   | Colorado |  1.736339|           8|
+| Washington | Colorado |  1.789792|           9|
+| Illinois   | Colorado |  1.789832|          10|
+| <br></br>  |          |          |            |
 
 ------------------------------------------------------------------------

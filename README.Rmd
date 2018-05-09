@@ -30,7 +30,7 @@ library(tidyverse)
 library(TestContR)
 ```
 
-### Random Selection of Test and Control groups/individuals
+### match_numeric(): Random Selection of Test and Control groups/individuals
 ```{r example, warning=FALSE}
 df <- datasets::USArrests %>% dplyr::mutate(state = base::row.names(USArrests)) %>%
                                dplyr::select(state, everything())
@@ -41,7 +41,8 @@ df <- datasets::USArrests %>% dplyr::mutate(state = base::row.names(USArrests)) 
 knitr::kable(head(df, n = 10))
 ```
 
-```{r}
+**Build Test and Control list**
+```{r match_numeric}
 set.seed(99)
 TEST_CONTROL_LIST <- TestContR::match_numeric(df)
 ```
@@ -77,3 +78,30 @@ knitr::kable(TEST_CONTROL_LIST)
 ```
 
 ***
+
+### topn_numeric(): Select Top N Controls for a group or individual
+Topn_numeric() is used in the situation where you have 1 test group/individual and you are looking for Top N nearest matches using Euclidian distance. 
+  - Note: You can provide more than one group, but the function does not remove duplicates in the control list for the more than 1 group or individual.
+First, create a dataframe (1x1) as below with the label of the group/individual of interest.
+```{r}
+test_list <- tribble(~"TEST","Colorado")
+```
+
+**Build the list of Top N matches **
+Provide the test_list dataframe to the test_list parameter in the function as below.
+```{r}
+TOPN_CONTROL_LIST <- TestContR::topn_numeric(df, n = 10, test_list = test_list)
+```
+
+**Results of Top N selection option:**
+```{r}
+knitr::kable(TOPN_CONTROL_LIST)
+```
+<br></br>
+
+***
+
+
+
+
+

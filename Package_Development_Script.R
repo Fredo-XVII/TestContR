@@ -9,7 +9,7 @@ library(roxygen2)
 #create_package(tmp)
 
 use_mit_license("Alfredo G Marquez")
-pckg_list <- c("random","tidyverse","reshape2")
+pckg_list <- c("tidyverse","reshape2","dplyr")
 use_package( "tidyverse", type = "Import")
 use_package( "reshape2", type = "Import")
 

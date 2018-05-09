@@ -1,30 +1,23 @@
-#' Test and Control Selector for Groups/Individuals.
+#' Top N Control Selector for 1 Test Group/Individual.
 #'
-#' Randomly select test groups/individuals and create matching control
-#' groups/individuals by using Euclidean distance on scaled numeric variables.
-#' The data frame must contain the group/individual labels in the first column
-#' and the other variables must be in levels, in other words not scaled.
+#' Selects n nearest control groups/individuals for 1 test group/individual
 #'
-#' @details In the case where duplicates arise in the Control, the function iterates
-#' through the test control list until there are no duplicates in the Control.
-#' In each iteration, it re-ranks the remaining possible control groups/individuals
-#' and matches to the test on the lowest distance.
-#'
-#' You can supply a data frame of pre-selected test groups/individuals to the
-#' parameter test_list and the function will provide you with a list of control
-#' groups/individuals.
+#' @details
+#' Providing a complete list of the groups/individuals to df, and suppling a data frame
+#' with 1 TEST group/individual to the parameter test_list and the function will provide
+#' you with an "N" list of control groups/individuals. If more than 1 group/individual
+#' is provided there is a good chance of duplicates. This function ignores duplicates
+#' in the control for more than 1 TEST group.
 #'
 #' @param df data frame of numeric inputs. First column must have group/individuals names, 1 line per group/individuals.
 #' @param n size of the top "N" of groups/individuals that match the test group/individuals. Defaults to 5.
-#' @param test_list df with one column named "TEST." This has a list of members in the current test. Defaults to NULL.
-#' @return If the "n" parameter is used, the function outputs a data frame with a list of randomized test groups/individuals from the supplied df with matching control groups/individuals, a 1 to 1 match.
-#' If a data frame is supplied to the "test_list" parameter, 1 to 1 matching control stores will be created for the groups/individuals in the "TEST" column supplied to the "test_list" parameter.
+#' @param test_list df with one column named "TEST," and one row with the label for one group/individual (one row), thus a 1x1 df. Defaults to NULL.
 #' @examples
 #' library(tidyverse)
 #' df <- datasets::USArrests %>% dplyr::mutate(state = base::row.names(USArrests)) %>%
 #'                               dplyr::select(state, everything())
 #' test_list <- tribble(~"TEST","Colorado")
-#' TEST_CONTROL_LIST <- TestContR::topn_numeric(df, n = 5)
+#' TOPN_CONTROL_LIST <- TestContR::topn_numeric(df, n = 5, test_list = test_list)
 #' @export
 
 
@@ -34,11 +27,10 @@
 # CREATE A RANKED LIST OF MATCHES BASED ON DISTANCE.
 
 # Libraries loaded in BUILD_METRICS.R script
-require(reshape2)
-require(tidyverse)
+# require(reshape2)
+# require(tidyverse)
 
-
-match_numeric <- function ( df, n = 10 , test_list = NULL ) {
+topn_numeric <- function ( df, n = 5 , test_list = NULL ) {
 
   # Prep for Distance: Convert column #1 to rownames and scale the dataset
 
@@ -64,13 +56,14 @@ match_numeric <- function ( df, n = 10 , test_list = NULL ) {
 
   ##----PART #2----------------------------------------------------------
 
-  # RANDOMLY SELECT THE LIST/DF OF THE TEST AND CONTROL GROUPS
-
-  # Select random number for seed from random.org
+  # RANDOMLY SELECT THE TOP N LIST/DF OF THE CONTROL GROUPS FOR 1 TEST GROUP
 
   #set.seed(17)
   if( is.null(test_list)) {
-    DF_TEST <- df %>% dplyr::sample_n(size = n) # Need to include a InputSelector, sample size of test
+    stop(
+'Please provide a dataframe for the test_list parameter with 1 Test group or individual in a column named "TEST."\n
+See documentation for topn_numeric\'s test_list parameter'
+         )
   } else {
     DF_TEST <- as.data.frame(test_list$TEST)
   }
@@ -81,76 +74,11 @@ match_numeric <- function ( df, n = 10 , test_list = NULL ) {
 
   CONTROL_STR_LIST <- DF_DIST_REDUCED %>%
     dplyr::group_by(TEST) %>%
+    dplyr::arrange(DIST_Q, CONTROL) %>%
     dplyr::mutate(DIST_RANK = min_rank(DIST_Q)) %>%
-    dplyr::filter(DIST_RANK <= 1) %>%
-    dplyr::select(-DIST_RANK) %>%
-    dplyr::ungroup() %>%
-    dplyr::mutate(GROUP = row_number())
+    dplyr::filter(DIST_RANK <= n) %>%
+    dplyr::ungroup()
 
-  # Create list of Dupes
-  DUPES_LIST <- CONTROL_STR_LIST %>% dplyr::group_by(CONTROL) %>%
-    dplyr::summarise(control_cnt = n()) %>%
-    dplyr::filter(control_cnt > 1)
-
-  # Run While loop over the list of duplicates, until no more dupes remain
-  i = 0
-
-  while (nrow(DUPES_LIST) > 0) {
-    # Count the number of iterations
-    i = i + 1
-    print(sprintf("The %sth de-duping iteration started", i))
-    # rank the duplicate control stores and keep the minimum rank
-
-    rank_dupes <- DUPES_LIST %>%
-      dplyr::inner_join(CONTROL_STR_LIST) %>%
-      dplyr::group_by(CONTROL) %>%
-      dplyr::mutate(rank = dplyr::min_rank(DIST_Q)) %>%
-      dplyr::filter(rank > 1)
-
-    # Remove the duplicate from remaining distance list
-
-    DF_DIST_FINAL_TEMP <- DF_DIST_REDUCED %>% dplyr::anti_join(rank_dupes, by = "CONTROL")
-
-    # Remove the duplicate data from CONTROL_STR_LIST distance list
-
-    CONTROL_STR_LIST_TEMP <-CONTROL_STR_LIST %>% dplyr::left_join(rank_dupes)
-
-    CONTROL_STR_LIST_TEMP <- CONTROL_STR_LIST_TEMP %>%
-      dplyr::mutate(CONTROL = dplyr::if_else(is.na(rank) == TRUE, CONTROL, NULL),
-                    DIST_Q = dplyr::if_else(is.na(rank) == TRUE, DIST_Q,NULL))
-
-    # select new minimum from the remaining list
-
-    TEST_DUPES_TEMP <- CONTROL_STR_LIST_TEMP %>% dplyr::filter(is.na(DIST_Q)) %>% select(TEST)
-    CONT_DUPES_TEMP <- CONTROL_STR_LIST_TEMP %>% dplyr::filter(!is.na(CONTROL)) %>% select(CONTROL)
-
-    DIST_REMAINING <- DF_DIST_FINAL_TEMP %>% dplyr::inner_join(TEST_DUPES_TEMP, by = 'TEST') %>%
-      dplyr::anti_join(CONT_DUPES_TEMP, by = 'CONTROL') %>%
-      dplyr::group_by(TEST) %>%
-      dplyr::arrange(TEST, DIST_Q) %>%
-      dplyr::mutate(rank = min_rank(DIST_Q)) %>%
-      dplyr::filter(rank == 1)
-
-    # Add new control to test stores with missing controls stores
-
-    CONTROL_STR_LIST <- CONTROL_STR_LIST_TEMP %>% dplyr::left_join(DIST_REMAINING, by = 'TEST') %>%
-      dplyr::mutate( CONTROL = coalesce(CONTROL.x, CONTROL.y),
-                     DIST_Q  = coalesce(DIST_Q.x, DIST_Q.y)) %>%
-      dplyr::select(CONTROL, TEST, DIST_Q, GROUP)
-
-    # re-move all test and control stores from the current dist df
-    DF_DIST_FINAL <- DF_DIST_FINAL_TEMP %>% dplyr::anti_join(CONTROL_STR_LIST, by = "CONTROL")
-
-    # re-build the Dupes_list
-
-    DUPES_LIST <- CONTROL_STR_LIST %>% dplyr::group_by(CONTROL) %>%
-      dplyr::summarise(control_cnt = n()) %>%
-      dplyr::filter(control_cnt > 1)
-
-    # ends when DUPES_LIST is nrow() = 0
-    print(sprintf("The %sth de-duping iteration complete.", i))
-
-  }
 
   # Output list of Test and Controls
   return(CONTROL_STR_LIST)
