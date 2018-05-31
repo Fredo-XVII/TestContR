@@ -2,4 +2,7 @@
 ^\.Rproj\.user$
 ^LICENSE\.md$
 ^README\.Rmd$
-^cran-comments.md
+^cran-comments\.md$
+^Package_Development_Script\.R$
+^hexbin_sticker\.R$
+^TestContR_150w\.png
