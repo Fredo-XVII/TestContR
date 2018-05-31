@@ -79,11 +79,11 @@ match_numeric <- function ( df, n = 10 , test_list = NULL ) {
 
     CONTROL_STR_LIST <- DF_DIST_REDUCED %>%
       dplyr::group_by(TEST) %>%
-      dplyr::mutate(DIST_RANK = min_rank(DIST_Q)) %>%
+      dplyr::mutate(DIST_RANK = dplyr::min_rank(DIST_Q)) %>%
       dplyr::filter(DIST_RANK <= 1) %>%
       dplyr::select(-DIST_RANK) %>%
       dplyr::ungroup() %>%
-      dplyr::mutate(GROUP = row_number())
+      dplyr::mutate(GROUP = dplyr::row_number())
 
     # Create list of Dupes
     DUPES_LIST <- CONTROL_STR_LIST %>% dplyr::group_by(CONTROL) %>%
@@ -119,21 +119,21 @@ match_numeric <- function ( df, n = 10 , test_list = NULL ) {
 
       # select new minimum from the remaining list
 
-      TEST_DUPES_TEMP <- CONTROL_STR_LIST_TEMP %>% dplyr::filter(is.na(DIST_Q)) %>% select(TEST)
-      CONT_DUPES_TEMP <- CONTROL_STR_LIST_TEMP %>% dplyr::filter(!is.na(CONTROL)) %>% select(CONTROL)
+      TEST_DUPES_TEMP <- CONTROL_STR_LIST_TEMP %>% dplyr::filter(is.na(DIST_Q)) %>% dplyr::select(TEST)
+      CONT_DUPES_TEMP <- CONTROL_STR_LIST_TEMP %>% dplyr::filter(!is.na(CONTROL)) %>% dplyr::select(CONTROL)
 
       DIST_REMAINING <- DF_DIST_FINAL_TEMP %>% dplyr::inner_join(TEST_DUPES_TEMP, by = 'TEST') %>%
         dplyr::anti_join(CONT_DUPES_TEMP, by = 'CONTROL') %>%
         dplyr::group_by(TEST) %>%
         dplyr::arrange(TEST, DIST_Q) %>%
-        dplyr::mutate(rank = min_rank(DIST_Q)) %>%
+        dplyr::mutate(rank = dplyr::min_rank(DIST_Q)) %>%
         dplyr::filter(rank == 1)
 
       # Add new control to test stores with missing controls stores
 
       CONTROL_STR_LIST <- CONTROL_STR_LIST_TEMP %>% dplyr::left_join(DIST_REMAINING, by = 'TEST') %>%
-        dplyr::mutate( CONTROL = coalesce(CONTROL.x, CONTROL.y),
-                DIST_Q  = coalesce(DIST_Q.x, DIST_Q.y)) %>%
+        dplyr::mutate( CONTROL = dplyr::coalesce(CONTROL.x, CONTROL.y),
+                DIST_Q  = dplyr::coalesce(DIST_Q.x, DIST_Q.y)) %>%
         dplyr::select(CONTROL, TEST, DIST_Q, GROUP)
 
       # re-move all test and control stores from the current dist df

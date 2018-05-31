@@ -75,7 +75,7 @@ See documentation for topn_numeric\'s test_list parameter'
   CONTROL_STR_LIST <- DF_DIST_REDUCED %>%
     dplyr::group_by(TEST) %>%
     dplyr::arrange(DIST_Q, CONTROL) %>%
-    dplyr::mutate(DIST_RANK = min_rank(DIST_Q)) %>%
+    dplyr::mutate(DIST_RANK = dplyr::min_rank(DIST_Q)) %>%
     dplyr::filter(DIST_RANK <= n) %>%
     dplyr::ungroup()
 
