@@ -25,6 +25,7 @@ in the control for more than 1 TEST group.
 }
 \examples{
 library(tidyverse)
+library(magrittr)
 df <- datasets::USArrests \%>\% dplyr::mutate(state = base::row.names(USArrests)) \%>\%
                               dplyr::select(state, everything())
 test_list <- tribble(~"TEST","Colorado")

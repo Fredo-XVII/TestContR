@@ -35,6 +35,7 @@ groups/individuals.
 }
 \examples{
 library(tidyverse)
+library(magrittr)
 df <- datasets::USArrests \%>\% dplyr::mutate(state = base::row.names(USArrests)) \%>\%
                               dplyr::select(state, everything())
 
