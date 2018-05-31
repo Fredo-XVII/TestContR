@@ -21,6 +21,7 @@
 #' If a data frame is supplied to the "test_list" parameter, 1 to 1 matching control stores will be created for the groups/individuals in the "TEST" column supplied to the "test_list" parameter.
 #' @examples
 #' library(tidyverse)
+#' library(magrittr)
 #' df <- datasets::USArrests %>% dplyr::mutate(state = base::row.names(USArrests)) %>%
 #'                               dplyr::select(state, everything())
 #'

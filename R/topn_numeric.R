@@ -14,6 +14,7 @@
 #' @param test_list df with one column named "TEST," and one row with the label for one group/individual (one row), thus a 1x1 df. Defaults to NULL.
 #' @examples
 #' library(tidyverse)
+#' library(magrittr)
 #' df <- datasets::USArrests %>% dplyr::mutate(state = base::row.names(USArrests)) %>%
 #'                               dplyr::select(state, everything())
 #' test_list <- tribble(~"TEST","Colorado")
