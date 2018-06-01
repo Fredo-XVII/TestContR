@@ -71,7 +71,7 @@ match_numeric <- function ( df, n = 10 , test_list = NULL ) {
     if( is.null(test_list)) {
       DF_TEST <- df %>% dplyr::sample_n(size = n) # Need to include a InputSelector, sample size of test
     } else {
-      DF_TEST <- as.data.frame(test_list$TEST)
+      DF_TEST <- as.data.frame(test_list['TEST'])
     }
     # Test and Control List
 
