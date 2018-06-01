@@ -1,5 +1,6 @@
 # TestContR 1.0.2 - in Development
   - Error: $ cannot be used with vector.  Fixed by removing $TEST, using ['TEST']
+  - Fixed warning for CRAN submission.
   - improve topn_numeric() for more than 1 group (in development).
 
 # TestContR 1.0.1
