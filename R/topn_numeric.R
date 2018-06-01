@@ -66,7 +66,7 @@ topn_numeric <- function ( df, n = 5 , test_list = NULL ) {
 See documentation for topn_numeric\'s test_list parameter'
          )
   } else {
-    DF_TEST <- as.data.frame(test_list$TEST)
+    DF_TEST <- as.data.frame(test_list['TEST'])
   }
   # Test and Control List
 
