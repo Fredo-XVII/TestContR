@@ -73,13 +73,19 @@ See documentation for topn_numeric\'s test_list parameter'
   DF_DIST_REDUCED <- DF_DIST_FINAL %>% dplyr::filter(!CONTROL %in% (DF_TEST[,1])) %>%
     dplyr::filter(TEST %in% (DF_TEST[,1]))
 
-  CONTROL_STR_LIST <- DF_DIST_REDUCED %>%
+  CONTROL_STR_LIST_1 <- DF_DIST_REDUCED %>%
     dplyr::group_by(TEST) %>%
     dplyr::arrange(DIST_Q, CONTROL) %>%
     dplyr::mutate(DIST_RANK = dplyr::min_rank(DIST_Q)) %>%
     dplyr::filter(DIST_RANK <= n) %>%
     dplyr::ungroup()
 
+  if exists("CONTROL_STR_LIST") && is.data.frame(get("CONTROL_STR_LIST")){
+    rbind(CONTROL_STR_LIST,CONTROL_STR_LIST_1)
+  } else{
+    CONTROL_STR_LIST <- CONTROL_STR_LIST_1
+    rm(CONTROL_STR_LIST_1)
+  }
 
   # Output list of Test and Controls
   return(CONTROL_STR_LIST)
