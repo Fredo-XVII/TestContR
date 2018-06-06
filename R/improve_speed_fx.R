@@ -80,6 +80,13 @@ See documentation for topn_numeric\'s test_list parameter'
     dplyr::filter(DIST_RANK <= n) %>%
     dplyr::ungroup()
 
+  if exists("CONTROL_STR_LIST") && is.data.frame(get("CONTROL_STR_LIST")){
+    rbind(CONTROL_STR_LIST,CONTROL_STR_LIST_1)
+  } else{
+    CONTROL_STR_LIST <- CONTROL_STR_LIST_1
+    rm(CONTROL_STR_LIST_1)
+  }
+
   # Output list of Test and Controls
   return(CONTROL_STR_LIST)
   # assign( CONTROL_STR_LIST, paste0("Randomized Selection_seed_",rand_num), envir = .GlobalEnv #)
