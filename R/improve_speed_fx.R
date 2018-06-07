@@ -70,23 +70,27 @@ See documentation for topn_numeric\'s test_list parameter'
   }
   # Test and Control List
 
-  DF_DIST_REDUCED <- DF_DIST_FINAL %>% dplyr::filter(!CONTROL %in% (DF_TEST[,1])) %>%
-    dplyr::filter(TEST %in% (DF_TEST[,1]))
+  for (k in 1:nrow(DF_TEST)) {
+    #k = 2
+    n = 5
+    DF_DIST_REDUCED <- DF_DIST_FINAL %>% dplyr::filter(!CONTROL %in% (DF_TEST[k,1])) %>%
+      dplyr::filter(TEST %in% (DF_TEST[k,1]))
 
-  CONTROL_STR_LIST_1 <- DF_DIST_REDUCED %>%
-    dplyr::group_by(TEST) %>%
-    dplyr::arrange(DIST_Q, CONTROL) %>%
-    dplyr::mutate(DIST_RANK = dplyr::min_rank(DIST_Q)) %>%
-    dplyr::filter(DIST_RANK <= n) %>%
-    dplyr::ungroup()
+    CONTROL_STR_LIST_1 <- DF_DIST_REDUCED %>%
+      dplyr::group_by(TEST) %>%
+      dplyr::arrange(DIST_Q, CONTROL) %>%
+      dplyr::mutate(DIST_RANK = dplyr::min_rank(DIST_Q)) %>%
+      dplyr::filter(DIST_RANK <= n) %>%
+      dplyr::ungroup()
 
-  if exists("CONTROL_STR_LIST") && is.data.frame(get("CONTROL_STR_LIST")){
-    rbind(CONTROL_STR_LIST,CONTROL_STR_LIST_1)
-  } else{
-    CONTROL_STR_LIST <- CONTROL_STR_LIST_1
-    rm(CONTROL_STR_LIST_1)
+
+    CONTROL_STR_LIST <- if (exists('CONTROL_STR_LIST')) {
+      rbind(CONTROL_STR_LIST,CONTROL_STR_LIST_1)
+    } else {
+      CONTROL_STR_LIST_1
+    }
+    #rm(CONTROL_STR_LIST_1)
   }
-
   # Output list of Test and Controls
   return(CONTROL_STR_LIST)
   # assign( CONTROL_STR_LIST, paste0("Randomized Selection_seed_",rand_num), envir = .GlobalEnv #)
