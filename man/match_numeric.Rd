@@ -4,7 +4,7 @@
 \alias{match_numeric}
 \title{Test and Control Selector for Groups/Individuals.}
 \usage{
-match_numeric(df, n = 10, test_list = NULL)
+match_numeric(df, n = 10, test_list = "NULL")
 }
 \arguments{
 \item{df}{data frame of numeric inputs. First column must have group/individuals names, 1 line per group/individuals.}
@@ -36,7 +36,7 @@ groups/individuals.
 \examples{
 library(tidyverse)
 library(magrittr)
-df <- datasets::USArrests \%>\% dplyr::mutate(state = base::row.names(USArrests)) \%>\%
+df <- datasets::USArrests \%>\% dplyr::mutate(state = base::row.names(datasets::USArrests)) \%>\%
                               dplyr::select(state, everything())
 
 TEST_CONTROL_LIST <- TestContR::match_numeric(df, n = 15)
