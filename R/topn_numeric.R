@@ -15,7 +15,7 @@
 #' @examples
 #' library(tidyverse)
 #' library(magrittr)
-#' df <- datasets::USArrests %>% dplyr::mutate(state = base::row.names(USArrests)) %>%
+#' df <- datasets::USArrests %>% dplyr::mutate(state = base::row.names(datasets::USArrests)) %>%
 #'                               dplyr::select(state, everything())
 #' test_list <- tribble(~"TEST","Colorado")
 #' TOPN_CONTROL_LIST <- TestContR::topn_numeric(df, n = 5, test_list = test_list)
@@ -62,7 +62,7 @@ topn_numeric <- function ( df, n = 5 , test_list = NULL ) {
   #set.seed(17)
   if( is.null(test_list)) {
     stop(
-'Please provide a dataframe for the test_list parameter with 1 Test group or individual in a column named "TEST."\n
+'Please provide a dataframe for the test_list "parameter" with 1 Test group or individual in a column named "TEST."\n
 See documentation for topn_numeric\'s test_list parameter'
          )
   } else {
@@ -70,17 +70,23 @@ See documentation for topn_numeric\'s test_list parameter'
   }
   # Test and Control List
 
-  DF_DIST_REDUCED <- DF_DIST_FINAL %>% dplyr::filter(!CONTROL %in% (DF_TEST[,1])) %>%
-    dplyr::filter(TEST %in% (DF_TEST[,1]))
+  for (k in 1:nrow(DF_TEST)) {
+    DF_DIST_REDUCED <- DF_DIST_FINAL %>% dplyr::filter(!CONTROL %in% (DF_TEST[k,1])) %>%
+      dplyr::filter(TEST %in% (DF_TEST[k,1]))
 
-  CONTROL_STR_LIST <- DF_DIST_REDUCED %>%
-    dplyr::group_by(TEST) %>%
-    dplyr::arrange(DIST_Q, CONTROL) %>%
-    dplyr::mutate(DIST_RANK = dplyr::min_rank(DIST_Q)) %>%
-    dplyr::filter(DIST_RANK <= n) %>%
-    dplyr::ungroup()
+    CONTROL_STR_LIST_1 <- DF_DIST_REDUCED %>%
+      dplyr::group_by(TEST) %>%
+      dplyr::arrange(DIST_Q, CONTROL) %>%
+      dplyr::mutate(DIST_RANK = dplyr::min_rank(DIST_Q)) %>%
+      dplyr::filter(DIST_RANK <= n) %>%
+      dplyr::ungroup()
 
-
+    CONTROL_STR_LIST <- if (exists('CONTROL_STR_LIST')) {
+      rbind(CONTROL_STR_LIST,CONTROL_STR_LIST_1)
+    } else {
+      CONTROL_STR_LIST_1
+    }
+  }
   # Output list of Test and Controls
   return(CONTROL_STR_LIST)
   # assign( CONTROL_STR_LIST, paste0("Randomized Selection_seed_",rand_num), envir = .GlobalEnv #)

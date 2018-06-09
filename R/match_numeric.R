@@ -22,7 +22,7 @@
 #' @examples
 #' library(tidyverse)
 #' library(magrittr)
-#' df <- datasets::USArrests %>% dplyr::mutate(state = base::row.names(USArrests)) %>%
+#' df <- datasets::USArrests %>% dplyr::mutate(state = base::row.names(datasets::USArrests)) %>%
 #'                               dplyr::select(state, everything())
 #'
 #' TEST_CONTROL_LIST <- TestContR::match_numeric(df, n = 15)
@@ -39,7 +39,7 @@
 #require(tidyverse)
 
 
-match_numeric <- function ( df, n = 10 , test_list = NULL ) {
+match_numeric <- function ( df, n = 10 , test_list = "NULL" ) {
 
     # Prep for Distance: Convert column #1 to rownames and scale the dataset
 
@@ -68,7 +68,7 @@ match_numeric <- function ( df, n = 10 , test_list = NULL ) {
     # RANDOMLY SELECT THE LIST/DF OF THE TEST AND CONTROL GROUPS
 
     #set.seed(17)
-    if( is.null(test_list)) {
+    if( test_list == "NULL") {
       DF_TEST <- df %>% dplyr::sample_n(size = n) # Need to include a InputSelector, sample size of test
     } else {
       DF_TEST <- as.data.frame(test_list['TEST'])
@@ -84,7 +84,7 @@ match_numeric <- function ( df, n = 10 , test_list = NULL ) {
       dplyr::filter(DIST_RANK <= 1) %>%
       dplyr::select(-DIST_RANK) %>%
       dplyr::ungroup() %>%
-      dplyr::mutate(GROUP = dplyr::row_number())
+      dplyr::mutate(GROUP = dplyr::row_number(TEST))
 
     # Create list of Dupes
     DUPES_LIST <- CONTROL_STR_LIST %>% dplyr::group_by(CONTROL) %>%
