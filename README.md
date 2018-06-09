@@ -14,6 +14,8 @@ R contains a crime data set for the all 50 states. This data set contains data o
 
 ``` r
 library(tidyverse)
+#> Warning: package 'stringr' was built under R version 3.4.4
+#> Warning: package 'forcats' was built under R version 3.4.4
 library(TestContR)
 ```
 
@@ -102,6 +104,8 @@ knitr::kable(TEST_GRP)
 ``` r
 set.seed(99)
 TEST_CONTROL_LIST <- TestContR::match_numeric(df, test_list = TEST_GRP)
+#> Warning in if (test_list == "NULL") {: the condition has length > 1 and
+#> only the first element will be used
 ```
 
 **Results for the "test\_list" input parameter:**
