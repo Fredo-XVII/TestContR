@@ -1,14 +1,56 @@
 # New Release
+  > If I have errors, please suggest google terms or code that will help me resolve the issue.  Thank you!
+  
+## Test environments 
+* local Windows install, R 3.5.0
+* ubuntu 12.04 (on travis-ci), R 3.5.0
 
-## Test environments
+## R CMD check results
+
+ERRORS: 1
+
+  1. LaTeX errors when creating PDF version.
+  
+    - checking PDF version of manual without hyperrefs or index ... ERROR
+    
+    - Error in texi2dvi(file = file, pdf = TRUE, clean = clean, quiet = quiet,  : pdflatex is not available    
+    
+  - Explanation: the pdflatex package is not available for 3.5.0
+
+WARNINGs: 1
+  
+  1. checking PDF version of manual ... WARNING
+  
+    - Explanation: the warning is due to the PDF creation which is dependent on packages on available for 3.5.0
+
+NOTES: 3
+
+  1. checking top-level files ... NOTE 
+  Files 'README.md' or 'NEWS.md' cannot be checked without 'pandoc' being installed.
+  
+    - Explanation: pandoc not available for 3.5.0
+  
+  2. checking R code for possible problems ... NOTE  
+  
+    - Explanation: Same as below, see explanation below.
+   
+   3. Embarressingly, I cannot find the 3rd note for the life of me.  If you do find it, please let me know when you reject my submission.  
+   
+    - Explanation: will write if needed.
+  
+
+## Test environments - built with the below install with no errors or warnings, and 1 note (same as #2 above).
 * local Windows install, R 3.4.3
 * ubuntu 12.04 (on travis-ci), R 3.4.3
 
 ## R CMD check results
 There were no ERRORs or WARNINGs. 
 
-There was 1 NOTE below. The base command used are 'dist', '%>%', and 'na.omit'.  The others are objects, dataframes and variables, that are used to build the matches.  This do not interfere with the users environment and are not created outside of the function.
+NOTES: 1
 
+  - Explanation: The base command used are 'dist', '%>%', and 'na.omit'.  The others are objects, dataframes and variables, that are used to build the matches.  This do not interfere with the users environment and are not created outside of the function.
+
+Note:
 "
 checking R code for possible problems ... NOTE
 match_numeric: no visible global function definition for 'dist'
