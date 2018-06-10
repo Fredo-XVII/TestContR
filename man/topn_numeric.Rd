@@ -17,7 +17,7 @@ topn_numeric(df, n = 5, test_list = NULL)
 Selects n nearest control groups/individuals for 1 test group/individual
 }
 \details{
-Providing a complete list of the groups/individuals to df, and suppling a data frame
+Providing a complete list of the groups/individuals to df, and supplying a data frame
 with 1 TEST group/individual to the parameter test_list and the function will provide
 you with an "N" list of control groups/individuals. If more than 1 group/individual
 is provided there is a good chance of duplicates. This function ignores duplicates
