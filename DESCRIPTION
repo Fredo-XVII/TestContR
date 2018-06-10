@@ -3,7 +3,7 @@ Version: 1.0.2
 Title: Randomly Select Test and Control Groups
 Description: Select a random list of test group/individuals and provides the best matching 
   group/individuals for a control based on a dataframe of metrics for the subjects. Or you 
-  can generate control groupsindividuals for a list of pre-selected test groups. Currently, 
+  can generate control groups/individuals for a list of pre-selected test groups. Currently, 
   only numeric values are excepted since Euclidian distance is used for the pairing.  Categorical 
   variables coming in a later version.
 Authors@R: person("Alfredo", "Marquez", , "Alfredo.G.Marquez@gmail.com", c("aut", "cre"))
