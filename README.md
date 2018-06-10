@@ -14,8 +14,6 @@ R contains a crime data set for the all 50 states. This data set contains data o
 
 ``` r
 library(tidyverse)
-#> Warning: package 'stringr' was built under R version 3.4.4
-#> Warning: package 'forcats' was built under R version 3.4.4
 library(TestContR)
 ```
 
