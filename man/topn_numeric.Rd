@@ -2,7 +2,8 @@
 % Please edit documentation in R/topn_numeric.R
 \name{topn_numeric}
 \alias{topn_numeric}
-\title{Top N Control Selector for 1 Test Group/Individual.}
+\title{importFrom("stats", "dist", "na.omit")
+Top N Control Selector for 1 Test Group/Individual.}
 \usage{
 topn_numeric(df, n = 5, test_list = NULL)
 }

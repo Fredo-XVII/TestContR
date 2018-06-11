@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-![GitHub Logo](TestContR_150w.png)
+![GitHub Logo](inst/logo/TestContR_150w.png)
 
 # TestContR ![](https://travis-ci.org/Fredo-XVII/TestContR.svg?branch=master)
 

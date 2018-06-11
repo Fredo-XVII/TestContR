@@ -1,6 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-![GitHub Logo](TestContR_150w.png)
+![GitHub Logo](inst/logo/TestContR_150w.png)
 
 TestContR ![](https://travis-ci.org/Fredo-XVII/TestContR.svg?branch=master)
 ===========================================================================
