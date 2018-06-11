@@ -2,3 +2,4 @@
 
 export(match_numeric)
 export(topn_numeric)
+importFrom(magrittr,"%>%")

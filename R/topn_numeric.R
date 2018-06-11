@@ -19,6 +19,7 @@
 #'                               dplyr::select(state, everything())
 #' test_list <- tribble(~"TEST","Colorado")
 #' TOPN_CONTROL_LIST <- TestContR::topn_numeric(df, n = 5, test_list = test_list)
+#' @importFrom magrittr %>%
 #' @export
 
 

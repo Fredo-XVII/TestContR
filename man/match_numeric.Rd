@@ -2,8 +2,7 @@
 % Please edit documentation in R/match_numeric.R
 \name{match_numeric}
 \alias{match_numeric}
-\title{globalvariables("%>%")
-Test and Control Selector for Groups/Individuals.}
+\title{Test and Control Selector for Groups/Individuals.}
 \usage{
 match_numeric(df, n = 10, test_list = NULL)
 }

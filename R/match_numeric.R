@@ -26,6 +26,7 @@
 #'                               dplyr::select(state, everything())
 #'
 #' TEST_CONTROL_LIST <- TestContR::match_numeric(df, n = 15)
+#' @importFrom magrittr %>%
 #' @export
 
 
