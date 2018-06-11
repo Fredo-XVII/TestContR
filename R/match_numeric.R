@@ -1,3 +1,4 @@
+#' importFrom("stats", "dist", "na.omit")
 #' Test and Control Selector for Groups/Individuals.
 #'
 #' Randomly select test groups/individuals and create matching control

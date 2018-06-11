@@ -1,3 +1,4 @@
+#' importFrom("stats", "dist", "na.omit")
 #' Top N Control Selector for 1 Test Group/Individual.
 #'
 #' Selects n nearest control groups/individuals for 1 test group/individual
