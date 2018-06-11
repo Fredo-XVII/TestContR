@@ -2,10 +2,9 @@
 % Please edit documentation in R/match_numeric.R
 \name{match_numeric}
 \alias{match_numeric}
-\title{importFrom("stats", "dist", "na.omit")
-Test and Control Selector for Groups/Individuals.}
+\title{Test and Control Selector for Groups/Individuals.}
 \usage{
-match_numeric(df, n = 10, test_list = "NULL")
+match_numeric(df, n = 10, test_list = NULL)
 }
 \arguments{
 \item{df}{data frame of numeric inputs. First column must have group/individuals names, 1 line per group/individuals.}
