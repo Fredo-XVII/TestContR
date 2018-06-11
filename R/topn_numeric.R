@@ -1,4 +1,3 @@
-#' importFrom("stats", "dist", "na.omit")
 #' Top N Control Selector for 1 Test Group/Individual.
 #'
 #' Selects n nearest control groups/individuals for 1 test group/individual
@@ -40,7 +39,7 @@ topn_numeric <- function ( df, n = 5 , test_list = NULL ) {
   df_scaled <- scale(df[,-1])
 
   #---- Build the Distant Matrix----
-  DF_DIST <- dist(df_scaled , method = "euclidian")
+  DF_DIST <- stats::dist(df_scaled , method = "euclidian")
 
   # Convert to Matrix
   DF_RANK_BASE <- as.matrix(DF_DIST)
@@ -52,7 +51,7 @@ topn_numeric <- function ( df, n = 5 , test_list = NULL ) {
   DF_RANK_BASE_1 <- reshape2::melt(DF_RANK_BASE)
   names(DF_RANK_BASE_1) <- c("CONTROL","TEST","DIST_Q")
 
-  DF_DIST_FINAL <- DF_RANK_BASE_1 %>% na.omit() %>%
+  DF_DIST_FINAL <- DF_RANK_BASE_1 %>% stats::na.omit() %>%
     dplyr::arrange(TEST,DIST_Q,CONTROL)
 
 

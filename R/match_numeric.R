@@ -1,4 +1,3 @@
-#' importFrom("stats", "dist", "na.omit")
 #' Test and Control Selector for Groups/Individuals.
 #'
 #' Randomly select test groups/individuals and create matching control
@@ -48,7 +47,7 @@ match_numeric <- function ( df, n = 10 , test_list = "NULL" ) {
     df_scaled <- scale(df[,-1])
 
     #---- Build the Distant Matrix----
-    DF_DIST <- dist(df_scaled , method = "euclidian")
+    DF_DIST <- stats::dist(df_scaled , method = "euclidian")
 
     # Convert to Matrix
     DF_RANK_BASE <- as.matrix(DF_DIST)
@@ -60,7 +59,7 @@ match_numeric <- function ( df, n = 10 , test_list = "NULL" ) {
     DF_RANK_BASE_1 <- reshape2::melt(DF_RANK_BASE)
     names(DF_RANK_BASE_1) <- c("CONTROL","TEST","DIST_Q")
 
-    DF_DIST_FINAL <- DF_RANK_BASE_1 %>% na.omit() %>%
+    DF_DIST_FINAL <- DF_RANK_BASE_1 %>% stats::na.omit() %>%
       dplyr::arrange(TEST,DIST_Q,CONTROL)
 
 
