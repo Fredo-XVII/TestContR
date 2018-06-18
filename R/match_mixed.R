@@ -20,10 +20,11 @@
 #' @return If the "n" parameter is used, the function outputs a data frame with a list of randomized test groups/individuals from the supplied df with matching control groups/individuals, a 1 to 1 match.
 #' If a data frame is supplied to the "test_list" parameter, 1 to 1 matching control stores will be created for the groups/individuals in the "TEST" column supplied to the "test_list" parameter.
 #' @examples
-#' library(tidyverse)
+#' library(dplyr)
 #' library(magrittr)
 #' df <- datasets::USArrests %>% dplyr::mutate(state = base::row.names(datasets::USArrests)) %>%
-#'                               dplyr::select(state, everything())
+#'   base::cbind(datasets::state.division) %>%
+#'   dplyr::select(state, dplyr::everything())
 #'
 #' TEST_CONTROL_LIST <- TestContR::match_mixed(df, n = 15)
 #' @importFrom magrittr %>%
@@ -42,13 +43,13 @@
 
 match_mixed <- function ( df, n = 10 , test_list = NULL ) {
 
-    # Prep for Distance: Convert column #1 to rownames and scale the dataset
+    # Prep for Distance: Convert column #1 to rownames and factor character variables
 
     rownames(df) <- df[,1]
-    df_scaled <- scale(df[,-1])
+    df_scaled <- df[,-1] %>% dplyr::mutate_if( is.character, as.factor) # Scaling happens in daisy()
 
-    #---- Build the Distant Matrix----
-    DF_DIST <- cluster::daisy(df_scaled)
+    #----Scale the Data and Build the Distant Matrix----
+    DF_DIST <- cluster::daisy(df_scaled) # Scaling happens here for numeric and factor
 
     # Convert to Matrix
     DF_RANK_BASE <- as.matrix(DF_DIST)

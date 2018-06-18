@@ -13,6 +13,7 @@ LazyData: true
 ByteCompile: true
 Imports:
     dplyr (>= 0.7.4),
+    cluster (>= 2.0.7-1), 
     reshape2 (>= 1.4.3),
     magrittr (>= 1.5),
     stats (>= 3.4.0)

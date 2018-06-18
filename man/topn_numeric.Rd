@@ -24,7 +24,7 @@ is provided there is a good chance of duplicates. This function ignores duplicat
 in the control for more than 1 TEST group.
 }
 \examples{
-library(tidyverse)
+library(dplyr)
 library(magrittr)
 df <- datasets::USArrests \%>\% dplyr::mutate(state = base::row.names(datasets::USArrests)) \%>\%
                               dplyr::select(state, dplyr::everything())
