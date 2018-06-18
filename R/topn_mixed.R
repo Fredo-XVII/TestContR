@@ -34,12 +34,12 @@
 # require(reshape2)
 # require(tidyverse)
 
-topn_numeric <- function ( df, n = 5 , test_list = NULL ) {
+topn_mixed <- function ( df, n = 5 , test_list = NULL ) {
 
   # Prep for Distance: Convert column #1 to rownames and factor character variables
 
   rownames(df) <- df[,1]
-  df_scaled <- df[,-1] %>% dplyr::mutate_if( is.character, as.factor) # Scaling happens in daisy()
+  df_scaled <- df[,-1] %>% dplyr::mutate_if( is.character, as.factor ) # Scaling happens in daisy()
 
   #----Scale the Data and Build the Distant Matrix----
   DF_DIST <- cluster::daisy(df_scaled) # Scaling happens here for numeric and factor

@@ -2,5 +2,6 @@
 
 export(match_mixed)
 export(match_numeric)
+export(topn_mixed)
 export(topn_numeric)
 importFrom(magrittr,"%>%")

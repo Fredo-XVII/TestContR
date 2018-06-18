@@ -37,7 +37,8 @@ groups/individuals.
 library(dplyr)
 library(magrittr)
 df <- datasets::USArrests \%>\% dplyr::mutate(state = base::row.names(datasets::USArrests)) \%>\%
-                              dplyr::select(state, dplyr::everything())
+  base::cbind(datasets::state.division) \%>\%
+  dplyr::select(state, dplyr::everything())
 
 TEST_CONTROL_LIST <- TestContR::match_mixed(df, n = 15)
 }

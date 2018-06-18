@@ -1,4 +1,10 @@
-# TestContR 1.0.2 - in Development
+# TestContR 1.1.0
+  - Added the 2 functions below to account for factors, or categorical variables in the distance matrix.
+  - match_mixed - added Gower distance matrix with cluster::daisy() to account for factor variables. Removed stats::dist() because daisy() already uses range for standardization of numeric variables.
+  - topn_mixed - added Gower distance matrix with cluster::daisy() to account for factor variables.  Removed stats::dist() because daisy() already uses range for standardization of numeric variables.
+  - Total 4 functions available, 2 for numeric variables, 2 for mixed variables
+
+# TestContR 1.0.2 
   - Error: $ cannot be used with vector.  Fixed by removing $TEST, using ['TEST'] - COMPLETED
   - Fixed warning for CRAN submission. - COMPLETED
   - improve topn_numeric() for more than 1 group (in development). - COMPLETED
