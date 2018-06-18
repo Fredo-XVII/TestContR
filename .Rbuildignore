@@ -3,7 +3,7 @@
 ^LICENSE\.md$
 ^README\.Rmd$
 ^cran-comments\.md$
-^\.travis\.yml
+^.travis\.yml$
 ^Package_Development_Script\.R$
 ^hexbin_sticker\.R$
 ^TestContR\.png$
