@@ -13,11 +13,11 @@
 #' @param n size of the top "N" of groups/individuals that match the test group/individuals. Defaults to 5.
 #' @param test_list df with one column named "TEST," and one row with the label for one group/individual (one row), thus a 1x1 df. Defaults to NULL.
 #' @examples
-#' library(tidyverse)
+#' library(dplyr)
 #' library(magrittr)
 #' df <- datasets::USArrests %>% dplyr::mutate(state = base::row.names(datasets::USArrests)) %>%
-#'                               dplyr::select(state, everything())
-#' test_list <- tribble(~"TEST","Colorado")
+#'                               dplyr::select(state, dplyr::everything())
+#' test_list <- dplyr::tribble(~"TEST","Colorado")
 #' TOPN_CONTROL_LIST <- TestContR::topn_numeric(df, n = 5, test_list = test_list)
 #' @importFrom magrittr %>%
 #' @export

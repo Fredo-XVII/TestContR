@@ -37,7 +37,7 @@ groups/individuals.
 library(tidyverse)
 library(magrittr)
 df <- datasets::USArrests \%>\% dplyr::mutate(state = base::row.names(datasets::USArrests)) \%>\%
-                              dplyr::select(state, everything())
+                              dplyr::select(state, dplyr::everything())
 
 TEST_CONTROL_LIST <- TestContR::match_numeric(df, n = 15)
 }

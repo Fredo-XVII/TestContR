@@ -27,7 +27,7 @@ in the control for more than 1 TEST group.
 library(tidyverse)
 library(magrittr)
 df <- datasets::USArrests \%>\% dplyr::mutate(state = base::row.names(datasets::USArrests)) \%>\%
-                              dplyr::select(state, everything())
-test_list <- tribble(~"TEST","Colorado")
+                              dplyr::select(state, dplyr::everything())
+test_list <- dplyr::tribble(~"TEST","Colorado")
 TOPN_CONTROL_LIST <- TestContR::topn_numeric(df, n = 5, test_list = test_list)
 }
