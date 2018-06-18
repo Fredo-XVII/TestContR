@@ -7,7 +7,7 @@
 match_mixed(df, n = 10, test_list = NULL)
 }
 \arguments{
-\item{df}{data frame of numeric inputs. First column must have group/individuals names, 1 line per group/individuals.}
+\item{df}{data frame of numeric, or mixed inputs. First column must have group/individuals names, 1 line per group/individuals.}
 
 \item{n}{size of the test group, and matching control group. Defaults to 10.}
 
@@ -19,11 +19,15 @@ If a data frame is supplied to the "test_list" parameter, 1 to 1 matching contro
 }
 \description{
 Randomly select test groups/individuals and create matching control
-groups/individuals by using Euclidean distance on scaled numeric variables.
-The data frame must contain the group/individual labels in the first column
-and the other variables must be in levels, in other words not scaled.
+groups/individuals by using Euclidean distance on scaled numeric variables,
+or with Gower's method for datasets with numeric and categorical variables.
+This function can handle both numeric and categorical as well as just numeric
+variables with Gower's methodology from cluster::daisy() function.
 }
 \details{
+The data frame must contain the group/individual labels in the first column
+and the other variables must be in levels, in other words not scaled.
+
 In the case where duplicates arise in the Control, the function iterates
 through the test control list until there are no duplicates in the Control.
 In each iteration, it re-ranks the remaining possible control groups/individuals

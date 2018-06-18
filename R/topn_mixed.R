@@ -3,13 +3,15 @@
 #' Selects n nearest control groups/individuals for 1 test group/individual
 #'
 #' @details
-#' Providing a complete list of the groups/individuals to df, and suppling a data frame
+#' Providing a complete list of the groups/individuals to df, and supply a data frame
 #' with 1 TEST group/individual to the parameter test_list and the function will provide
 #' you with an "N" list of control groups/individuals. If more than 1 group/individual
 #' is provided there is a good chance of duplicates. This function ignores duplicates
-#' in the control for more than 1 TEST group.
+#' in the control for more than 1 TEST group.  This function can handle both numeric
+#' and categorical as well as just numeric with Gower's methodology in cluster::daisy()
+#' function.
 #'
-#' @param df data frame of numeric inputs. First column must have group/individuals names, 1 line per group/individuals.
+#' @param df data frame of numeric, or mixed inputs. First column must have group/individuals names, 1 line per group/individuals.
 #' @param n size of the top "N" of groups/individuals that match the test group/individuals. Defaults to 5.
 #' @param test_list df with one column named "TEST," and one row with the label for one group/individual (one row), thus a 1x1 df. Defaults to NULL.
 #' @examples
