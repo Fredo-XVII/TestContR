@@ -7,3 +7,5 @@
 ^Package_Development_Script\.R$
 ^hexbin_sticker\.R$
 ^TestContR\.png$
+^*\.tar
+^*\.zip
