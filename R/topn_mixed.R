@@ -40,11 +40,12 @@ topn_mixed <- function ( df, n = 5 , test_list = NULL ) {
 
   # Prep for Distance: Convert column #1 to rownames and factor character variables
 
-  rownames(df) <- df[,1]
   df_scaled <- df[,-1] %>% dplyr::mutate_if( is.character, as.factor ) # Scaling happens in daisy()
 
   #----Scale the Data and Build the Distant Matrix----
+  #----Convert column #1 to rownames----
   DF_DIST <- cluster::daisy(df_scaled) # Scaling happens here for numeric and factor
+  attr(DF_DIST,"Labels") <- as.factor(df[,1]) # column and row names here
 
   # Convert to Matrix
   DF_RANK_BASE <- as.matrix(DF_DIST)
@@ -66,10 +67,10 @@ topn_mixed <- function ( df, n = 5 , test_list = NULL ) {
 
   #set.seed(17)
   if( is.null(test_list)) {
-    stop(
-      'Please provide a dataframe for the test_list "parameter" with 1 Test group or individual in a column named "TEST."\n
-See documentation for topn_numeric\'s test_list parameter'
+    warning( 'If no dataframe provided for the "test_list" parameter, will use all the labels in the dataset.  Otherwise, please provide a dataframe for the "test_list" parameter with 1, or N, Test group(s) or individual(s) label(s) in a column named "TEST."\n
+      See documentation for topn_numeric\'s test_list parameter'
     )
+    DF_TEST <- data.frame("TEST" = df[,1])
   } else {
     DF_TEST <- as.data.frame(test_list['TEST'])
   }
