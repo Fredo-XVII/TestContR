@@ -1,17 +1,19 @@
-#' Top N Control Selector for 1 Test Group/Individual.
+#' Top N Control Selector for 1 or more Test Group(s)/Individual(s).
 #'
-#' Selects n nearest control groups/individuals for 1 test group/individual
+#' Selects n nearest control groups/individuals for 1 or more test group(s)/individual(s)
 #'
 #' @details
 #' Providing a complete list of the groups/individuals to df, and suppling a data frame
-#' with 1 TEST group/individual to the parameter test_list and the function will provide
+#' with 1 or more TEST group(s)/individual(s) to the parameter test_list, the function will provide
 #' you with an "N" list of control groups/individuals. If more than 1 group/individual
 #' is provided there is a good chance of duplicates. This function ignores duplicates
-#' in the control for more than 1 TEST group.
+#' in the control for more than 1 TEST group, resulting in a dataframe with Labels x N rows.
+#' This function can handle only numeric data.
 #'
 #' @param df data frame of numeric inputs. First column must have group/individuals names, 1 line per group/individuals.
 #' @param topN size of the top "N" of groups/individuals that match the test group/individuals. Defaults to 5.
-#' @param test_list df with one column named "TEST," and one row with the label for one group/individual (one row), thus a 1x1 df. Defaults to NULL.
+#' @param test_list df with one column named "TEST," and one row for each label for each group/individual. Defaults to NULL, but be aware if test_list
+#' is left blank, the function will use all the unique labels in the first column of the dataframe, resulting in labels x topN rows dataframe.
 #' @examples
 #' library(dplyr)
 #' library(magrittr)
@@ -62,10 +64,10 @@ topn_numeric <- function ( df, topN = 5 , test_list = NULL ) {
 
   #set.seed(17)
   if( is.null(test_list)) {
-    stop(
-'Please provide a dataframe for the test_list "parameter" with 1 Test group or individual in a column named "TEST."\n
-See documentation for topn_numeric\'s test_list parameter'
-         )
+    warning( 'If no dataframe provided for the "test_list" parameter, will use all the labels in the dataset.  Otherwise, please provide a dataframe for the "test_list" parameter with 1, or N, Test group(s) or individual(s) label(s) in a column named "TEST."\n
+      See documentation for topn_numeric\'s test_list parameter'
+    )
+    DF_TEST <- data.frame("TEST" = df[,1])
   } else {
     DF_TEST <- as.data.frame(test_list['TEST'])
   }
