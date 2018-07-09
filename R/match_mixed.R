@@ -49,11 +49,12 @@ match_mixed <- function ( df, n = 10 , test_list = NULL ) {
 
     # Prep for Distance: Convert column #1 to rownames and factor character variables
 
-    rownames(df) <- df[,1]
     df_scaled <- df[,-1] %>% dplyr::mutate_if( is.character, as.factor ) # Scaling happens in daisy()
 
     #----Scale the Data and Build the Distant Matrix----
+    #----Convert column #1 to rownames----
     DF_DIST <- cluster::daisy(df_scaled) # Scaling happens here for numeric and factor
+    attr(DF_DIST,"Labels") <- as.factor(df[,1]) # column and row names here
 
     # Convert to Matrix
     DF_RANK_BASE <- as.matrix(DF_DIST)
@@ -75,7 +76,7 @@ match_mixed <- function ( df, n = 10 , test_list = NULL ) {
 
     #set.seed(17)
     if( is.null((test_list)) ) {
-      DF_TEST <- df %>% dplyr::sample_n(size = n) # Need to include a InputSelector, sample size of test
+      DF_TEST <- df %>% dplyr::sample_n(size = n) # Sample size of test
     } else {
       DF_TEST <- as.data.frame(test_list['TEST'])
     }
