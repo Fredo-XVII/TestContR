@@ -4,15 +4,15 @@
 \alias{topn_mixed}
 \title{Top N Control Selector for 1 or more Test Group(s)/Individual(s).}
 \usage{
-topn_mixed(df, N = 5, test_list = NULL)
+topn_mixed(df, topN = 5, test_list = NULL)
 }
 \arguments{
 \item{df}{data frame of numeric, or mixed inputs. First column must have group/individuals names, 1 line per group/individuals.}
 
+\item{topN}{size of the top "N" of groups/individuals that match the test group/individuals. Defaults to 5.}
+
 \item{test_list}{df with one column named "TEST," and one row for each label for each group/individual. Defaults to NULL, but be aware if test_list
 is left blank, the function will use all the unique labels in the first column of the dataframe, resulting in labels x topN rows dataframe.}
-
-\item{n}{size of the top "N" of groups/individuals that match the test group/individuals. Defaults to 5.}
 }
 \description{
 Selects n nearest control groups/individuals for 1 or more test group(s)/individual(s)
@@ -34,5 +34,5 @@ df <- datasets::USArrests \%>\% dplyr::mutate(state = base::row.names(datasets::
   dplyr::select(state, dplyr::everything())
 
 test_list <- dplyr::tribble(~"TEST","Colorado")
-TOPN_CONTROL_LIST <- TestContR::topn_mixed(df, N = 5, test_list = test_list)
+TOPN_CONTROL_LIST <- TestContR::topn_mixed(df, topN = 5, test_list = test_list)
 }
