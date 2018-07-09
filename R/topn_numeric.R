@@ -10,7 +10,7 @@
 #' in the control for more than 1 TEST group.
 #'
 #' @param df data frame of numeric inputs. First column must have group/individuals names, 1 line per group/individuals.
-#' @param n size of the top "N" of groups/individuals that match the test group/individuals. Defaults to 5.
+#' @param N size of the top "N" of groups/individuals that match the test group/individuals. Defaults to 5.
 #' @param test_list df with one column named "TEST," and one row with the label for one group/individual (one row), thus a 1x1 df. Defaults to NULL.
 #' @examples
 #' library(dplyr)
@@ -18,7 +18,7 @@
 #' df <- datasets::USArrests %>% dplyr::mutate(state = base::row.names(datasets::USArrests)) %>%
 #'                               dplyr::select(state, dplyr::everything())
 #' test_list <- dplyr::tribble(~"TEST","Colorado")
-#' TOPN_CONTROL_LIST <- TestContR::topn_numeric(df, n = 5, test_list = test_list)
+#' TOPN_CONTROL_LIST <- TestContR::topn_numeric(df, N = 5, test_list = test_list)
 #' @importFrom magrittr %>%
 #' @export
 
@@ -32,7 +32,7 @@
 # require(reshape2)
 # require(tidyverse)
 
-topn_numeric <- function ( df, n = 5 , test_list = NULL ) {
+topn_numeric <- function ( df, N = 5 , test_list = NULL ) {
 
   # Prep for Distance: Convert column #1 to rownames and scale the dataset
 
@@ -79,7 +79,7 @@ See documentation for topn_numeric\'s test_list parameter'
       dplyr::group_by(TEST) %>%
       dplyr::arrange(DIST_Q, CONTROL) %>%
       dplyr::mutate(DIST_RANK = dplyr::min_rank(DIST_Q)) %>%
-      dplyr::filter(DIST_RANK <= n) %>%
+      dplyr::filter(DIST_RANK <= N) %>%
       dplyr::ungroup()
 
     CONTROL_STR_LIST <- if (exists('CONTROL_STR_LIST')) {
