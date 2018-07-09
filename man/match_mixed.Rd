@@ -9,7 +9,7 @@ match_mixed(df, n = 10, test_list = NULL)
 \arguments{
 \item{df}{data frame of numeric, or mixed inputs. First column must have group/individuals names, 1 line per group/individuals.}
 
-\item{n}{size of the test group, and matching control group. Defaults to 10.}
+\item{n}{size of the test group, and matching control group. Defaults to 10. Will be ignored if df provide to the "test_list" parameter.}
 
 \item{test_list}{df with one column named "TEST." This has a list of members in the current test. Defaults to NULL.}
 }

@@ -19,7 +19,7 @@
 #' groups/individuals.
 #'
 #' @param df data frame of numeric, or mixed inputs. First column must have group/individuals names, 1 line per group/individuals.
-#' @param n size of the test group, and matching control group. Defaults to 10.
+#' @param n size of the test group, and matching control group. Defaults to 10. Will be ignored if df provide to the "test_list" parameter.
 #' @param test_list df with one column named "TEST." This has a list of members in the current test. Defaults to NULL.
 #' @return If the "n" parameter is used, the function outputs a data frame with a list of randomized test groups/individuals from the supplied df with matching control groups/individuals, a 1 to 1 match.
 #' If a data frame is supplied to the "test_list" parameter, 1 to 1 matching control stores will be created for the groups/individuals in the "TEST" column supplied to the "test_list" parameter.
@@ -49,11 +49,12 @@ match_mixed <- function ( df, n = 10 , test_list = NULL ) {
 
     # Prep for Distance: Convert column #1 to rownames and factor character variables
 
-    rownames(df) <- df[,1]
     df_scaled <- df[,-1] %>% dplyr::mutate_if( is.character, as.factor ) # Scaling happens in daisy()
 
     #----Scale the Data and Build the Distant Matrix----
+    #----Convert column #1 to rownames----
     DF_DIST <- cluster::daisy(df_scaled) # Scaling happens here for numeric and factor
+    attr(DF_DIST,"Labels") <- as.factor(df[,1]) # column and row names here
 
     # Convert to Matrix
     DF_RANK_BASE <- as.matrix(DF_DIST)
@@ -75,7 +76,7 @@ match_mixed <- function ( df, n = 10 , test_list = NULL ) {
 
     #set.seed(17)
     if( is.null((test_list)) ) {
-      DF_TEST <- df %>% dplyr::sample_n(size = n) # Need to include a InputSelector, sample size of test
+      DF_TEST <- df %>% dplyr::sample_n(size = n) # Sample size of test
     } else {
       DF_TEST <- as.data.frame(test_list['TEST'])
     }

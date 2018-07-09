@@ -1,3 +1,9 @@
+# TestContR 1.1.001
+  - Bug Fix - fixed the bug with the daisy dissimilarity distance matrix.  Would not pull the correct labels from the data, instead using row number, creating matches for data that didn't exists when the labels where numeric.  Added attr(df,"Label") <- as.factor(df[,1]) to ensure that the correct labels would be used in the reporting of the matching.
+  - Updated documentation
+  - Changes to Code: Changed the parameter "n" to "topN" in the topN_* functions. (RENAMED)
+  - Will also update the READ.md file to include new variables.
+  
 # TestContR 1.1.0
   - Added the 2 functions below to account for factors, or categorical variables in the distance matrix.
   - match_mixed - added Gower distance matrix with cluster::daisy() to account for factor variables. Removed stats::dist() because daisy() already uses range for standardization of numeric variables.

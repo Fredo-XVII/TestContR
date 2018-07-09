@@ -2,28 +2,29 @@
 % Please edit documentation in R/topn_mixed.R
 \name{topn_mixed}
 \alias{topn_mixed}
-\title{Top N Control Selector for 1 Test Group/Individual.}
+\title{Top N Control Selector for 1 or more Test Group(s)/Individual(s).}
 \usage{
-topn_mixed(df, n = 5, test_list = NULL)
+topn_mixed(df, topN = 5, test_list = NULL)
 }
 \arguments{
 \item{df}{data frame of numeric, or mixed inputs. First column must have group/individuals names, 1 line per group/individuals.}
 
-\item{n}{size of the top "N" of groups/individuals that match the test group/individuals. Defaults to 5.}
+\item{topN}{size of the top "N" of groups/individuals that match the test group/individuals. Defaults to 5.}
 
-\item{test_list}{df with one column named "TEST," and one row with the label for one group/individual (one row), thus a 1x1 df. Defaults to NULL.}
+\item{test_list}{df with one column named "TEST," and one row for each label for each group/individual. Defaults to NULL, but be aware if test_list
+is left blank, the function will use all the unique labels in the first column of the dataframe, resulting in labels x topN rows dataframe.}
 }
 \description{
-Selects n nearest control groups/individuals for 1 test group/individual
+Selects n nearest control groups/individuals for 1 or more test group(s)/individual(s)
 }
 \details{
-Providing a complete list of the groups/individuals to df, and supply a data frame
-with 1 TEST group/individual to the parameter test_list and the function will provide
+Providing a complete list of the groups/individuals to df, and suppling a data frame
+with 1 or more TEST group(s)/individual(s) to the parameter test_list, the function will provide
 you with an "N" list of control groups/individuals. If more than 1 group/individual
 is provided there is a good chance of duplicates. This function ignores duplicates
-in the control for more than 1 TEST group.  This function can handle both numeric
-and categorical as well as just numeric with Gower's methodology in cluster::daisy()
-function.
+in the control for more than 1 TEST group, resulting in a dataframe with Labels x N rows.
+This function can handle both numeric and categorical as well as just numeric with Gower's
+methodology in cluster::daisy() function.
 }
 \examples{
 library(dplyr)
@@ -33,5 +34,5 @@ df <- datasets::USArrests \%>\% dplyr::mutate(state = base::row.names(datasets::
   dplyr::select(state, dplyr::everything())
 
 test_list <- dplyr::tribble(~"TEST","Colorado")
-TOPN_CONTROL_LIST <- TestContR::topn_mixed(df, n = 5, test_list = test_list)
+TOPN_CONTROL_LIST <- TestContR::topn_mixed(df, topN = 5, test_list = test_list)
 }
