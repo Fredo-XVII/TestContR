@@ -44,6 +44,7 @@ match_numeric <- function ( df, n = 10 , test_list = NULL ) {
 
     # Prep for Distance: Convert column #1 to rownames and scale the dataset
 
+    df <- as.data.frame(df)
     rownames(df) <- df[,1]
     df_scaled <- scale(df[,-1])
 

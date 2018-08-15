@@ -41,6 +41,7 @@ topn_mixed <- function ( df, topN = 5 , test_list = NULL ) {
 
   # Prep for Distance: Convert column #1 to rownames and factor character variables
 
+  df <- as.data.frame(df)
   df_scaled <- df[,-1] %>% dplyr::mutate_if( is.character, as.factor ) # Scaling happens in daisy()
 
   #----Scale the Data and Build the Distant Matrix----
