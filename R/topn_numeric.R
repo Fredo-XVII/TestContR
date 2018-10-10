@@ -40,7 +40,7 @@ topn_numeric <- function ( df, topN = 5 , test_list = NULL ) {
 
   df <- as.data.frame(df)
   rownames(df) <- df[,1]
-  df_scaled <- scale(df[,-1])
+  df_scaled <- scale(df[,-1], center = TRUE, scale = TRUE)
 
   #---- Build the Distant Matrix----
   DF_DIST <- stats::dist(df_scaled , method = "euclidian")
