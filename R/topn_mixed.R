@@ -46,7 +46,7 @@ topn_mixed <- function ( df, topN = 5 , test_list = NULL ) {
 
   #----Scale the Data and Build the Distant Matrix----
   #----Convert column #1 to rownames----
-  DF_DIST <- cluster::daisy(df_scaled) # Scaling happens here for numeric and factor
+  DF_DIST <- cluster::daisy(df_scaled, stand = TRUE) # Scaling happens here for numeric and factor
   attr(DF_DIST,"Labels") <- as.factor(df[,1]) # column and row names here
 
   # Convert to Matrix
