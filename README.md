@@ -247,20 +247,21 @@ TOPN_CONTROL_LIST <- TestContR::topn_numeric(df, topN = 10, test_list = test_lis
 **Results of Top N selection option:**
 
 ``` r
-knitr::kable(TOPN_CONTROL_LIST) %>% head(20)
-#>  [1] "CONTROL      TEST          DIST_Q   DIST_RANK"
-#>  [2] "-----------  ---------  ---------  ----------"
-#>  [3] "Michigan     Colorado    1.236311           1"
-#>  [4] "California   Colorado    1.287618           2"
-#>  [5] "Missouri     Colorado    1.312741           3"
-#>  [6] "Arizona      Colorado    1.365031           4"
-#>  [7] "Nevada       Colorado    1.398859           5"
-#>  [8] "Oregon       Colorado    1.533198           6"
-#>  [9] "New Mexico   Colorado    1.546744           7"
-#> [10] "New York     Colorado    1.736339           8"
-#> [11] "Washington   Colorado    1.789792           9"
-#> [12] "Illinois     Colorado    1.789832          10"
+knitr::kable(head(TOPN_CONTROL_LIST,20))
 ```
+
+| CONTROL    | TEST     |   DIST\_Q|  DIST\_RANK|
+|:-----------|:---------|---------:|-----------:|
+| Michigan   | Colorado |  1.236311|           1|
+| California | Colorado |  1.287618|           2|
+| Missouri   | Colorado |  1.312741|           3|
+| Arizona    | Colorado |  1.365031|           4|
+| Nevada     | Colorado |  1.398859|           5|
+| Oregon     | Colorado |  1.533198|           6|
+| New Mexico | Colorado |  1.546744|           7|
+| New York   | Colorado |  1.736339|           8|
+| Washington | Colorado |  1.789792|           9|
+| Illinois   | Colorado |  1.789832|          10|
 
 **Top N without a Test List** Don't be concerned about the warning; I just wanted to let users know that it would use all the labels in the dataframe.
 
@@ -274,28 +275,31 @@ TOPN_CONTROL_LIST <- TestContR::topn_numeric(df, topN = 10)
 **Results of Top N selection without Test List:**
 
 ``` r
-knitr::kable(TOPN_CONTROL_LIST) %>% head(20)
-#>  [1] "CONTROL          TEST                 DIST_Q   DIST_RANK"
-#>  [2] "---------------  ---------------  ----------  ----------"
-#>  [3] "Louisiana        Alabama           0.7722224           1"
-#>  [4] "Tennessee        Alabama           0.8407489           2"
-#>  [5] "South Carolina   Alabama           0.9157968           3"
-#>  [6] "Georgia          Alabama           1.1314351           4"
-#>  [7] "Mississippi      Alabama           1.2831907           5"
-#>  [8] "Maryland         Alabama           1.2896460           6"
-#>  [9] "Arkansas         Alabama           1.2898102           7"
-#> [10] "Virginia         Alabama           1.4859733           8"
-#> [11] "New Mexico       Alabama           1.5993970           9"
-#> [12] "North Carolina   Alabama           1.6043662          10"
-#> [13] "New Mexico       Alaska            2.0580889           1"
-#> [14] "Michigan         Alaska            2.1154937           2"
-#> [15] "Maryland         Alaska            2.2777590           3"
-#> [16] "Colorado         Alaska            2.3265187           4"
-#> [17] "Tennessee        Alaska            2.3362541           5"
-#> [18] "Nevada           Alaska            2.3443182           6"
-#> [19] "Missouri         Alaska            2.5360573           7"
-#> [20] "South Carolina   Alaska            2.5640542           8"
+knitr::kable(head(TOPN_CONTROL_LIST,20))
 ```
+
+| CONTROL        | TEST    |    DIST\_Q|  DIST\_RANK|
+|:---------------|:--------|----------:|-----------:|
+| Louisiana      | Alabama |  0.7722224|           1|
+| Tennessee      | Alabama |  0.8407489|           2|
+| South Carolina | Alabama |  0.9157968|           3|
+| Georgia        | Alabama |  1.1314351|           4|
+| Mississippi    | Alabama |  1.2831907|           5|
+| Maryland       | Alabama |  1.2896460|           6|
+| Arkansas       | Alabama |  1.2898102|           7|
+| Virginia       | Alabama |  1.4859733|           8|
+| New Mexico     | Alabama |  1.5993970|           9|
+| North Carolina | Alabama |  1.6043662|          10|
+| New Mexico     | Alaska  |  2.0580889|           1|
+| Michigan       | Alaska  |  2.1154937|           2|
+| Maryland       | Alaska  |  2.2777590|           3|
+| Colorado       | Alaska  |  2.3265187|           4|
+| Tennessee      | Alaska  |  2.3362541|           5|
+| Nevada         | Alaska  |  2.3443182|           6|
+| Missouri       | Alaska  |  2.5360573|           7|
+| South Carolina | Alaska  |  2.5640542|           8|
+| Oregon         | Alaska  |  2.6990696|           9|
+| Arizona        | Alaska  |  2.7006429|          10|
 
 <br></br>
 
@@ -336,20 +340,21 @@ TOPN_CONTROL_LIST <- TestContR::topn_mixed(df, topN = 10, test_list = test_list)
 **Results of Top N selection without Test List:**
 
 ``` r
-knitr::kable(TOPN_CONTROL_LIST) %>% head(20)
-#>  [1] "CONTROL      TEST           DIST_Q   DIST_RANK"
-#>  [2] "-----------  ---------  ----------  ----------"
-#>  [3] "Arizona      Colorado    0.1106264           1"
-#>  [4] "Nevada       Colorado    0.1325795           2"
-#>  [5] "New Mexico   Colorado    0.1588753           3"
-#>  [6] "Utah         Colorado    0.2025942           4"
-#>  [7] "Wyoming      Colorado    0.2231019           5"
-#>  [8] "Montana      Colorado    0.2879513           6"
-#>  [9] "Missouri     Colorado    0.3124434           7"
-#> [10] "California   Colorado    0.3164550           8"
-#> [11] "Michigan     Colorado    0.3176979           9"
-#> [12] "Idaho        Colorado    0.3293606          10"
+knitr::kable(head(TOPN_CONTROL_LIST,20))
 ```
+
+| CONTROL    | TEST     |    DIST\_Q|  DIST\_RANK|
+|:-----------|:---------|----------:|-----------:|
+| Arizona    | Colorado |  0.1106264|           1|
+| Nevada     | Colorado |  0.1325795|           2|
+| New Mexico | Colorado |  0.1588753|           3|
+| Utah       | Colorado |  0.2025942|           4|
+| Wyoming    | Colorado |  0.2231019|           5|
+| Montana    | Colorado |  0.2879513|           6|
+| Missouri   | Colorado |  0.3124434|           7|
+| California | Colorado |  0.3164550|           8|
+| Michigan   | Colorado |  0.3176979|           9|
+| Idaho      | Colorado |  0.3293606|          10|
 
 **Top N Mixed without a Test List** Don't be concerned about the warning; I just wanted to let users know that it would use all the labels in the dataframe.
 
@@ -363,28 +368,31 @@ TOPN_CONTROL_LIST <- TestContR::topn_mixed(df, topN = 10)
 **Results of Top N selection without Test List:**
 
 ``` r
-knitr::kable(TOPN_CONTROL_LIST) %>% head(20)
-#>  [1] "CONTROL          TEST                 DIST_Q   DIST_RANK"
-#>  [2] "---------------  ---------------  ----------  ----------"
-#>  [3] "Tennessee        Alabama           0.0657239           1"
-#>  [4] "Mississippi      Alabama           0.1193394           2"
-#>  [5] "Kentucky         Alabama           0.1748170           3"
-#>  [6] "Louisiana        Alabama           0.2676967           4"
-#>  [7] "South Carolina   Alabama           0.2845265           5"
-#>  [8] "Georgia          Alabama           0.2982780           6"
-#>  [9] "Arkansas         Alabama           0.3204231           7"
-#> [10] "Texas            Alabama           0.3267952           8"
-#> [11] "Virginia         Alabama           0.3309542           9"
-#> [12] "Maryland         Alabama           0.3313442          10"
-#> [13] "California       Alaska            0.1868701           1"
-#> [14] "Oregon           Alaska            0.2756384           2"
-#> [15] "Washington       Alaska            0.3324305           3"
-#> [16] "Nevada           Alaska            0.3536566           4"
-#> [17] "Michigan         Alaska            0.3674951           5"
-#> [18] "New Mexico       Alaska            0.3705949           6"
-#> [19] "South Carolina   Alaska            0.3776660           7"
-#> [20] "Maryland         Alaska            0.3917168           8"
+knitr::kable(head(TOPN_CONTROL_LIST,20))
 ```
+
+| CONTROL        | TEST    |    DIST\_Q|  DIST\_RANK|
+|:---------------|:--------|----------:|-----------:|
+| Tennessee      | Alabama |  0.0657239|           1|
+| Mississippi    | Alabama |  0.1193394|           2|
+| Kentucky       | Alabama |  0.1748170|           3|
+| Louisiana      | Alabama |  0.2676967|           4|
+| South Carolina | Alabama |  0.2845265|           5|
+| Georgia        | Alabama |  0.2982780|           6|
+| Arkansas       | Alabama |  0.3204231|           7|
+| Texas          | Alabama |  0.3267952|           8|
+| Virginia       | Alabama |  0.3309542|           9|
+| Maryland       | Alabama |  0.3313442|          10|
+| California     | Alaska  |  0.1868701|           1|
+| Oregon         | Alaska  |  0.2756384|           2|
+| Washington     | Alaska  |  0.3324305|           3|
+| Nevada         | Alaska  |  0.3536566|           4|
+| Michigan       | Alaska  |  0.3674951|           5|
+| New Mexico     | Alaska  |  0.3705949|           6|
+| South Carolina | Alaska  |  0.3776660|           7|
+| Maryland       | Alaska  |  0.3917168|           8|
+| Colorado       | Alaska  |  0.3973812|           9|
+| Arkansas       | Alaska  |  0.4004365|          10|
 
 ------------------------------------------------------------------------
 

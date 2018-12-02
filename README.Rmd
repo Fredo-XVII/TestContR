@@ -152,7 +152,7 @@ TOPN_CONTROL_LIST <- TestContR::topn_numeric(df, topN = 10, test_list = test_lis
 
 **Results of Top N selection option:**
 ```{r}
-knitr::kable(TOPN_CONTROL_LIST) %>% head(20)
+knitr::kable(head(TOPN_CONTROL_LIST,20))
 ```
 
 **Top N without a Test List**
@@ -164,7 +164,7 @@ TOPN_CONTROL_LIST <- TestContR::topn_numeric(df, topN = 10)
 
 **Results of Top N selection without Test List:**
 ```{r}
-knitr::kable(TOPN_CONTROL_LIST) %>% head(20)
+knitr::kable(head(TOPN_CONTROL_LIST,20))
 ```
 
 <br></br>
@@ -190,7 +190,7 @@ TOPN_CONTROL_LIST <- TestContR::topn_mixed(df, topN = 10, test_list = test_list)
 
 **Results of Top N selection without Test List:**
 ```{r}
-knitr::kable(TOPN_CONTROL_LIST) %>% head(20)
+knitr::kable(head(TOPN_CONTROL_LIST,20))
 ```
 
 **Top N Mixed without a Test List**
@@ -202,7 +202,7 @@ TOPN_CONTROL_LIST <- TestContR::topn_mixed(df, topN = 10)
 
 **Results of Top N selection without Test List:**
 ```{r}
-knitr::kable(TOPN_CONTROL_LIST) %>% head(20)
+knitr::kable(head(TOPN_CONTROL_LIST,20))
 ```
 
 ***
