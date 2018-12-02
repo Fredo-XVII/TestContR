@@ -1,4 +1,7 @@
 # TestContR 1.1.001
+  - Bug fix - fixed it so that the test_list parameter in the functions will accept any name for the column of the test list.
+
+# TestContR 1.1.001
   - Bug Fix - fixed the bug with the daisy dissimilarity distance matrix.  Would not pull the correct labels from the data, instead using row number, creating matches for data that didn't exists when the labels where numeric.  Added attr(df,"Label") <- as.factor(df[,1]) to ensure that the correct labels would be used in the reporting of the matching.
   - Updated documentation
   - Changes to Code: Changed the parameter "n" to "topN" in the topN_* functions. (RENAMED)

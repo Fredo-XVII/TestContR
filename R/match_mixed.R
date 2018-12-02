@@ -79,6 +79,7 @@ match_mixed <- function ( df, n = 10 , test_list = NULL ) {
     if( is.null((test_list)) ) {
       DF_TEST <- df %>% dplyr::sample_n(size = n) # Sample size of test
     } else {
+      names(test_list) <- c("TEST")
       DF_TEST <- as.data.frame(test_list['TEST'])
     }
     # Test and Control List

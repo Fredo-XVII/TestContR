@@ -70,6 +70,7 @@ topn_numeric <- function ( df, topN = 5 , test_list = NULL ) {
     )
     DF_TEST <- data.frame("TEST" = df[,1])
   } else {
+    names(test_list) <- c("TEST")
     DF_TEST <- as.data.frame(test_list['TEST'])
   }
   # Test and Control List
