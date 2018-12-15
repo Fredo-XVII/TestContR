@@ -1,4 +1,9 @@
-# TestContR 1.1.001
+# TestContR 1.1.003
+  - Bug fix - Fixing the error below. This will allow the package to pass the CMD checks for upload to CRAN.
+  - ERROR: Writing R Packages: no visible binding for global variable.
+  - Solution found @: https://github.com/STAT545-UBC/Discussion/issues/451
+  
+# TestContR 1.1.002
   - Bug fix - fixed it so that the test_list parameter in the functions will accept any name for the column of the test list.
 
 # TestContR 1.1.001

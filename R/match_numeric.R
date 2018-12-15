@@ -27,6 +27,7 @@
 #'
 #' TEST_CONTROL_LIST <- TestContR::match_numeric(df, n = 15)
 #' @importFrom magrittr %>%
+#' @importFrom rlang .data
 #' @export
 
 
@@ -62,7 +63,7 @@ match_numeric <- function ( df, n = 10 , test_list = NULL ) {
     names(DF_RANK_BASE_1) <- c("CONTROL","TEST","DIST_Q")
 
     DF_DIST_FINAL <- DF_RANK_BASE_1 %>% stats::na.omit() %>%
-      dplyr::arrange(TEST,DIST_Q,CONTROL)
+      dplyr::arrange(.data$TEST,.data$DIST_Q,.data$CONTROL)
 
 
     ##----PART #2----------------------------------------------------------
@@ -78,21 +79,21 @@ match_numeric <- function ( df, n = 10 , test_list = NULL ) {
     }
     # Test and Control List
 
-    DF_DIST_REDUCED <- DF_DIST_FINAL %>% dplyr::filter(!CONTROL %in% (DF_TEST[,1])) %>%
-      dplyr::filter(TEST %in% (DF_TEST[,1]))
+    DF_DIST_REDUCED <- DF_DIST_FINAL %>% dplyr::filter(!.data$CONTROL %in% (DF_TEST[,1])) %>%
+      dplyr::filter(.data$TEST %in% (DF_TEST[,1]))
 
     CONTROL_STR_LIST <- DF_DIST_REDUCED %>%
-      dplyr::group_by(TEST) %>%
-      dplyr::mutate(DIST_RANK = dplyr::min_rank(DIST_Q)) %>%
-      dplyr::filter(DIST_RANK <= 1) %>%
-      dplyr::select(-DIST_RANK) %>%
+      dplyr::group_by(.data$TEST) %>%
+      dplyr::mutate(DIST_RANK = dplyr::min_rank(.data$DIST_Q)) %>%
+      dplyr::filter(.data$DIST_RANK <= 1) %>%
+      dplyr::select(-.data$DIST_RANK) %>%
       dplyr::ungroup() %>%
-      dplyr::mutate(GROUP = dplyr::row_number(TEST))
+      dplyr::mutate(GROUP = dplyr::row_number(.data$TEST))
 
     # Create list of Dupes
-    DUPES_LIST <- CONTROL_STR_LIST %>% dplyr::group_by(CONTROL) %>%
+    DUPES_LIST <- CONTROL_STR_LIST %>% dplyr::group_by(.data$CONTROL) %>%
       dplyr::summarise(control_cnt = n()) %>%
-      dplyr::filter(control_cnt > 1)
+      dplyr::filter(.data$control_cnt > 1)
 
     # Run While loop over the list of duplicates, until no more dupes remain
     i = 0
@@ -105,9 +106,9 @@ match_numeric <- function ( df, n = 10 , test_list = NULL ) {
 
       rank_dupes <- DUPES_LIST %>%
         dplyr::inner_join(CONTROL_STR_LIST) %>%
-        dplyr::group_by(CONTROL) %>%
-        dplyr::mutate(rank = dplyr::min_rank(DIST_Q)) %>%
-        dplyr::filter(rank > 1)
+        dplyr::group_by(.data$CONTROL) %>%
+        dplyr::mutate(rank = dplyr::min_rank(.data$DIST_Q)) %>%
+        dplyr::filter(.data$rank > 1)
 
       # Remove the duplicate from remaining distance list
 
@@ -118,36 +119,36 @@ match_numeric <- function ( df, n = 10 , test_list = NULL ) {
       CONTROL_STR_LIST_TEMP <-CONTROL_STR_LIST %>% dplyr::left_join(rank_dupes)
 
       CONTROL_STR_LIST_TEMP <- CONTROL_STR_LIST_TEMP %>%
-        dplyr::mutate(CONTROL = dplyr::if_else(is.na(rank) == TRUE, CONTROL, NULL),
-                      DIST_Q = dplyr::if_else(is.na(rank) == TRUE, DIST_Q,NULL))
+        dplyr::mutate(CONTROL = dplyr::if_else(is.na(rank) == TRUE, .data$CONTROL, NULL),
+                      DIST_Q = dplyr::if_else(is.na(rank) == TRUE, .data$DIST_Q,NULL))
 
       # select new minimum from the remaining list
 
-      TEST_DUPES_TEMP <- CONTROL_STR_LIST_TEMP %>% dplyr::filter(is.na(DIST_Q)) %>% dplyr::select(TEST)
-      CONT_DUPES_TEMP <- CONTROL_STR_LIST_TEMP %>% dplyr::filter(!is.na(CONTROL)) %>% dplyr::select(CONTROL)
+      TEST_DUPES_TEMP <- CONTROL_STR_LIST_TEMP %>% dplyr::filter(is.na(.data$DIST_Q)) %>% dplyr::select(.data$TEST)
+      CONT_DUPES_TEMP <- CONTROL_STR_LIST_TEMP %>% dplyr::filter(!is.na(.data$CONTROL)) %>% dplyr::select(.data$CONTROL)
 
       DIST_REMAINING <- DF_DIST_FINAL_TEMP %>% dplyr::inner_join(TEST_DUPES_TEMP, by = 'TEST') %>%
         dplyr::anti_join(CONT_DUPES_TEMP, by = 'CONTROL') %>%
-        dplyr::group_by(TEST) %>%
-        dplyr::arrange(TEST, DIST_Q) %>%
-        dplyr::mutate(rank = dplyr::min_rank(DIST_Q)) %>%
-        dplyr::filter(rank == 1)
+        dplyr::group_by(.data$TEST) %>%
+        dplyr::arrange(.data$TEST, .data$DIST_Q) %>%
+        dplyr::mutate(rank = dplyr::min_rank(.data$DIST_Q)) %>%
+        dplyr::filter(.data$rank == 1)
 
       # Add new control to test stores with missing controls stores
 
       CONTROL_STR_LIST <- CONTROL_STR_LIST_TEMP %>% dplyr::left_join(DIST_REMAINING, by = 'TEST') %>%
-        dplyr::mutate( CONTROL = dplyr::coalesce(CONTROL.x, CONTROL.y),
-                DIST_Q  = dplyr::coalesce(DIST_Q.x, DIST_Q.y)) %>%
-        dplyr::select(CONTROL, TEST, DIST_Q, GROUP)
+        dplyr::mutate( CONTROL = dplyr::coalesce(.data$CONTROL.x, .data$CONTROL.y),
+                DIST_Q  = dplyr::coalesce(.data$DIST_Q.x, .data$DIST_Q.y)) %>%
+        dplyr::select(.data$CONTROL, .data$TEST, .data$DIST_Q, .data$GROUP)
 
       # re-move all test and control stores from the current dist df
       DF_DIST_FINAL <- DF_DIST_FINAL_TEMP %>% dplyr::anti_join(CONTROL_STR_LIST, by = "CONTROL")
 
       # re-build the Dupes_list
 
-      DUPES_LIST <- CONTROL_STR_LIST %>% dplyr::group_by(CONTROL) %>%
+      DUPES_LIST <- CONTROL_STR_LIST %>% dplyr::group_by(.data$CONTROL) %>%
         dplyr::summarise(control_cnt = n()) %>%
-        dplyr::filter(control_cnt > 1)
+        dplyr::filter(.data$control_cnt > 1)
 
       # ends when DUPES_LIST is nrow() = 0
       print(sprintf("The %sth de-duping iteration complete.", i))

@@ -22,6 +22,7 @@
 #' test_list <- dplyr::tribble(~"TEST","Colorado")
 #' TOPN_CONTROL_LIST <- TestContR::topn_numeric(df, topN = 5, test_list = test_list)
 #' @importFrom magrittr %>%
+#' @importFrom rlang .data
 #' @export
 
 
@@ -56,7 +57,7 @@ topn_numeric <- function ( df, topN = 5 , test_list = NULL ) {
   names(DF_RANK_BASE_1) <- c("CONTROL","TEST","DIST_Q")
 
   DF_DIST_FINAL <- DF_RANK_BASE_1 %>% stats::na.omit() %>%
-    dplyr::arrange(TEST,DIST_Q,CONTROL)
+    dplyr::arrange(.data$TEST,.data$DIST_Q,.data$CONTROL)
 
 
   ##----PART #2----------------------------------------------------------
@@ -76,14 +77,14 @@ topn_numeric <- function ( df, topN = 5 , test_list = NULL ) {
   # Test and Control List
 
   for (k in 1:nrow(DF_TEST)) {
-    DF_DIST_REDUCED <- DF_DIST_FINAL %>% dplyr::filter(!CONTROL %in% (DF_TEST[k,1])) %>%
-      dplyr::filter(TEST %in% (DF_TEST[k,1]))
+    DF_DIST_REDUCED <- DF_DIST_FINAL %>% dplyr::filter(!.data$CONTROL %in% (DF_TEST[k,1])) %>%
+      dplyr::filter(.data$TEST %in% (DF_TEST[k,1]))
 
     CONTROL_STR_LIST_1 <- DF_DIST_REDUCED %>%
-      dplyr::group_by(TEST) %>%
-      dplyr::arrange(DIST_Q, CONTROL) %>%
-      dplyr::mutate(DIST_RANK = dplyr::min_rank(DIST_Q)) %>%
-      dplyr::filter(DIST_RANK <= topN) %>%
+      dplyr::group_by(.data$TEST) %>%
+      dplyr::arrange(.data$DIST_Q, .data$CONTROL) %>%
+      dplyr::mutate(DIST_RANK = dplyr::min_rank(.data$DIST_Q)) %>%
+      dplyr::filter(.data$DIST_RANK <= topN) %>%
       dplyr::ungroup()
 
     CONTROL_STR_LIST <- if (exists('CONTROL_STR_LIST')) {
