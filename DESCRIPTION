@@ -1,5 +1,5 @@
 Package: TestContR
-Version: 1.1.003  
+Version: 1.1.003
 Title: Randomly Select Test and Control Groups
 Description: Select a random list of test group/individuals and provides the best matching 
   group/individuals for a control based on a dataframe of metrics for the subjects. Or you 
@@ -21,8 +21,8 @@ Imports:
     rlang (>= 0.0.1)
 Suggests:
     tidyverse (>= 1.2.1),
-    knitr (>= 1.20),
-    rmarkdown (>= 1.9),
+    knitr,
+    rmarkdown,
     testthat (>= 2.0.0)
 VignetteBuilder: knitr
 RoxygenNote: 6.1.1
