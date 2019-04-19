@@ -1,6 +1,6 @@
 ---
 title: "TestContR"
-author: "Alfredo G Marquezr"
+author: "Alfredo G Marquez"
 date: "`r Sys.Date()`"
 output: 
   rmarkdown::html_vignette:
@@ -50,7 +50,7 @@ df <- datasets::USArrests %>% dplyr::mutate(state = base::row.names(USArrests)) 
                                dplyr::select(state, everything())
 ```
 
-**Expected data set layout with labels/names/id in the first column:**
+**Expected data set layout with individuals/labels/names/id in the first column:**
 ```{r, fig.cap = "Crime Data"}
 knitr::kable(head(df, n = 10))
 ```
@@ -97,7 +97,7 @@ df <- datasets::USArrests %>% dplyr::mutate(state = base::row.names(datasets::US
   dplyr::select(state, dplyr::everything())
 ```
 
-**Expected data set layout with labels/names/id in the first column:**
+**Expected data set layout with individuals/labels/names/id in the first column:**
 ```{r}
 knitr::kable(head(df, n = 10))
 ```
@@ -189,7 +189,7 @@ df <- datasets::USArrests %>% dplyr::mutate(state = base::row.names(datasets::US
   dplyr::select(state, dplyr::everything())
 ```
 
-**Expected data set layout with labels/names/id in the first column:**
+**Expected data set layout with individuals/labels/names/id in the first column:**
 ```{r}
 knitr::kable(head(df, n = 10))
 ```
