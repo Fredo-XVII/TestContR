@@ -7,7 +7,7 @@ Description: Select a random list of test group/individuals and provides the bes
   Euclidian distance is used for the pairing.  For datasets with mixed variables, Gower's distance matrix 
   derived with the cluster::daisy() function is used for the pairing.  
   Categorical variables are know account as of version 1.1.0.
-Authors@R: person("Alfredo", "Marquez", , "Alfredo.G.Marquez@gmail.com", c("aut", "cre"))
+Authors@R: person("Alfredo G", "Marquez", , "Alfredo.G.Marquez@gmail.com", c("aut", "cre"))
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

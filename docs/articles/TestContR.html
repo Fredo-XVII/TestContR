@@ -5,11 +5,11 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vignette Title • TestContR</title>
+<title>TestContR • TestContR</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Vignette Title">
+<script src="../pkgdown.js"></script><meta property="og:title" content="TestContR">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -64,8 +64,8 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Vignette Title</h1>
-                        <h4 class="author">Vignette Author</h4>
+      <h1>TestContR</h1>
+                        <h4 class="author">Alfredo G Marquezr</h4>
             
             <h4 class="date">2019-04-18</h4>
       
@@ -76,210 +76,1049 @@
 
     
     
-<p>Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The <code>html_vignette</code> output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The <code>html_vignette</code> format:</p>
-<ul>
-<li>Never uses retina figures</li>
-<li>Has a smaller default figure size</li>
-<li>Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style</li>
-</ul>
-<div id="vignette-info" class="section level2">
+<div id="example---randomised-sample-match_-functions" class="section level2">
 <h2 class="hasAnchor">
-<a href="#vignette-info" class="anchor"></a>Vignette Info</h2>
-<p>Note the various macros within the <code>vignette</code> section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the <code>title</code> field and the <code>\VignetteIndexEntry</code> to match the title of your vignette.</p>
-</div>
-<div id="styles" class="section level2">
-<h2 class="hasAnchor">
-<a href="#styles" class="anchor"></a>Styles</h2>
-<p>The <code>html_vignette</code> template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:</p>
-<pre><code>output: 
-  rmarkdown::html_vignette:
-    css: mystyles.css</code></pre>
-</div>
-<div id="figures" class="section level2">
-<h2 class="hasAnchor">
-<a href="#figures" class="anchor"></a>Figures</h2>
-<p>The figure sizes have been customised so that you can easily put two images side-by-side.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(<span class="dv">10</span><span class="op">:</span><span class="dv">1</span>)</code></pre></div>
-<p><img src="TestContR_files/figure-html/unnamed-chunk-1-1.png" width="700"><img src="TestContR_files/figure-html/unnamed-chunk-1-2.png" width="700"></p>
-<p>You can enable figure captions by <code>fig_caption: yes</code> in YAML:</p>
-<pre><code>output:
-  rmarkdown::html_vignette:
-    fig_caption: yes</code></pre>
-<p>Then you can use the chunk option <code>fig.cap = "Your figure caption."</code> in <strong>knitr</strong>.</p>
-</div>
-<div id="more-examples" class="section level2">
-<h2 class="hasAnchor">
-<a href="#more-examples" class="anchor"></a>More Examples</h2>
-<p>You can write math expressions, e.g. <span class="math inline">\(Y = X\beta + \epsilon\)</span>, footnotes<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>, and tables, e.g. using <code><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">knitr::kable()</a></code>.</p>
+<a href="#example---randomised-sample-match_-functions" class="anchor"></a>Example - Randomised Sample, match_* functions</h2>
+<p>R contains a crime data set for the all 50 states. This data set contains data on murder rates, assaults, urban population and the occurances of rape. The TestContR can be used to match states that have similar crime rates.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)
+<span class="co">#&gt; Warning: package 'dplyr' was built under R version 3.5.3</span>
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(TestContR)</code></pre></div>
+<div id="match_numeric-random-selection-of-test-and-control-groupsindividuals-for-numeric-metricsvariables-" class="section level3">
+<h3 class="hasAnchor">
+<a href="#match_numeric-random-selection-of-test-and-control-groupsindividuals-for-numeric-metricsvariables-" class="anchor"></a>match_numeric(): Random Selection of Test and Control groups/individuals for numeric metrics/variables.</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span>datasets<span class="op">::</span>USArrests <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">state =</span> base<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/row.names">row.names</a></span>(USArrests)) <span class="op">%&gt;%</span>
+<span class="st">                               </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(state, <span class="kw">everything</span>())</code></pre></div>
+<p><strong>Expected data set layout with labels/names/id in the first column:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(df, <span class="dt">n =</span> <span class="dv">10</span>))</code></pre></div>
 <table class="table">
 <thead><tr class="header">
-<th></th>
-<th align="right">mpg</th>
-<th align="right">cyl</th>
-<th align="right">disp</th>
-<th align="right">hp</th>
-<th align="right">drat</th>
-<th align="right">wt</th>
-<th align="right">qsec</th>
-<th align="right">vs</th>
-<th align="right">am</th>
-<th align="right">gear</th>
-<th align="right">carb</th>
+<th align="left">state</th>
+<th align="right">Murder</th>
+<th align="right">Assault</th>
+<th align="right">UrbanPop</th>
+<th align="right">Rape</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td>Mazda RX4</td>
-<td align="right">21.0</td>
-<td align="right">6</td>
-<td align="right">160.0</td>
-<td align="right">110</td>
-<td align="right">3.90</td>
-<td align="right">2.620</td>
-<td align="right">16.46</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">4</td>
-<td align="right">4</td>
+<td align="left">Alabama</td>
+<td align="right">13.2</td>
+<td align="right">236</td>
+<td align="right">58</td>
+<td align="right">21.2</td>
 </tr>
 <tr class="even">
-<td>Mazda RX4 Wag</td>
-<td align="right">21.0</td>
-<td align="right">6</td>
-<td align="right">160.0</td>
-<td align="right">110</td>
-<td align="right">3.90</td>
-<td align="right">2.875</td>
-<td align="right">17.02</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">4</td>
-<td align="right">4</td>
+<td align="left">Alaska</td>
+<td align="right">10.0</td>
+<td align="right">263</td>
+<td align="right">48</td>
+<td align="right">44.5</td>
 </tr>
 <tr class="odd">
-<td>Datsun 710</td>
-<td align="right">22.8</td>
-<td align="right">4</td>
-<td align="right">108.0</td>
-<td align="right">93</td>
-<td align="right">3.85</td>
-<td align="right">2.320</td>
-<td align="right">18.61</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">4</td>
+<td align="left">Arizona</td>
+<td align="right">8.1</td>
+<td align="right">294</td>
+<td align="right">80</td>
+<td align="right">31.0</td>
+</tr>
+<tr class="even">
+<td align="left">Arkansas</td>
+<td align="right">8.8</td>
+<td align="right">190</td>
+<td align="right">50</td>
+<td align="right">19.5</td>
+</tr>
+<tr class="odd">
+<td align="left">California</td>
+<td align="right">9.0</td>
+<td align="right">276</td>
+<td align="right">91</td>
+<td align="right">40.6</td>
+</tr>
+<tr class="even">
+<td align="left">Colorado</td>
+<td align="right">7.9</td>
+<td align="right">204</td>
+<td align="right">78</td>
+<td align="right">38.7</td>
+</tr>
+<tr class="odd">
+<td align="left">Connecticut</td>
+<td align="right">3.3</td>
+<td align="right">110</td>
+<td align="right">77</td>
+<td align="right">11.1</td>
+</tr>
+<tr class="even">
+<td align="left">Delaware</td>
+<td align="right">5.9</td>
+<td align="right">238</td>
+<td align="right">72</td>
+<td align="right">15.8</td>
+</tr>
+<tr class="odd">
+<td align="left">Florida</td>
+<td align="right">15.4</td>
+<td align="right">335</td>
+<td align="right">80</td>
+<td align="right">31.9</td>
+</tr>
+<tr class="even">
+<td align="left">Georgia</td>
+<td align="right">17.4</td>
+<td align="right">211</td>
+<td align="right">60</td>
+<td align="right">25.8</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Build Test and Control list</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">99</span>)
+TEST_CONTROL_LIST &lt;-<span class="st"> </span>TestContR<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/TestContR/topics/match_numeric">match_numeric</a></span>(df)
+<span class="co">#&gt; [1] "The 1th de-duping iteration started"</span>
+<span class="co">#&gt; Joining, by = "CONTROL"</span>
+<span class="co">#&gt; Joining, by = c("CONTROL", "TEST", "DIST_Q", "GROUP")</span>
+<span class="co">#&gt; [1] "The 1th de-duping iteration complete."</span>
+<span class="co">#&gt; [1] "The 2th de-duping iteration started"</span>
+<span class="co">#&gt; Joining, by = "CONTROL"</span>
+<span class="co">#&gt; Joining, by = c("CONTROL", "TEST", "DIST_Q", "GROUP")</span>
+<span class="co">#&gt; [1] "The 2th de-duping iteration complete."</span></code></pre></div>
+<p><strong>Results of random selection option:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(TEST_CONTROL_LIST)</code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">CONTROL</th>
+<th align="left">TEST</th>
+<th align="right">DIST_Q</th>
+<th align="right">GROUP</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Michigan</td>
+<td align="left">Colorado</td>
+<td align="right">1.2363108</td>
 <td align="right">1</td>
 </tr>
 <tr class="even">
-<td>Hornet 4 Drive</td>
-<td align="right">21.4</td>
-<td align="right">6</td>
-<td align="right">258.0</td>
-<td align="right">110</td>
-<td align="right">3.08</td>
-<td align="right">3.215</td>
-<td align="right">19.44</td>
-<td align="right">1</td>
-<td align="right">0</td>
+<td align="left">Oklahoma</td>
+<td align="left">Delaware</td>
+<td align="right">1.1802929</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">New York</td>
+<td align="left">Illinois</td>
+<td align="right">0.3502188</td>
 <td align="right">3</td>
-<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Indiana</td>
+<td align="left">Kansas</td>
+<td align="right">0.4287712</td>
+<td align="right">4</td>
 </tr>
 <tr class="odd">
-<td>Hornet Sportabout</td>
-<td align="right">18.7</td>
+<td align="left">Texas</td>
+<td align="left">Missouri</td>
+<td align="right">1.1654171</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="left">Massachusetts</td>
+<td align="left">New Jersey</td>
+<td align="right">0.7977642</td>
+<td align="right">6</td>
+</tr>
+<tr class="odd">
+<td align="left">South Carolina</td>
+<td align="left">North Carolina</td>
+<td align="right">1.0476313</td>
+<td align="right">7</td>
+</tr>
+<tr class="even">
+<td align="left">Ohio</td>
+<td align="left">Utah</td>
+<td align="right">1.0154223</td>
 <td align="right">8</td>
-<td align="right">360.0</td>
-<td align="right">175</td>
-<td align="right">3.15</td>
-<td align="right">3.440</td>
-<td align="right">17.02</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">2</td>
-</tr>
-<tr class="even">
-<td>Valiant</td>
-<td align="right">18.1</td>
-<td align="right">6</td>
-<td align="right">225.0</td>
-<td align="right">105</td>
-<td align="right">2.76</td>
-<td align="right">3.460</td>
-<td align="right">20.22</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">1</td>
 </tr>
 <tr class="odd">
-<td>Duster 360</td>
-<td align="right">14.3</td>
-<td align="right">8</td>
-<td align="right">360.0</td>
-<td align="right">245</td>
-<td align="right">3.21</td>
-<td align="right">3.570</td>
-<td align="right">15.84</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">4</td>
+<td align="left">Oregon</td>
+<td align="left">Washington</td>
+<td align="right">0.5935343</td>
+<td align="right">9</td>
 </tr>
 <tr class="even">
-<td>Merc 240D</td>
-<td align="right">24.4</td>
-<td align="right">4</td>
-<td align="right">146.7</td>
-<td align="right">62</td>
-<td align="right">3.69</td>
-<td align="right">3.190</td>
-<td align="right">20.00</td>
+<td align="left">Virginia</td>
+<td align="left">Wyoming</td>
+<td align="right">0.7038309</td>
+<td align="right">10</td>
+</tr>
+<tr class="odd">
+<td align="left"><br></td>
+<td align="left"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+</tbody>
+</table>
+<div id="providing-a-list-of-test-groupsindividuals" class="section level4">
+<h4 class="hasAnchor">
+<a href="#providing-a-list-of-test-groupsindividuals" class="anchor"></a>Providing a list of Test Groups/Individuals</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">TEST_GRP &lt;-<span class="st"> </span><span class="kw">tribble</span>(<span class="op">~</span><span class="st">'TEST'</span>,<span class="st">'Colorado'</span>,<span class="st">'Minnesota'</span>,<span class="st">'Florida'</span>,<span class="st">'South Carolina'</span>)</code></pre></div>
+<p><strong>Example of data frame for the “test_list” input parameter:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(TEST_GRP)</code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">TEST</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Colorado</td>
+</tr>
+<tr class="even">
+<td align="left">Minnesota</td>
+</tr>
+<tr class="odd">
+<td align="left">Florida</td>
+</tr>
+<tr class="even">
+<td align="left">South Carolina</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">99</span>)
+TEST_CONTROL_LIST &lt;-<span class="st"> </span>TestContR<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/TestContR/topics/match_numeric">match_numeric</a></span>(df, <span class="dt">test_list =</span> TEST_GRP)</code></pre></div>
+<p><strong>Results for the “test_list” input parameter:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(TEST_CONTROL_LIST)</code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">CONTROL</th>
+<th align="left">TEST</th>
+<th align="right">DIST_Q</th>
+<th align="right">GROUP</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Michigan</td>
+<td align="left">Colorado</td>
+<td align="right">1.2363108</td>
 <td align="right">1</td>
-<td align="right">0</td>
-<td align="right">4</td>
+</tr>
+<tr class="even">
+<td align="left">New Mexico</td>
+<td align="left">Florida</td>
+<td align="right">1.2965798</td>
 <td align="right">2</td>
 </tr>
 <tr class="odd">
-<td>Merc 230</td>
-<td align="right">22.8</td>
-<td align="right">4</td>
-<td align="right">140.8</td>
-<td align="right">95</td>
-<td align="right">3.92</td>
-<td align="right">3.150</td>
-<td align="right">22.90</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">4</td>
-<td align="right">2</td>
+<td align="left">Wisconsin</td>
+<td align="left">Minnesota</td>
+<td align="right">0.4940832</td>
+<td align="right">3</td>
 </tr>
 <tr class="even">
-<td>Merc 280</td>
-<td align="right">19.2</td>
-<td align="right">6</td>
-<td align="right">167.6</td>
-<td align="right">123</td>
-<td align="right">3.92</td>
-<td align="right">3.440</td>
-<td align="right">18.30</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">4</td>
+<td align="left">Mississippi</td>
+<td align="left">South Carolina</td>
+<td align="right">0.7865674</td>
 <td align="right">4</td>
 </tr>
 </tbody>
 </table>
-<p>Also a quote using <code>&gt;</code>:</p>
-<blockquote>
-<p>“He who gives up [code] safety for [code] speed deserves neither.” (<a href="https://twitter.com/hadleywickham/status/504368538874703872">via</a>)</p>
-</blockquote>
 </div>
-<div class="footnotes">
+</div>
+<div id="match_mixed-random-select-of-test-and-control-groupsindividuals-with-mixed-metricsvariables-" class="section level3">
+<h3 class="hasAnchor">
+<a href="#match_mixed-random-select-of-test-and-control-groupsindividuals-with-mixed-metricsvariables-" class="anchor"></a>match_mixed(): Random Select of Test and Control groups/individuals with mixed metrics/variables.</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span>datasets<span class="op">::</span>USArrests <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">state =</span> base<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/row.names">row.names</a></span>(datasets<span class="op">::</span>USArrests)) <span class="op">%&gt;%</span>
+<span class="st">  </span>base<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">cbind</a></span>(datasets<span class="op">::</span>state.division) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(state, dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">everything</a></span>())</code></pre></div>
+<p><strong>Expected data set layout with labels/names/id in the first column:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(df, <span class="dt">n =</span> <span class="dv">10</span>))</code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">state</th>
+<th align="right">Murder</th>
+<th align="right">Assault</th>
+<th align="right">UrbanPop</th>
+<th align="right">Rape</th>
+<th align="left">datasets::state.division</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Alabama</td>
+<td align="right">13.2</td>
+<td align="right">236</td>
+<td align="right">58</td>
+<td align="right">21.2</td>
+<td align="left">East South Central</td>
+</tr>
+<tr class="even">
+<td align="left">Alaska</td>
+<td align="right">10.0</td>
+<td align="right">263</td>
+<td align="right">48</td>
+<td align="right">44.5</td>
+<td align="left">Pacific</td>
+</tr>
+<tr class="odd">
+<td align="left">Arizona</td>
+<td align="right">8.1</td>
+<td align="right">294</td>
+<td align="right">80</td>
+<td align="right">31.0</td>
+<td align="left">Mountain</td>
+</tr>
+<tr class="even">
+<td align="left">Arkansas</td>
+<td align="right">8.8</td>
+<td align="right">190</td>
+<td align="right">50</td>
+<td align="right">19.5</td>
+<td align="left">West South Central</td>
+</tr>
+<tr class="odd">
+<td align="left">California</td>
+<td align="right">9.0</td>
+<td align="right">276</td>
+<td align="right">91</td>
+<td align="right">40.6</td>
+<td align="left">Pacific</td>
+</tr>
+<tr class="even">
+<td align="left">Colorado</td>
+<td align="right">7.9</td>
+<td align="right">204</td>
+<td align="right">78</td>
+<td align="right">38.7</td>
+<td align="left">Mountain</td>
+</tr>
+<tr class="odd">
+<td align="left">Connecticut</td>
+<td align="right">3.3</td>
+<td align="right">110</td>
+<td align="right">77</td>
+<td align="right">11.1</td>
+<td align="left">New England</td>
+</tr>
+<tr class="even">
+<td align="left">Delaware</td>
+<td align="right">5.9</td>
+<td align="right">238</td>
+<td align="right">72</td>
+<td align="right">15.8</td>
+<td align="left">South Atlantic</td>
+</tr>
+<tr class="odd">
+<td align="left">Florida</td>
+<td align="right">15.4</td>
+<td align="right">335</td>
+<td align="right">80</td>
+<td align="right">31.9</td>
+<td align="left">South Atlantic</td>
+</tr>
+<tr class="even">
+<td align="left">Georgia</td>
+<td align="right">17.4</td>
+<td align="right">211</td>
+<td align="right">60</td>
+<td align="right">25.8</td>
+<td align="left">South Atlantic</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Build Test and Control list from mixed metrics</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">99</span>)
+TEST_CONTROL_LIST &lt;-<span class="st"> </span>TestContR<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/TestContR/topics/match_mixed">match_mixed</a></span>(df)
+<span class="co">#&gt; [1] "The 1th de-duping iteration started"</span>
+<span class="co">#&gt; Joining, by = "CONTROL"</span>
+<span class="co">#&gt; Joining, by = c("CONTROL", "TEST", "DIST_Q", "GROUP")</span>
+<span class="co">#&gt; [1] "The 1th de-duping iteration complete."</span></code></pre></div>
+<p><strong>Results of random selection option:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(TEST_CONTROL_LIST)</code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">CONTROL</th>
+<th align="left">TEST</th>
+<th align="right">DIST_Q</th>
+<th align="right">GROUP</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Arizona</td>
+<td align="left">Colorado</td>
+<td align="right">0.1106264</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Virginia</td>
+<td align="left">Delaware</td>
+<td align="right">0.1433212</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">Michigan</td>
+<td align="left">Illinois</td>
+<td align="right">0.1124643</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">Nebraska</td>
+<td align="left">Kansas</td>
+<td align="right">0.0506973</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Minnesota</td>
+<td align="left">Missouri</td>
+<td align="right">0.2307995</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="left">Pennsylvania</td>
+<td align="left">New Jersey</td>
+<td align="right">0.1273365</td>
+<td align="right">6</td>
+</tr>
+<tr class="odd">
+<td align="left">South Carolina</td>
+<td align="left">North Carolina</td>
+<td align="right">0.0998379</td>
+<td align="right">7</td>
+</tr>
+<tr class="even">
+<td align="left">Idaho</td>
+<td align="left">Utah</td>
+<td align="right">0.1403257</td>
+<td align="right">8</td>
+</tr>
+<tr class="odd">
+<td align="left">Oregon</td>
+<td align="left">Washington</td>
+<td align="right">0.0567921</td>
+<td align="right">9</td>
+</tr>
+<tr class="even">
+<td align="left">Montana</td>
+<td align="left">Wyoming</td>
+<td align="right">0.0731182</td>
+<td align="right">10</td>
+</tr>
+</tbody>
+</table>
 <hr>
-<ol>
-<li id="fn1"><p>A footnote here.<a href="#fnref1">↩</a></p></li>
-</ol>
+<div id="providing-a-list-of-test-groupsindividuals-1" class="section level4">
+<h4 class="hasAnchor">
+<a href="#providing-a-list-of-test-groupsindividuals-1" class="anchor"></a>Providing a list of Test Groups/Individuals</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">TEST_GRP &lt;-<span class="st"> </span><span class="kw">tribble</span>(<span class="op">~</span><span class="st">'TEST'</span>,<span class="st">'Colorado'</span>,<span class="st">'Minnesota'</span>,<span class="st">'Florida'</span>,<span class="st">'South Carolina'</span>)</code></pre></div>
+<p><strong>Example of data frame for the “test_list” input parameter:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(TEST_GRP)</code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">TEST</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Colorado</td>
+</tr>
+<tr class="even">
+<td align="left">Minnesota</td>
+</tr>
+<tr class="odd">
+<td align="left">Florida</td>
+</tr>
+<tr class="even">
+<td align="left">South Carolina</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">99</span>)
+TEST_CONTROL_LIST &lt;-<span class="st"> </span>TestContR<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/TestContR/topics/match_mixed">match_mixed</a></span>(df, <span class="dt">test_list =</span> TEST_GRP)</code></pre></div>
+<p><strong>Results for the “test_list” input parameter:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(TEST_CONTROL_LIST)</code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">CONTROL</th>
+<th align="left">TEST</th>
+<th align="right">DIST_Q</th>
+<th align="right">GROUP</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Arizona</td>
+<td align="left">Colorado</td>
+<td align="right">0.1106264</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Maryland</td>
+<td align="left">Florida</td>
+<td align="right">0.1386266</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">Nebraska</td>
+<td align="left">Minnesota</td>
+<td align="right">0.0616531</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">North Carolina</td>
+<td align="left">South Carolina</td>
+<td align="right">0.0998379</td>
+<td align="right">4</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<hr>
+</div>
+</div>
+</div>
+<div id="example---top-n-selection-for-individuals-or-groups-the-topn_-functions" class="section level2">
+<h2 class="hasAnchor">
+<a href="#example---top-n-selection-for-individuals-or-groups-the-topn_-functions" class="anchor"></a>Example - Top N selection for individuals or groups, the topn_* functions</h2>
+<div id="topn_numeric-select-top-n-controls-for-a-group-or-individual" class="section level3">
+<h3 class="hasAnchor">
+<a href="#topn_numeric-select-top-n-controls-for-a-group-or-individual" class="anchor"></a>topn_numeric(): Select Top N Controls for a group or individual</h3>
+<p>Topn_numeric() is used in the situation where you have 1 test group/individual and you are looking for Top N nearest matches using Euclidian distance. - Note: You can provide more than one group, but the function does not remove duplicates in the control list for the more than 1 group or individual. First, create a dataframe (1x1) as below with the label of the group/individual of interest.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">test_list &lt;-<span class="st"> </span><span class="kw">tribble</span>(<span class="op">~</span><span class="st">"TEST"</span>,<span class="st">"Colorado"</span>)</code></pre></div>
+<p>Numeric only dataframe:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span>datasets<span class="op">::</span>USArrests <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">state =</span> base<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/row.names">row.names</a></span>(USArrests)) <span class="op">%&gt;%</span>
+<span class="st">                               </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(state, <span class="kw">everything</span>())</code></pre></div>
+<p><strong>Build the list of Top N matches </strong> Provide the test_list dataframe to the test_list parameter in the function as below.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">TOPN_CONTROL_LIST &lt;-<span class="st"> </span>TestContR<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/TestContR/topics/topn_numeric">topn_numeric</a></span>(df, <span class="dt">topN =</span> <span class="dv">10</span>, <span class="dt">test_list =</span> test_list)</code></pre></div>
+<p><strong>Results of Top N selection option:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(TOPN_CONTROL_LIST,<span class="dv">20</span>))</code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">CONTROL</th>
+<th align="left">TEST</th>
+<th align="right">DIST_Q</th>
+<th align="right">DIST_RANK</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Michigan</td>
+<td align="left">Colorado</td>
+<td align="right">1.236311</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">California</td>
+<td align="left">Colorado</td>
+<td align="right">1.287618</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">Missouri</td>
+<td align="left">Colorado</td>
+<td align="right">1.312741</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">Arizona</td>
+<td align="left">Colorado</td>
+<td align="right">1.365031</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Nevada</td>
+<td align="left">Colorado</td>
+<td align="right">1.398859</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="left">Oregon</td>
+<td align="left">Colorado</td>
+<td align="right">1.533198</td>
+<td align="right">6</td>
+</tr>
+<tr class="odd">
+<td align="left">New Mexico</td>
+<td align="left">Colorado</td>
+<td align="right">1.546744</td>
+<td align="right">7</td>
+</tr>
+<tr class="even">
+<td align="left">New York</td>
+<td align="left">Colorado</td>
+<td align="right">1.736339</td>
+<td align="right">8</td>
+</tr>
+<tr class="odd">
+<td align="left">Washington</td>
+<td align="left">Colorado</td>
+<td align="right">1.789792</td>
+<td align="right">9</td>
+</tr>
+<tr class="even">
+<td align="left">Illinois</td>
+<td align="left">Colorado</td>
+<td align="right">1.789832</td>
+<td align="right">10</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Top N without a Test List</strong> Don’t be concerned about the warning; I just wanted to let users know that it would use all the labels in the dataframe.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">TOPN_CONTROL_LIST &lt;-<span class="st"> </span>TestContR<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/TestContR/topics/topn_numeric">topn_numeric</a></span>(df, <span class="dt">topN =</span> <span class="dv">10</span>)
+<span class="co">#&gt; Warning in TestContR::topn_numeric(df, topN = 10): If no dataframe provided for the "test_list" parameter, will use all the labels in the dataset.  Otherwise, please provide a dataframe for the "test_list" parameter with 1, or N, Test group(s) or individual(s) label(s) in a column named "TEST."</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;       See documentation for topn_numeric's test_list parameter</span></code></pre></div>
+<p><strong>Results of Top N selection without Test List:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(TOPN_CONTROL_LIST,<span class="dv">20</span>))</code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">CONTROL</th>
+<th align="left">TEST</th>
+<th align="right">DIST_Q</th>
+<th align="right">DIST_RANK</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Louisiana</td>
+<td align="left">Alabama</td>
+<td align="right">0.7722224</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Tennessee</td>
+<td align="left">Alabama</td>
+<td align="right">0.8407489</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">South Carolina</td>
+<td align="left">Alabama</td>
+<td align="right">0.9157968</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">Georgia</td>
+<td align="left">Alabama</td>
+<td align="right">1.1314351</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Mississippi</td>
+<td align="left">Alabama</td>
+<td align="right">1.2831907</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="left">Maryland</td>
+<td align="left">Alabama</td>
+<td align="right">1.2896460</td>
+<td align="right">6</td>
+</tr>
+<tr class="odd">
+<td align="left">Arkansas</td>
+<td align="left">Alabama</td>
+<td align="right">1.2898102</td>
+<td align="right">7</td>
+</tr>
+<tr class="even">
+<td align="left">Virginia</td>
+<td align="left">Alabama</td>
+<td align="right">1.4859733</td>
+<td align="right">8</td>
+</tr>
+<tr class="odd">
+<td align="left">New Mexico</td>
+<td align="left">Alabama</td>
+<td align="right">1.5993970</td>
+<td align="right">9</td>
+</tr>
+<tr class="even">
+<td align="left">North Carolina</td>
+<td align="left">Alabama</td>
+<td align="right">1.6043662</td>
+<td align="right">10</td>
+</tr>
+<tr class="odd">
+<td align="left">New Mexico</td>
+<td align="left">Alaska</td>
+<td align="right">2.0580889</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Michigan</td>
+<td align="left">Alaska</td>
+<td align="right">2.1154937</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">Maryland</td>
+<td align="left">Alaska</td>
+<td align="right">2.2777590</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">Colorado</td>
+<td align="left">Alaska</td>
+<td align="right">2.3265187</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Tennessee</td>
+<td align="left">Alaska</td>
+<td align="right">2.3362541</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="left">Nevada</td>
+<td align="left">Alaska</td>
+<td align="right">2.3443182</td>
+<td align="right">6</td>
+</tr>
+<tr class="odd">
+<td align="left">Missouri</td>
+<td align="left">Alaska</td>
+<td align="right">2.5360573</td>
+<td align="right">7</td>
+</tr>
+<tr class="even">
+<td align="left">South Carolina</td>
+<td align="left">Alaska</td>
+<td align="right">2.5640542</td>
+<td align="right">8</td>
+</tr>
+<tr class="odd">
+<td align="left">Oregon</td>
+<td align="left">Alaska</td>
+<td align="right">2.6990696</td>
+<td align="right">9</td>
+</tr>
+<tr class="even">
+<td align="left">Arizona</td>
+<td align="left">Alaska</td>
+<td align="right">2.7006429</td>
+<td align="right">10</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+</div>
+<div id="topn_mixed-random-select-of-test-and-control-groupsindividuals-with-mixed-metricsvariables-" class="section level3">
+<h3 class="hasAnchor">
+<a href="#topn_mixed-random-select-of-test-and-control-groupsindividuals-with-mixed-metricsvariables-" class="anchor"></a>topN_mixed(): Random Select of Test and Control groups/individuals with mixed metrics/variables.</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span>datasets<span class="op">::</span>USArrests <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">state =</span> base<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/row.names">row.names</a></span>(datasets<span class="op">::</span>USArrests)) <span class="op">%&gt;%</span>
+<span class="st">  </span>base<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">cbind</a></span>(datasets<span class="op">::</span>state.division) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(state, dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">everything</a></span>())</code></pre></div>
+<p><strong>Expected data set layout with labels/names/id in the first column:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(df, <span class="dt">n =</span> <span class="dv">10</span>))</code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">state</th>
+<th align="right">Murder</th>
+<th align="right">Assault</th>
+<th align="right">UrbanPop</th>
+<th align="right">Rape</th>
+<th align="left">datasets::state.division</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Alabama</td>
+<td align="right">13.2</td>
+<td align="right">236</td>
+<td align="right">58</td>
+<td align="right">21.2</td>
+<td align="left">East South Central</td>
+</tr>
+<tr class="even">
+<td align="left">Alaska</td>
+<td align="right">10.0</td>
+<td align="right">263</td>
+<td align="right">48</td>
+<td align="right">44.5</td>
+<td align="left">Pacific</td>
+</tr>
+<tr class="odd">
+<td align="left">Arizona</td>
+<td align="right">8.1</td>
+<td align="right">294</td>
+<td align="right">80</td>
+<td align="right">31.0</td>
+<td align="left">Mountain</td>
+</tr>
+<tr class="even">
+<td align="left">Arkansas</td>
+<td align="right">8.8</td>
+<td align="right">190</td>
+<td align="right">50</td>
+<td align="right">19.5</td>
+<td align="left">West South Central</td>
+</tr>
+<tr class="odd">
+<td align="left">California</td>
+<td align="right">9.0</td>
+<td align="right">276</td>
+<td align="right">91</td>
+<td align="right">40.6</td>
+<td align="left">Pacific</td>
+</tr>
+<tr class="even">
+<td align="left">Colorado</td>
+<td align="right">7.9</td>
+<td align="right">204</td>
+<td align="right">78</td>
+<td align="right">38.7</td>
+<td align="left">Mountain</td>
+</tr>
+<tr class="odd">
+<td align="left">Connecticut</td>
+<td align="right">3.3</td>
+<td align="right">110</td>
+<td align="right">77</td>
+<td align="right">11.1</td>
+<td align="left">New England</td>
+</tr>
+<tr class="even">
+<td align="left">Delaware</td>
+<td align="right">5.9</td>
+<td align="right">238</td>
+<td align="right">72</td>
+<td align="right">15.8</td>
+<td align="left">South Atlantic</td>
+</tr>
+<tr class="odd">
+<td align="left">Florida</td>
+<td align="right">15.4</td>
+<td align="right">335</td>
+<td align="right">80</td>
+<td align="right">31.9</td>
+<td align="left">South Atlantic</td>
+</tr>
+<tr class="even">
+<td align="left">Georgia</td>
+<td align="right">17.4</td>
+<td align="right">211</td>
+<td align="right">60</td>
+<td align="right">25.8</td>
+<td align="left">South Atlantic</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Build Test and Control list from mixed metrics</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">99</span>)
+TOPN_CONTROL_LIST &lt;-<span class="st"> </span>TestContR<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/TestContR/topics/topn_mixed">topn_mixed</a></span>(df, <span class="dt">topN =</span> <span class="dv">10</span>, <span class="dt">test_list =</span> test_list)</code></pre></div>
+<p><strong>Results of Top N selection without Test List:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(TOPN_CONTROL_LIST,<span class="dv">20</span>))</code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">CONTROL</th>
+<th align="left">TEST</th>
+<th align="right">DIST_Q</th>
+<th align="right">DIST_RANK</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Arizona</td>
+<td align="left">Colorado</td>
+<td align="right">0.1106264</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Nevada</td>
+<td align="left">Colorado</td>
+<td align="right">0.1325795</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">New Mexico</td>
+<td align="left">Colorado</td>
+<td align="right">0.1588753</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">Utah</td>
+<td align="left">Colorado</td>
+<td align="right">0.2025942</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Wyoming</td>
+<td align="left">Colorado</td>
+<td align="right">0.2231019</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="left">Montana</td>
+<td align="left">Colorado</td>
+<td align="right">0.2879513</td>
+<td align="right">6</td>
+</tr>
+<tr class="odd">
+<td align="left">Missouri</td>
+<td align="left">Colorado</td>
+<td align="right">0.3124434</td>
+<td align="right">7</td>
+</tr>
+<tr class="even">
+<td align="left">California</td>
+<td align="left">Colorado</td>
+<td align="right">0.3164550</td>
+<td align="right">8</td>
+</tr>
+<tr class="odd">
+<td align="left">Michigan</td>
+<td align="left">Colorado</td>
+<td align="right">0.3176979</td>
+<td align="right">9</td>
+</tr>
+<tr class="even">
+<td align="left">Idaho</td>
+<td align="left">Colorado</td>
+<td align="right">0.3293606</td>
+<td align="right">10</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Top N Mixed without a Test List</strong> Don’t be concerned about the warning; I just wanted to let users know that it would use all the labels in the dataframe.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">TOPN_CONTROL_LIST &lt;-<span class="st"> </span>TestContR<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/TestContR/topics/topn_mixed">topn_mixed</a></span>(df, <span class="dt">topN =</span> <span class="dv">10</span>)
+<span class="co">#&gt; Warning in TestContR::topn_mixed(df, topN = 10): If no dataframe provided for the "test_list" parameter, will use all the labels in the dataset.  Otherwise, please provide a dataframe for the "test_list" parameter with 1, or N, Test group(s) or individual(s) label(s) in a column named "TEST."</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;       See documentation for topn_numeric's test_list parameter</span></code></pre></div>
+<p><strong>Results of Top N selection without Test List:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(TOPN_CONTROL_LIST,<span class="dv">20</span>))</code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">CONTROL</th>
+<th align="left">TEST</th>
+<th align="right">DIST_Q</th>
+<th align="right">DIST_RANK</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Tennessee</td>
+<td align="left">Alabama</td>
+<td align="right">0.0657239</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Mississippi</td>
+<td align="left">Alabama</td>
+<td align="right">0.1193394</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">Kentucky</td>
+<td align="left">Alabama</td>
+<td align="right">0.1748170</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">Louisiana</td>
+<td align="left">Alabama</td>
+<td align="right">0.2676967</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="left">South Carolina</td>
+<td align="left">Alabama</td>
+<td align="right">0.2845265</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="left">Georgia</td>
+<td align="left">Alabama</td>
+<td align="right">0.2982780</td>
+<td align="right">6</td>
+</tr>
+<tr class="odd">
+<td align="left">Arkansas</td>
+<td align="left">Alabama</td>
+<td align="right">0.3204231</td>
+<td align="right">7</td>
+</tr>
+<tr class="even">
+<td align="left">Texas</td>
+<td align="left">Alabama</td>
+<td align="right">0.3267952</td>
+<td align="right">8</td>
+</tr>
+<tr class="odd">
+<td align="left">Virginia</td>
+<td align="left">Alabama</td>
+<td align="right">0.3309542</td>
+<td align="right">9</td>
+</tr>
+<tr class="even">
+<td align="left">Maryland</td>
+<td align="left">Alabama</td>
+<td align="right">0.3313442</td>
+<td align="right">10</td>
+</tr>
+<tr class="odd">
+<td align="left">California</td>
+<td align="left">Alaska</td>
+<td align="right">0.1868701</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Oregon</td>
+<td align="left">Alaska</td>
+<td align="right">0.2756384</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">Washington</td>
+<td align="left">Alaska</td>
+<td align="right">0.3324305</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">Nevada</td>
+<td align="left">Alaska</td>
+<td align="right">0.3536566</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Michigan</td>
+<td align="left">Alaska</td>
+<td align="right">0.3674951</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="left">New Mexico</td>
+<td align="left">Alaska</td>
+<td align="right">0.3705949</td>
+<td align="right">6</td>
+</tr>
+<tr class="odd">
+<td align="left">South Carolina</td>
+<td align="left">Alaska</td>
+<td align="right">0.3776660</td>
+<td align="right">7</td>
+</tr>
+<tr class="even">
+<td align="left">Maryland</td>
+<td align="left">Alaska</td>
+<td align="right">0.3917168</td>
+<td align="right">8</td>
+</tr>
+<tr class="odd">
+<td align="left">Colorado</td>
+<td align="left">Alaska</td>
+<td align="right">0.3973812</td>
+<td align="right">9</td>
+</tr>
+<tr class="even">
+<td align="left">Arkansas</td>
+<td align="left">Alaska</td>
+<td align="right">0.4004365</td>
+<td align="right">10</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<hr>
+</div>
+<div id="conclusion" class="section level3">
+<h3 class="hasAnchor">
+<a href="#conclusion" class="anchor"></a>Conclusion</h3>
+<p>Depending on your experiment, it may be prudent to add categorical metrics/variables that will help align your data better. In the above examples, when only using the numerical data Alabama’s nearest match is Louisiana, but once region is taken into consideration, Alabama’s nearest match is Tennessee. Now you have the tools to create a list of nearest matches for your data whether it is numeric or mixed.</p>
+<hr>
+<hr>
+</div>
 </div>
   </div>
 
@@ -288,10 +1127,8 @@
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#vignette-info">Vignette Info</a></li>
-      <li><a href="#styles">Styles</a></li>
-      <li><a href="#figures">Figures</a></li>
-      <li><a href="#more-examples">More Examples</a></li>
+<li><a href="#example---randomised-sample-match_-functions">Example - Randomised Sample, match_* functions</a></li>
+      <li><a href="#example---top-n-selection-for-individuals-or-groups-the-topn_-functions">Example - Top N selection for individuals or groups, the topn_* functions</a></li>
       </ul>
 </div>
       </div>
@@ -300,7 +1137,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Alfredo Marquez.</p>
+  <p>Developed by Alfredo G Marquez.</p>
 </div>
 
 <div class="pkgdown">

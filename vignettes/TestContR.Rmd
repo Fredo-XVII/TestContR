@@ -1,10 +1,12 @@
 ---
-title: "Vignette Title"
-author: "Vignette Author"
+title: "TestContR"
+author: "Alfredo G Marquezr"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+    fig_caption: yes
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{TestContR}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -16,50 +18,195 @@ knitr::opts_chunk$set(
 )
 ```
 
-Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
+## Example - Randomised Sample, match_* functions
 
-- Never uses retina figures
-- Has a smaller default figure size
-- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
+R contains a crime data set for the all 50 states.  This data set contains data on murder rates, assaults, urban 
+population and the occurances of rape.  The TestContR can be used to match states that have similar crime rates.
 
-## Vignette Info
-
-Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
-
-## Styles
-
-The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
-
-    output: 
-      rmarkdown::html_vignette:
-        css: mystyles.css
-
-## Figures
-
-The figure sizes have been customised so that you can easily put two images side-by-side. 
-
-```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
+```{r, results='hide', message=FALSE}
+library(dplyr)
+library(TestContR)
 ```
 
-You can enable figure captions by `fig_caption: yes` in YAML:
-
-    output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
-
-Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
-
-## More Examples
-
-You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
-
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
+### match_numeric(): Random Selection of Test and Control groups/individuals for numeric metrics/variables.
+```{r df_1, warning=FALSE}
+df <- datasets::USArrests %>% dplyr::mutate(state = base::row.names(USArrests)) %>%
+                               dplyr::select(state, everything())
 ```
 
-Also a quote using `>`:
+**Expected data set layout with labels/names/id in the first column:**
+```{r, fig.cap = "Crime Data"}
+knitr::kable(head(df, n = 10))
+```
 
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))
+**Build Test and Control list**
+```{r match_numeric}
+set.seed(99)
+TEST_CONTROL_LIST <- TestContR::match_numeric(df)
+```
+
+**Results of random selection option:**
+```{r}
+knitr::kable(TEST_CONTROL_LIST)
+```
+<br></br>
+
+#### Providing a list of Test Groups/Individuals
+```{r}
+TEST_GRP <- tribble(~'TEST','Colorado','Minnesota','Florida','South Carolina')
+
+```
+
+**Example of data frame for the "test_list" input parameter:**
+```{r}
+knitr::kable(TEST_GRP)
+```
+
+
+```{r}
+set.seed(99)
+TEST_CONTROL_LIST <- TestContR::match_numeric(df, test_list = TEST_GRP)
+```
+
+**Results for the "test_list" input parameter:**
+```{r}
+knitr::kable(TEST_CONTROL_LIST)
+```
+
+
+### match_mixed(): Random Select of Test and Control groups/individuals with mixed metrics/variables, meaning both numeric and categorical.
+```{r df_2, warning=FALSE}
+df <- datasets::USArrests %>% dplyr::mutate(state = base::row.names(datasets::USArrests)) %>%
+  base::cbind(datasets::state.division) %>%
+  dplyr::select(state, dplyr::everything())
+```
+
+**Expected data set layout with labels/names/id in the first column:**
+```{r}
+knitr::kable(head(df, n = 10))
+```
+
+**Build Test and Control list from mixed metrics**
+```{r match_mixed}
+set.seed(99)
+TEST_CONTROL_LIST <- TestContR::match_mixed(df)
+```
+
+**Results of random selection option:**
+```{r}
+knitr::kable(TEST_CONTROL_LIST)
+```
+
+---
+
+#### Providing a list of Test Groups/Individuals
+```{r}
+TEST_GRP <- tribble(~'TEST','Colorado','Minnesota','Florida','South Carolina')
+
+```
+
+**Example of data frame for the "test_list" input parameter:**
+```{r}
+knitr::kable(TEST_GRP)
+```
+
+
+```{r}
+set.seed(99)
+TEST_CONTROL_LIST <- TestContR::match_mixed(df, test_list = TEST_GRP)
+```
+
+**Results for the "test_list" input parameter:**
+```{r}
+knitr::kable(TEST_CONTROL_LIST)
+```
+
+***
+***
+
+## Example - Top N selection for individuals or groups, the topn_* functions
+
+### topn_numeric(): Select Top N Controls for a group or individual
+Topn_numeric() is used in the situation where you have 1 test group/individual and you are looking for Top N nearest matches using Euclidian distance. 
+  - Note: You can provide more than one group, but the function does not remove duplicates in the control list for the more than 1 group or individual.
+First, create a dataframe (1x1) as below with the label of the group/individual of interest.
+```{r}
+test_list <- tribble(~"TEST","Colorado")
+```
+
+Numeric only dataframe:
+```{r df_3, warning=FALSE}
+df <- datasets::USArrests %>% dplyr::mutate(state = base::row.names(USArrests)) %>%
+                               dplyr::select(state, everything())
+```
+
+**Build the list of Top N matches **
+Provide the test_list dataframe to the test_list parameter in the function as below.
+```{r topn_numeric}
+TOPN_CONTROL_LIST <- TestContR::topn_numeric(df, topN = 10, test_list = test_list)
+```
+
+**Results of Top N selection option:**
+```{r}
+knitr::kable(head(TOPN_CONTROL_LIST,20))
+```
+
+**Top N without a Test List**
+Don't be concerned about the warning; I just wanted to let users know that it would use all the labels in the dataframe.
+```{r}
+TOPN_CONTROL_LIST <- TestContR::topn_numeric(df, topN = 10)
+
+```
+
+**Results of Top N selection without Test List:**
+```{r}
+knitr::kable(head(TOPN_CONTROL_LIST,20))
+```
+
+<br></br>
+
+
+### topN_mixed(): Random Select of Test and Control groups/individuals with mixed metrics/variables.
+```{r df_4, warning=FALSE}
+df <- datasets::USArrests %>% dplyr::mutate(state = base::row.names(datasets::USArrests)) %>%
+  base::cbind(datasets::state.division) %>%
+  dplyr::select(state, dplyr::everything())
+```
+
+**Expected data set layout with labels/names/id in the first column:**
+```{r}
+knitr::kable(head(df, n = 10))
+```
+
+**Build Test and Control list from mixed metrics**
+```{r}
+set.seed(99)
+TOPN_CONTROL_LIST <- TestContR::topn_mixed(df, topN = 10, test_list = test_list)
+```
+
+**Results of Top N selection without Test List:**
+```{r}
+knitr::kable(head(TOPN_CONTROL_LIST,20))
+```
+
+**Top N Mixed without a Test List**
+Don't be concerned about the warning; I just wanted to let users know that it would use all the labels in the dataframe.
+```{r}
+TOPN_CONTROL_LIST <- TestContR::topn_mixed(df, topN = 10)
+
+```
+
+**Results of Top N selection without Test List:**
+```{r}
+knitr::kable(head(TOPN_CONTROL_LIST,20))
+```
+
+***
+***
+
+### Conclusion
+Depending on your experiment, it may be prudent to add categorical metrics/variables that will help align your data better.  In the above examples, when only using the numerical data Alabama's nearest match is Louisiana, but once region is taken into consideration, Alabama's nearest match is Tennessee.  Now you have the tools to create a list of nearest matches for your data whether it is numeric or mixed.
+
+
+***
+***
