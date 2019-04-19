@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Example - Randomised Sample, match_* functions
+## Randomised Sample, match_* functions
 
 R contains a crime data set for the all 50 states.  This data set contains data on murder rates, assaults, urban 
 population and the occurances of rape.  The TestContR can be used to match states that have similar crime rates.
@@ -124,7 +124,7 @@ knitr::kable(TEST_CONTROL_LIST)
 ***
 ***
 
-## Example - Top N selection for individuals or groups, the topn_* functions
+## Top N matches for individuals or groups, the topn_* functions
 
 ### topn_numeric(): Select Top N Controls for a group or individual
 Topn_numeric() is used in the situation where you have 1 test group/individual and you are looking for Top N nearest matches using Euclidian distance. 
