@@ -76,6 +76,28 @@
 
     
     
+<p>Before you use this package you need to answer the following 2 questions:</p>
+<ol style="list-style-type: decimal">
+<li>Do I want a randomized list of individuals or do I want the Top N observations for a list individuals that I already have?</li>
+</ol>
+<ul>
+<li>If randomized, then use a match_* function.</li>
+<li>if top n, then use a top_n* function.</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>Do you have data with only numeric variables, or does your data have both numeric and categorical?</li>
+</ol>
+<ul>
+<li>If numeric, then use a *_numeric function.</li>
+<li>If mixed, then use a *_mixed function.</li>
+</ul>
+<p>So your choices for how you want to proceed are listed below:</p>
+<ul>
+<li>match_numeric(): randomized output, numeric input.</li>
+<li>match_mixed(): randomized output, mixed input.</li>
+<li>topn_numeric(): list of top n matches for output, numeric input.</li>
+<li>topn_mixed(): list of top n matches for output, mixed input.</li>
+</ul>
 <div id="randomised-sample-match_-functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#randomised-sample-match_-functions" class="anchor"></a>Randomised Sample, match_* functions</h2>

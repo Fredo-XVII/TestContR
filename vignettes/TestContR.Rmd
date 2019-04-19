@@ -18,6 +18,22 @@ knitr::opts_chunk$set(
 )
 ```
 
+Before you use this package you need to answer the following 2 questions:
+
+ 1. Do I want a randomized list of individuals or do I want the Top N observations for a list individuals that I already have?
+  - If randomized, then use a match_* function.
+  - if top n, then use a top_n* function.
+ 2. Do you have data with only numeric variables, or does your data have both numeric and categorical?
+  - If numeric, then use a *_numeric function.
+  - If mixed, then use a *_mixed function.
+  
+So your choices for how you want to proceed are listed below:
+
+  - match_numeric(): randomized output, numeric input.
+  - match_mixed(): randomized output, mixed input.
+  - topn_numeric(): list of top n matches for output, numeric input.
+  - topn_mixed(): list of top n matches for output, mixed input.
+
 ## Randomised Sample, match_* functions
 
 R contains a crime data set for the all 50 states.  This data set contains data on murder rates, assaults, urban 
