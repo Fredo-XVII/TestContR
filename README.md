@@ -7,7 +7,7 @@ TestContR ![](https://travis-ci.org/Fredo-XVII/TestContR.svg?branch=master) ![Gi
 
 The primary goal of TestContR is to select randomized Test groups/individuals and matched them with Control groups/individuals using Euclidian distance. You also have the option to provide a list of test groups/individuals where by you can generate a list of control groups/individuals.
 
-[Documentation](https://fredo-xvii.github.io/TestContR/)
+[Vignette](https://fredo-xvii.github.io/TestContR/)
 
 ------------------------------------------------------------------------
 
