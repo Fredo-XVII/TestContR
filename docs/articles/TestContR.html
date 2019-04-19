@@ -67,7 +67,7 @@
       <h1>TestContR</h1>
                         <h4 class="author">Alfredo G Marquezr</h4>
             
-            <h4 class="date">2019-04-18</h4>
+            <h4 class="date">2019-04-19</h4>
       
       
       <div class="hidden name"><code>TestContR.Rmd</code></div>
@@ -325,9 +325,9 @@ TEST_CONTROL_LIST &lt;-<span class="st"> </span>TestContR<span class="op">::</sp
 </table>
 </div>
 </div>
-<div id="match_mixed-random-select-of-test-and-control-groupsindividuals-with-mixed-metricsvariables-" class="section level3">
+<div id="match_mixed-random-select-of-test-and-control-groupsindividuals-with-mixed-metricsvariables-meaning-both-numeric-and-categorical-" class="section level3">
 <h3 class="hasAnchor">
-<a href="#match_mixed-random-select-of-test-and-control-groupsindividuals-with-mixed-metricsvariables-" class="anchor"></a>match_mixed(): Random Select of Test and Control groups/individuals with mixed metrics/variables.</h3>
+<a href="#match_mixed-random-select-of-test-and-control-groupsindividuals-with-mixed-metricsvariables-meaning-both-numeric-and-categorical-" class="anchor"></a>match_mixed(): Random Select of Test and Control groups/individuals with mixed metrics/variables, meaning both numeric and categorical.</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span>datasets<span class="op">::</span>USArrests <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">state =</span> base<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/row.names">row.names</a></span>(datasets<span class="op">::</span>USArrests)) <span class="op">%&gt;%</span>
 <span class="st">  </span>base<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">cbind</a></span>(datasets<span class="op">::</span>state.division) <span class="op">%&gt;%</span>
 <span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(state, dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">everything</a></span>())</code></pre></div>
