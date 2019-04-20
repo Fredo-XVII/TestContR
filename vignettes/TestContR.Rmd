@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 
 Before you use this package you need to answer the following 2 questions:
 
- 1. Do I want a randomized list of individuals or do I want the Top N observations for a list individuals that I already have?
+ 1. Do I want a randomized list of individuals or do I want the Top N observations for a list of individuals that I already have?
   - If randomized, then use a match_* function.
   - if top n, then use a top_n* function.
  2. Do you have data with only numeric variables, or does your data have both numeric and categorical?
@@ -44,21 +44,25 @@ library(dplyr)
 library(TestContR)
 ```
 
-### match_numeric(): Random Selection of Test and Control groups/individuals for numeric metrics/variables.
+### match_numeric(): Random selection of test and control groups/individuals for numeric metrics/variables.
+
+**Numeric only dataframe:**
 ```{r df_1, warning=FALSE}
 df <- datasets::USArrests %>% dplyr::mutate(state = base::row.names(USArrests)) %>%
                                dplyr::select(state, everything())
 ```
 
-**Expected data set layout with individuals/labels/names/id in the first column:**
+**Expected data set format with individuals/labels/names/id in the first column:**
 ```{r, fig.cap = "Crime Data"}
 knitr::kable(head(df, n = 10))
 ```
 
-**Build Test and Control list**
+**Build Test and Control list:**
 ```{r match_numeric}
+# defaults to 10 obs for the test group with matching controls. Change the size of the test group w/ param "n".
+
 set.seed(99)
-TEST_CONTROL_LIST <- TestContR::match_numeric(df)
+TEST_CONTROL_LIST <- TestContR::match_numeric(df) 
 ```
 
 **Results of random selection option:**
@@ -67,7 +71,7 @@ knitr::kable(TEST_CONTROL_LIST)
 ```
 <br></br>
 
-#### Providing a list of Test Groups/Individuals
+#### Providing a list of Test Groups/Individuals (No randomization of the test group)
 ```{r}
 TEST_GRP <- tribble(~'TEST','Colorado','Minnesota','Florida','South Carolina')
 
@@ -90,20 +94,24 @@ knitr::kable(TEST_CONTROL_LIST)
 ```
 
 
-### match_mixed(): Random Select of Test and Control groups/individuals with mixed metrics/variables, meaning both numeric and categorical.
+### match_mixed(): Random selection of test and control groups/individuals with mixed metrics/variables, meaning both numeric and categorical.
+
+**Numeric and categorical dataframe:**
 ```{r df_2, warning=FALSE}
 df <- datasets::USArrests %>% dplyr::mutate(state = base::row.names(datasets::USArrests)) %>%
   base::cbind(datasets::state.division) %>%
   dplyr::select(state, dplyr::everything())
 ```
 
-**Expected data set layout with individuals/labels/names/id in the first column:**
+**Expected data set format with individuals/labels/names/id in the first column:**
 ```{r}
 knitr::kable(head(df, n = 10))
 ```
 
-**Build Test and Control list from mixed metrics**
+**Build Test and Control list from mixed metrics:**
 ```{r match_mixed}
+# defaults to 10 obs for the test group with matching controls. Change the size of the test group w/ param "n".
+
 set.seed(99)
 TEST_CONTROL_LIST <- TestContR::match_mixed(df)
 ```
@@ -115,7 +123,7 @@ knitr::kable(TEST_CONTROL_LIST)
 
 ---
 
-#### Providing a list of Test Groups/Individuals
+#### Providing a list of Test Groups/Individuals (No randomization of the test group)
 ```{r}
 TEST_GRP <- tribble(~'TEST','Colorado','Minnesota','Florida','South Carolina')
 
@@ -142,21 +150,27 @@ knitr::kable(TEST_CONTROL_LIST)
 
 ## Top N matches for individuals or groups, the topn_* functions
 
-### topn_numeric(): Select Top N Controls for a group or individual
-Topn_numeric() is used in the situation where you have 1 test group/individual and you are looking for Top N nearest matches using Euclidian distance. 
-  - Note: You can provide more than one group, but the function does not remove duplicates in the control list for the more than 1 group or individual.
-First, create a dataframe (1x1) as below with the label of the group/individual of interest.
+  - **NOTE:** You can provide more than one group to the topn_\* functions, but the function does not remove duplicates in the control list for the more than 1 group or individual. **WARNING** Because of this, if you provide topn_* functions with a full dataset of size M with a function parameter "n" ~ M and no "test_list", then you will get an Mx~M matrix, where n is the function parameter that determines the size of the list of matches. For the topn_mixed function this may take a very long time to complete. In other words, you should be selective of the size of Top N matches you want to create and it highly advised to use the "test_list" parameter when possible. More on this below.
+
+### topn_numeric(): Select Top N Controls for a set of groups or individuals
+
+**Build/provide a list of the obs of interest in the test_list:**
 ```{r}
 test_list <- tribble(~"TEST","Colorado")
 ```
 
-Numeric only dataframe:
+**Numeric only dataframe:**
 ```{r df_3, warning=FALSE}
 df <- datasets::USArrests %>% dplyr::mutate(state = base::row.names(USArrests)) %>%
                                dplyr::select(state, everything())
 ```
 
-**Build the list of Top N matches **
+**Expected data set format with individuals/labels/names/id in the first column:**
+```{r}
+knitr::kable(head(df, n = 10))
+```
+
+**Build the list of Top N matches: **
 Provide the test_list dataframe to the test_list parameter in the function as below.
 ```{r topn_numeric}
 TOPN_CONTROL_LIST <- TestContR::topn_numeric(df, topN = 10, test_list = test_list)
@@ -167,8 +181,8 @@ TOPN_CONTROL_LIST <- TestContR::topn_numeric(df, topN = 10, test_list = test_lis
 knitr::kable(head(TOPN_CONTROL_LIST,20))
 ```
 
-**Top N without a Test List**
-Don't be concerned about the warning; I just wanted to let users know that it would use all the labels in the dataframe.
+**Top N without a Test List: **
+Don't be concerned about the warning; I just wanted to let users know that it would use all the labels in the dataframe. 
 ```{r}
 TOPN_CONTROL_LIST <- TestContR::topn_numeric(df, topN = 10)
 
@@ -182,19 +196,21 @@ knitr::kable(head(TOPN_CONTROL_LIST,20))
 <br></br>
 
 
-### topN_mixed(): Random Select of Test and Control groups/individuals with mixed metrics/variables.
+### topN_mixed(): Random selection of test and control groups/individuals with mixed metrics/
+
+**Numeric and categorical dataframe:**
 ```{r df_4, warning=FALSE}
 df <- datasets::USArrests %>% dplyr::mutate(state = base::row.names(datasets::USArrests)) %>%
   base::cbind(datasets::state.division) %>%
   dplyr::select(state, dplyr::everything())
 ```
 
-**Expected data set layout with individuals/labels/names/id in the first column:**
+**Expected data set format with individuals/labels/names/id in the first column:**
 ```{r}
 knitr::kable(head(df, n = 10))
 ```
 
-**Build Test and Control list from mixed metrics**
+**Build Test and Control list from mixed metrics:**
 ```{r}
 set.seed(99)
 TOPN_CONTROL_LIST <- TestContR::topn_mixed(df, topN = 10, test_list = test_list)

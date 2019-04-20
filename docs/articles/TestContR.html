@@ -67,7 +67,7 @@
       <h1>TestContR</h1>
                         <h4 class="author">Alfredo G Marquez</h4>
             
-            <h4 class="date">2019-04-19</h4>
+            <h4 class="date">2019-04-20</h4>
       
       
       <div class="hidden name"><code>TestContR.Rmd</code></div>
@@ -78,7 +78,7 @@
     
 <p>Before you use this package you need to answer the following 2 questions:</p>
 <ol style="list-style-type: decimal">
-<li>Do I want a randomized list of individuals or do I want the Top N observations for a list individuals that I already have?</li>
+<li>Do I want a randomized list of individuals or do I want the Top N observations for a list of individuals that I already have?</li>
 </ol>
 <ul>
 <li>If randomized, then use a match_* function.</li>
@@ -107,10 +107,11 @@
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(TestContR)</code></pre></div>
 <div id="match_numeric-random-selection-of-test-and-control-groupsindividuals-for-numeric-metricsvariables-" class="section level3">
 <h3 class="hasAnchor">
-<a href="#match_numeric-random-selection-of-test-and-control-groupsindividuals-for-numeric-metricsvariables-" class="anchor"></a>match_numeric(): Random Selection of Test and Control groups/individuals for numeric metrics/variables.</h3>
+<a href="#match_numeric-random-selection-of-test-and-control-groupsindividuals-for-numeric-metricsvariables-" class="anchor"></a>match_numeric(): Random selection of test and control groups/individuals for numeric metrics/variables.</h3>
+<p><strong> </strong>Numeric only dataframe:**</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span>datasets<span class="op">::</span>USArrests <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">state =</span> base<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/row.names">row.names</a></span>(USArrests)) <span class="op">%&gt;%</span>
 <span class="st">                               </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(state, <span class="kw">everything</span>())</code></pre></div>
-<p><strong>Expected data set layout with individuals/labels/names/id in the first column:</strong></p>
+<p><strong>Expected data set format with individuals/labels/names/id in the first column:</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(df, <span class="dt">n =</span> <span class="dv">10</span>))</code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -193,9 +194,11 @@
 </tr>
 </tbody>
 </table>
-<p><strong>Build Test and Control list</strong></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">99</span>)
-TEST_CONTROL_LIST &lt;-<span class="st"> </span>TestContR<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/TestContR/topics/match_numeric">match_numeric</a></span>(df)
+<p><strong>Build Test and Control list:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># defaults to 10 obs for the test group with matching controls. Change the size of the test group w/ param "n".</span>
+
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">99</span>)
+TEST_CONTROL_LIST &lt;-<span class="st"> </span>TestContR<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/TestContR/topics/match_numeric">match_numeric</a></span>(df) 
 <span class="co">#&gt; [1] "The 1th de-duping iteration started"</span>
 <span class="co">#&gt; Joining, by = "CONTROL"</span>
 <span class="co">#&gt; Joining, by = c("CONTROL", "TEST", "DIST_Q", "GROUP")</span>
@@ -282,9 +285,9 @@ TEST_CONTROL_LIST &lt;-<span class="st"> </span>TestContR<span class="op">::</sp
 </tr>
 </tbody>
 </table>
-<div id="providing-a-list-of-test-groupsindividuals" class="section level4">
+<div id="providing-a-list-of-test-groupsindividuals-no-randomization-of-the-test-group" class="section level4">
 <h4 class="hasAnchor">
-<a href="#providing-a-list-of-test-groupsindividuals" class="anchor"></a>Providing a list of Test Groups/Individuals</h4>
+<a href="#providing-a-list-of-test-groupsindividuals-no-randomization-of-the-test-group" class="anchor"></a>Providing a list of Test Groups/Individuals (No randomization of the test group)</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">TEST_GRP &lt;-<span class="st"> </span><span class="kw">tribble</span>(<span class="op">~</span><span class="st">'TEST'</span>,<span class="st">'Colorado'</span>,<span class="st">'Minnesota'</span>,<span class="st">'Florida'</span>,<span class="st">'South Carolina'</span>)</code></pre></div>
 <p><strong>Example of data frame for the “test_list” input parameter:</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(TEST_GRP)</code></pre></div>
@@ -347,13 +350,14 @@ TEST_CONTROL_LIST &lt;-<span class="st"> </span>TestContR<span class="op">::</sp
 </table>
 </div>
 </div>
-<div id="match_mixed-random-select-of-test-and-control-groupsindividuals-with-mixed-metricsvariables-meaning-both-numeric-and-categorical-" class="section level3">
+<div id="match_mixed-random-selection-of-test-and-control-groupsindividuals-with-mixed-metricsvariables-meaning-both-numeric-and-categorical-" class="section level3">
 <h3 class="hasAnchor">
-<a href="#match_mixed-random-select-of-test-and-control-groupsindividuals-with-mixed-metricsvariables-meaning-both-numeric-and-categorical-" class="anchor"></a>match_mixed(): Random Select of Test and Control groups/individuals with mixed metrics/variables, meaning both numeric and categorical.</h3>
+<a href="#match_mixed-random-selection-of-test-and-control-groupsindividuals-with-mixed-metricsvariables-meaning-both-numeric-and-categorical-" class="anchor"></a>match_mixed(): Random selection of test and control groups/individuals with mixed metrics/variables, meaning both numeric and categorical.</h3>
+<p><strong> </strong>Numeric and categorical dataframe:**</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span>datasets<span class="op">::</span>USArrests <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">state =</span> base<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/row.names">row.names</a></span>(datasets<span class="op">::</span>USArrests)) <span class="op">%&gt;%</span>
 <span class="st">  </span>base<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">cbind</a></span>(datasets<span class="op">::</span>state.division) <span class="op">%&gt;%</span>
 <span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(state, dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">everything</a></span>())</code></pre></div>
-<p><strong>Expected data set layout with individuals/labels/names/id in the first column:</strong></p>
+<p><strong>Expected data set format with individuals/labels/names/id in the first column:</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(df, <span class="dt">n =</span> <span class="dv">10</span>))</code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -447,8 +451,10 @@ TEST_CONTROL_LIST &lt;-<span class="st"> </span>TestContR<span class="op">::</sp
 </tr>
 </tbody>
 </table>
-<p><strong>Build Test and Control list from mixed metrics</strong></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">99</span>)
+<p><strong>Build Test and Control list from mixed metrics:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># defaults to 10 obs for the test group with matching controls. Change the size of the test group w/ param "n".</span>
+
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">99</span>)
 TEST_CONTROL_LIST &lt;-<span class="st"> </span>TestContR<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/TestContR/topics/match_mixed">match_mixed</a></span>(df)
 <span class="co">#&gt; [1] "The 1th de-duping iteration started"</span>
 <span class="co">#&gt; Joining, by = "CONTROL"</span>
@@ -527,9 +533,9 @@ TEST_CONTROL_LIST &lt;-<span class="st"> </span>TestContR<span class="op">::</sp
 </tbody>
 </table>
 <hr>
-<div id="providing-a-list-of-test-groupsindividuals-1" class="section level4">
+<div id="providing-a-list-of-test-groupsindividuals-no-randomization-of-the-test-group-1" class="section level4">
 <h4 class="hasAnchor">
-<a href="#providing-a-list-of-test-groupsindividuals-1" class="anchor"></a>Providing a list of Test Groups/Individuals</h4>
+<a href="#providing-a-list-of-test-groupsindividuals-no-randomization-of-the-test-group-1" class="anchor"></a>Providing a list of Test Groups/Individuals (No randomization of the test group)</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">TEST_GRP &lt;-<span class="st"> </span><span class="kw">tribble</span>(<span class="op">~</span><span class="st">'TEST'</span>,<span class="st">'Colorado'</span>,<span class="st">'Minnesota'</span>,<span class="st">'Florida'</span>,<span class="st">'South Carolina'</span>)</code></pre></div>
 <p><strong>Example of data frame for the “test_list” input parameter:</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(TEST_GRP)</code></pre></div>
@@ -598,15 +604,102 @@ TEST_CONTROL_LIST &lt;-<span class="st"> </span>TestContR<span class="op">::</sp
 <div id="top-n-matches-for-individuals-or-groups-the-topn_-functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#top-n-matches-for-individuals-or-groups-the-topn_-functions" class="anchor"></a>Top N matches for individuals or groups, the topn_* functions</h2>
-<div id="topn_numeric-select-top-n-controls-for-a-group-or-individual" class="section level3">
+<ul>
+<li>
+<strong>NOTE:</strong> You can provide more than one group to the topn_* functions, but the function does not remove duplicates in the control list for the more than 1 group or individual. <strong>WARNING</strong> Because of this, if you provide topn_* functions with a full dataset of size M with a function parameter “n” ~ M and no “test_list”, then you will get an Mx~M matrix, where n is the function parameter that determines the size of the list of matches. For the topn_mixed function this may take a very long time to complete. In other words, you should be selective of the size of Top N matches you want to create and it highly advised to use the “test_list” parameter when possible. More on this below.</li>
+</ul>
+<div id="topn_numeric-select-top-n-controls-for-a-set-of-groups-or-individuals" class="section level3">
 <h3 class="hasAnchor">
-<a href="#topn_numeric-select-top-n-controls-for-a-group-or-individual" class="anchor"></a>topn_numeric(): Select Top N Controls for a group or individual</h3>
-<p>Topn_numeric() is used in the situation where you have 1 test group/individual and you are looking for Top N nearest matches using Euclidian distance. - Note: You can provide more than one group, but the function does not remove duplicates in the control list for the more than 1 group or individual. First, create a dataframe (1x1) as below with the label of the group/individual of interest.</p>
+<a href="#topn_numeric-select-top-n-controls-for-a-set-of-groups-or-individuals" class="anchor"></a>topn_numeric(): Select Top N Controls for a set of groups or individuals</h3>
+<p><strong>Build/provide a list of the obs of interest in the test_list:</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">test_list &lt;-<span class="st"> </span><span class="kw">tribble</span>(<span class="op">~</span><span class="st">"TEST"</span>,<span class="st">"Colorado"</span>)</code></pre></div>
-<p>Numeric only dataframe:</p>
+<p><strong>Numeric only dataframe:</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span>datasets<span class="op">::</span>USArrests <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">state =</span> base<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/row.names">row.names</a></span>(USArrests)) <span class="op">%&gt;%</span>
 <span class="st">                               </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(state, <span class="kw">everything</span>())</code></pre></div>
-<p><strong>Build the list of Top N matches </strong> Provide the test_list dataframe to the test_list parameter in the function as below.</p>
+<p><strong>Expected data set format with individuals/labels/names/id in the first column:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(df, <span class="dt">n =</span> <span class="dv">10</span>))</code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="left">state</th>
+<th align="right">Murder</th>
+<th align="right">Assault</th>
+<th align="right">UrbanPop</th>
+<th align="right">Rape</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Alabama</td>
+<td align="right">13.2</td>
+<td align="right">236</td>
+<td align="right">58</td>
+<td align="right">21.2</td>
+</tr>
+<tr class="even">
+<td align="left">Alaska</td>
+<td align="right">10.0</td>
+<td align="right">263</td>
+<td align="right">48</td>
+<td align="right">44.5</td>
+</tr>
+<tr class="odd">
+<td align="left">Arizona</td>
+<td align="right">8.1</td>
+<td align="right">294</td>
+<td align="right">80</td>
+<td align="right">31.0</td>
+</tr>
+<tr class="even">
+<td align="left">Arkansas</td>
+<td align="right">8.8</td>
+<td align="right">190</td>
+<td align="right">50</td>
+<td align="right">19.5</td>
+</tr>
+<tr class="odd">
+<td align="left">California</td>
+<td align="right">9.0</td>
+<td align="right">276</td>
+<td align="right">91</td>
+<td align="right">40.6</td>
+</tr>
+<tr class="even">
+<td align="left">Colorado</td>
+<td align="right">7.9</td>
+<td align="right">204</td>
+<td align="right">78</td>
+<td align="right">38.7</td>
+</tr>
+<tr class="odd">
+<td align="left">Connecticut</td>
+<td align="right">3.3</td>
+<td align="right">110</td>
+<td align="right">77</td>
+<td align="right">11.1</td>
+</tr>
+<tr class="even">
+<td align="left">Delaware</td>
+<td align="right">5.9</td>
+<td align="right">238</td>
+<td align="right">72</td>
+<td align="right">15.8</td>
+</tr>
+<tr class="odd">
+<td align="left">Florida</td>
+<td align="right">15.4</td>
+<td align="right">335</td>
+<td align="right">80</td>
+<td align="right">31.9</td>
+</tr>
+<tr class="even">
+<td align="left">Georgia</td>
+<td align="right">17.4</td>
+<td align="right">211</td>
+<td align="right">60</td>
+<td align="right">25.8</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Build the list of Top N matches: </strong> Provide the test_list dataframe to the test_list parameter in the function as below.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">TOPN_CONTROL_LIST &lt;-<span class="st"> </span>TestContR<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/TestContR/topics/topn_numeric">topn_numeric</a></span>(df, <span class="dt">topN =</span> <span class="dv">10</span>, <span class="dt">test_list =</span> test_list)</code></pre></div>
 <p><strong>Results of Top N selection option:</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(TOPN_CONTROL_LIST,<span class="dv">20</span>))</code></pre></div>
@@ -680,7 +773,7 @@ TEST_CONTROL_LIST &lt;-<span class="st"> </span>TestContR<span class="op">::</sp
 </tr>
 </tbody>
 </table>
-<p><strong>Top N without a Test List</strong> Don’t be concerned about the warning; I just wanted to let users know that it would use all the labels in the dataframe.</p>
+<p><strong>Top N without a Test List: </strong> Don’t be concerned about the warning; I just wanted to let users know that it would use all the labels in the dataframe.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">TOPN_CONTROL_LIST &lt;-<span class="st"> </span>TestContR<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/TestContR/topics/topn_numeric">topn_numeric</a></span>(df, <span class="dt">topN =</span> <span class="dv">10</span>)
 <span class="co">#&gt; Warning in TestContR::topn_numeric(df, topN = 10): If no dataframe provided for the "test_list" parameter, will use all the labels in the dataset.  Otherwise, please provide a dataframe for the "test_list" parameter with 1, or N, Test group(s) or individual(s) label(s) in a column named "TEST."</span>
 <span class="co">#&gt; </span>
@@ -819,13 +912,14 @@ TEST_CONTROL_LIST &lt;-<span class="st"> </span>TestContR<span class="op">::</sp
 </table>
 <p><br></p>
 </div>
-<div id="topn_mixed-random-select-of-test-and-control-groupsindividuals-with-mixed-metricsvariables-" class="section level3">
+<div id="topn_mixed-random-selection-of-test-and-control-groupsindividuals-with-mixed-metrics" class="section level3">
 <h3 class="hasAnchor">
-<a href="#topn_mixed-random-select-of-test-and-control-groupsindividuals-with-mixed-metricsvariables-" class="anchor"></a>topN_mixed(): Random Select of Test and Control groups/individuals with mixed metrics/variables.</h3>
+<a href="#topn_mixed-random-selection-of-test-and-control-groupsindividuals-with-mixed-metrics" class="anchor"></a>topN_mixed(): Random selection of test and control groups/individuals with mixed metrics/</h3>
+<p><strong>Numeric and categorical dataframe:</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span>datasets<span class="op">::</span>USArrests <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">state =</span> base<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/row.names">row.names</a></span>(datasets<span class="op">::</span>USArrests)) <span class="op">%&gt;%</span>
 <span class="st">  </span>base<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cbind">cbind</a></span>(datasets<span class="op">::</span>state.division) <span class="op">%&gt;%</span>
 <span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(state, dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">everything</a></span>())</code></pre></div>
-<p><strong>Expected data set layout with individuals/labels/names/id in the first column:</strong></p>
+<p><strong>Expected data set format with individuals/labels/names/id in the first column:</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(df, <span class="dt">n =</span> <span class="dv">10</span>))</code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -919,7 +1013,7 @@ TEST_CONTROL_LIST &lt;-<span class="st"> </span>TestContR<span class="op">::</sp
 </tr>
 </tbody>
 </table>
-<p><strong>Build Test and Control list from mixed metrics</strong></p>
+<p><strong>Build Test and Control list from mixed metrics:</strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">99</span>)
 TOPN_CONTROL_LIST &lt;-<span class="st"> </span>TestContR<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/TestContR/topics/topn_mixed">topn_mixed</a></span>(df, <span class="dt">topN =</span> <span class="dv">10</span>, <span class="dt">test_list =</span> test_list)</code></pre></div>
 <p><strong>Results of Top N selection without Test List:</strong></p>
