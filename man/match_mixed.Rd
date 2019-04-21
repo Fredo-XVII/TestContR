@@ -2,7 +2,7 @@
 % Please edit documentation in R/match_mixed.R
 \name{match_mixed}
 \alias{match_mixed}
-\title{Test and Control Selector for Groups/Individuals.}
+\title{Test and Control Selector for Groups/Individuals, with Mixed Input Variables/Metrics.}
 \usage{
 match_mixed(df, n = 10, test_list = NULL)
 }

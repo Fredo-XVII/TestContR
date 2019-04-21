@@ -2,7 +2,7 @@
 % Please edit documentation in R/topn_mixed.R
 \name{topn_mixed}
 \alias{topn_mixed}
-\title{Top N Control Selector for 1 or more Test Group(s)/Individual(s).}
+\title{Top N Control Selector for 1 or more Test Group(s)/Individual(s), with Mixed Input Variables/Metrics.}
 \usage{
 topn_mixed(df, topN = 5, test_list = NULL)
 }

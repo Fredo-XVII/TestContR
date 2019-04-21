@@ -2,7 +2,7 @@
 % Please edit documentation in R/topn_numeric.R
 \name{topn_numeric}
 \alias{topn_numeric}
-\title{Top N Control Selector for 1 or more Test Group(s)/Individual(s).}
+\title{Top N Control Selector for 1 or more Test Group(s)/Individual(s), with Numeric Input Variables/Metrics.}
 \usage{
 topn_numeric(df, topN = 5, test_list = NULL)
 }

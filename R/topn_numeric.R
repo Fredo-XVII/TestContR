@@ -1,4 +1,4 @@
-#' Top N Control Selector for 1 or more Test Group(s)/Individual(s).
+#' Top N Control Selector for 1 or more Test Group(s)/Individual(s), with Numeric Input Variables/Metrics.
 #'
 #' Selects n nearest control groups/individuals for 1 or more test group(s)/individual(s)
 #'

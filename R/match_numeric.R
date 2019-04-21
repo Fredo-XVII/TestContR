@@ -1,4 +1,4 @@
-#' Test and Control Selector for Groups/Individuals.
+#' Test and Control Selector for Groups/Individuals, Numeric Input Variables/Metrics.
 #'
 #' Randomly select test groups/individuals and create matching control
 #' groups/individuals by using Euclidean distance on scaled numeric variables.
