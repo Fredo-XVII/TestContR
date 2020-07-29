@@ -1,3 +1,7 @@
+# TestContR 1.1.004
+ - Tested the package for R 4.0.x
+ - Add appveyor.yml
+
 # TestContR 1.1.003
   - Bug fix - Fixing the error below. This will allow the package to pass the CMD checks for upload to CRAN.
   - ERROR: Writing R Packages: no visible binding for global variable.
