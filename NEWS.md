@@ -1,6 +1,7 @@
 # TestContR 1.1.004
  - Tested the package for R 4.0.x
  - Add appveyor.yml
+ - Submit to CRAN
 
 # TestContR 1.1.003
   - Bug fix - Fixing the error below. This will allow the package to pass the CMD checks for upload to CRAN.
