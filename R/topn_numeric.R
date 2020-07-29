@@ -3,7 +3,7 @@
 #' Selects n nearest control groups/individuals for 1 or more test group(s)/individual(s)
 #'
 #' @details
-#' Providing a complete list of the groups/individuals to df, and suppling a data frame
+#' Providing a complete list of the groups/individuals to df, and supplying a data frame
 #' with 1 or more TEST group(s)/individual(s) to the parameter test_list, the function will provide
 #' you with an "N" list of control groups/individuals. If more than 1 group/individual
 #' is provided there is a good chance of duplicates. This function ignores duplicates

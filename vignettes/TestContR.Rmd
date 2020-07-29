@@ -34,10 +34,10 @@ So your choices for how you want to proceed are listed below:
   - topn_numeric(): list of top n matches for output, numeric input.
   - topn_mixed(): list of top n matches for output, mixed input.
 
-## Randomised Sample, match_* functions
+## Randomized Sample, match_* functions
 
 R contains a crime data set for the all 50 states.  This data set contains data on murder rates, assaults, urban 
-population and the occurances of rape.  The TestContR can be used to match states that have similar crime rates.
+population and the occurrences of rape.  The TestContR can be used to match states that have similar crime rates.
 
 ```{r, results='hide', message=FALSE}
 library(dplyr)

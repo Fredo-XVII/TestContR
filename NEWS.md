@@ -1,5 +1,6 @@
 # TestContR 1.1.004
  - Tested the package for R 4.0.x
+ - Installed Rtools 4.0
  - Add appveyor.yml
  - Submit to CRAN
 

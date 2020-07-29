@@ -7,27 +7,10 @@
 * server Windows (on appveyor), R 4.0.2
 
 ## R CMD check results
-There were no ERRORs or WARNINGs. 
+-- R CMD check results ---------------------------------- TestContR 1.1.004 ----
+Duration: 27.9s
 
-NOTE: 1
-
-  - Explanation: R can't find installed pandoc software, but not relevant to the functions in the package.
-
-Note:
-"
-* checking top-level files ... NOTE
-Files 'README.md' or 'NEWS.md' cannot be checked without 'pandoc' being installed.
-"
-
-NOTE: 2
-
-  - Explanation: CRAN checking maintainer of package
-
-Note:
-"
-* checking CRAN incoming feasibility ... NOTE
-Maintainer: 'Alfredo G Marquez <Alfredo.G.Marquez@gmail.com>'
-"
+0 errors v | 0 warnings v | 0 notes v
 
 ## Downstream dependencies
 There are currently no downstream dependencies for this package for TestContR.
