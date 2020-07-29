@@ -1,5 +1,5 @@
 Package: TestContR
-Version: 1.1.004
+Version: 1.1.4
 Title: Randomly Select Test and Control Groups
 Description: Select a random list of test group/individuals and provides the best matching 
   group/individuals for a control based on a dataframe of metrics for the subjects. Or you 
@@ -7,7 +7,12 @@ Description: Select a random list of test group/individuals and provides the bes
   Euclidian distance is used for the pairing.  For datasets with mixed variables, Gower's distance matrix 
   derived with the cluster::daisy() function is used for the pairing.  
   Categorical variables are know account as of version 1.1.0.
-Authors@R: person("Alfredo G", "Marquez", , "Alfredo.G.Marquez@gmail.com", c("aut", "cre"))
+Authors@R: 
+    person(given = "Alfredo G",
+           family = "Marquez",
+           role = c("aut", "cre"),
+           email = "Alfredo.G.Marquez@gmail.com",
+           comment = c(ORCID = "0000-0001-7044-8167"))
 License: CC0
 Encoding: UTF-8
 LazyData: true
