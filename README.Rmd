@@ -19,6 +19,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 ![](https://travis-ci.org/Fredo-XVII/TestContR.svg?branch=master)
 [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/Fredo-XVII/TestContR?branch=master&svg=true)](https://ci.appveyor.com/project/Fredo-XVII/TestContR)
+[![R build status](https://github.com/Fredo-XVII/TestContR/workflows/R-CMD-check/badge.svg)](https://github.com/Fredo-XVII/TestContR/actions)
 <!-- badges: end -->
 
 The primary goal of TestContR is to select randomized Test groups/individuals and matched them with Control groups/individuals using Euclidian distance. You also have the option to provide a list of test groups/individuals where by you can generate a list of control groups/individuals.

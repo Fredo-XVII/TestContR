@@ -10,3 +10,4 @@
 ^hexbin_sticker\.R$
 ^TestContR\.png$
 ^appveyor.yml$
+^\.github$

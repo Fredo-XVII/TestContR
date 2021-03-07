@@ -10,6 +10,8 @@
 ![](https://travis-ci.org/Fredo-XVII/TestContR.svg?branch=master)
 [![AppVeyor build
 status](https://ci.appveyor.com/api/projects/status/github/Fredo-XVII/TestContR?branch=master&svg=true)](https://ci.appveyor.com/project/Fredo-XVII/TestContR)
+[![R build
+status](https://github.com/Fredo-XVII/TestContR/workflows/R-CMD-check/badge.svg)](https://github.com/Fredo-XVII/TestContR/actions)
 <!-- badges: end -->
 
 The primary goal of TestContR is to select randomized Test
