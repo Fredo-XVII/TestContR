@@ -109,6 +109,12 @@ match_numeric <- function ( df, n = 10 , test_list = NULL ) {
   DF_DIST_REDUCED <- DF_DIST_FINAL %>% dplyr::filter(!.data$CONTROL %in% (DF_TEST[,1])) %>%
     dplyr::filter(.data$TEST %in% (DF_TEST[,1]))
 
+  DF_DIST_REDUCED_fst <- DF_DIST_FINAL_fst %>%
+    collapse::fsubset(!CONTROL %in% (DF_TEST[,1])) %>%
+    collapse::fsubset(TEST %in% (DF_TEST[,1]))
+
+  identical(DF_DIST_REDUCED, DF_DIST_REDUCED_fst) # Failed only because of attribute
+
   CONTROL_STR_LIST <- DF_DIST_REDUCED %>%
     dplyr::group_by(.data$TEST) %>%
     dplyr::mutate(DIST_RANK = dplyr::min_rank(.data$DIST_Q)) %>%
@@ -116,6 +122,17 @@ match_numeric <- function ( df, n = 10 , test_list = NULL ) {
     dplyr::select(-.data$DIST_RANK) %>%
     dplyr::ungroup() %>%
     dplyr::mutate(GROUP = dplyr::row_number(.data$TEST))
+
+  CONTROL_STR_LIST_fst <- DF_DIST_REDUCED_fst %>%
+    collapse::fgroup_by(TEST) %>%
+    collapse::fmutate(DIST_RANK = dplyr::min_rank(DIST_Q)) %>%
+    collapse::fsubset(DIST_RANK <= 1) %>%
+    collapse::fselect(-DIST_RANK) %>%
+    collapse::fungroup() %>%
+    collapse::fmutate(GROUP = dplyr::row_number(TEST))
+
+  identical(CONTROL_STR_LIST, CONTROL_STR_LIST_fst) #  Failed only because of attribute
+
 
   # Create list of Dupes
   DUPES_LIST <- CONTROL_STR_LIST %>% dplyr::group_by(.data$CONTROL) %>%
