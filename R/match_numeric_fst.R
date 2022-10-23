@@ -139,6 +139,10 @@ match_numeric <- function ( df, n = 10 , test_list = NULL ) {
     dplyr::summarise(control_cnt = n()) %>%
     dplyr::filter(.data$control_cnt > 1)
 
+  DUPES_LIST_fst <- CONTROL_STR_LIST_fst %>% collapse::fgroup_by(CONTROL) %>% #head()
+    collapse::fnobs() %>%
+    collapse::fsubset(GROUP > 1)
+
   # Run While loop over the list of duplicates, until no more dupes remain
   i = 0
 
@@ -151,7 +155,13 @@ match_numeric <- function ( df, n = 10 , test_list = NULL ) {
     rank_dupes <- DUPES_LIST %>%
       dplyr::inner_join(CONTROL_STR_LIST) %>%
       dplyr::group_by(.data$CONTROL) %>%
-      dplyr::mutate(rank = dplyr::min_rank(.data$DIST_Q)) %>%
+      dplyr::mutate(rank = dplyr::min_rank(.data$DIST_Q)) %>% head()
+      dplyr::filter(.data$rank > 1)
+
+    rank_dupes_fst <- DUPES_LIST_fst %>%
+      dplyr::inner_join(CONTROL_STR_LIST) %>%
+      collapse::fgroup_by(CONTROL)
+      dplyr::mutate(rank = dplyr::min_rank(.data$DIST_Q)) %>% head()
       dplyr::filter(.data$rank > 1)
 
     # Remove the duplicate from remaining distance list
