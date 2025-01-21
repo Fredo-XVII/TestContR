@@ -18,7 +18,7 @@
 #' @param n size of the test group, and matching control group. Defaults to 10. Defaults to 10. Will be ignored if df provide to the "test_list" parameter.
 #' @param test_list df with one column named "TEST." This has a list of members in the current test. Defaults to NULL.
 #' @return If the "n" parameter is used, the function outputs a data frame with a list of randomized test groups/individuals from the supplied df with matching control groups/individuals, a 1 to 1 match.
-#' If a data frame is supplied to the "test_list" parameter, 1 to 1 matching control stores will be created for the groups/individuals in the "TEST" column supplied to the "test_list" parameter.
+#' If a data frame is supplied to the "test_list" parameter, 1 to 1 matching control group will be created for the groups/individuals in the "TEST" column supplied to the "test_list" parameter.
 #' @examples
 #' library(dplyr)
 #' library(magrittr)
@@ -49,24 +49,25 @@ match_numeric <- function ( df, n = 10 , test_list = NULL ) {
   df <- as.data.frame(df)
   rownames(df) <- df[,1]
   df_scaled <- scale(df[,-1], center = TRUE, scale = TRUE)
-  df_scaled_fst <- collapse::fscale(df[,-1])
+  df_scaled_fst <- collapse::fscale(df[,-1]) # KEEP
 
   #---- Build the Distant Matrix----
   DF_DIST <- stats::dist(df_scaled , method = "euclidian")
-  DF_DIST_fst <- stats::dist(df_scaled , method = "euclidian")
+  DF_DIST_fst <- stats::dist(df_scaled , method = "euclidian") # KEEP
 
   # Convert to Matrix
-  #DF_RANK_BASE <- as.matrix(DF_DIST)
-  DF_RANK_BASE <- as.matrix(DF_DIST_fst)
+  DF_RANK_BASE <- as.matrix(DF_DIST)
+  DF_RANK_BASE_fst <- as.matrix(DF_DIST_fst) # Identical, TRUE keep
 
   # Keep the full matrix for addressing duplicates: Force NA to diagonal
   diag(DF_RANK_BASE) <- NA
 
   #----Produce list of one to one distance Metric----
-  DF_RANK_BASE_1 <- reshape2::melt(DF_RANK_BASE) %>% head()
+  DF_RANK_BASE_1 <- reshape2::melt(DF_RANK_BASE)
   ### replaces reshape
   DF_RANK_BASE_fst <- collapse::qDF(DF_RANK_BASE)
-  DF_RANK_BASE_1_fst <-  tibble::rownames_to_column(DF_RANK_BASE_fst) %>%
+  DF_RANK_BASE_1_fst <- tibble::rownames_to_column( collapse::qDF(DF_RANK_BASE) ) %>%
+    #tibble::rownames_to_column(DF_RANK_BASE_fst) %>%
       tidyr::gather(key = Var2,
                     value = value, -rowname) %>%
       collapse::frename(rowname = Var1)
@@ -77,6 +78,7 @@ match_numeric <- function ( df, n = 10 , test_list = NULL ) {
   DF_DIST_FINAL <- DF_RANK_BASE_1 %>% stats::na.omit() %>%
     dplyr::arrange(.data$TEST,.data$DIST_Q,.data$CONTROL)
 
+  # fast: pass summary + sd() test, so equal
   DF_DIST_FINAL_fst <- DF_RANK_BASE_1_fst %>% collapse::na_omit() %>%
     collapse::roworder(TEST,DIST_Q,CONTROL)
 
@@ -92,6 +94,7 @@ match_numeric <- function ( df, n = 10 , test_list = NULL ) {
     names(test_list) <- c("TEST")
     DF_TEST <- as.data.frame(test_list['TEST'])
   }
+  # fast
   dqrng::dqset.seed(17)
   if( is.null((test_list)) ) {
     DF_TEST_sample <- row.names(df) %>% dqrng:::dqsample(size = n)# Sample size of test
@@ -102,13 +105,12 @@ match_numeric <- function ( df, n = 10 , test_list = NULL ) {
   }
 
 
-
-
   # Test and Control List
 
   DF_DIST_REDUCED <- DF_DIST_FINAL %>% dplyr::filter(!.data$CONTROL %in% (DF_TEST[,1])) %>%
     dplyr::filter(.data$TEST %in% (DF_TEST[,1]))
 
+  # fast: passed
   DF_DIST_REDUCED_fst <- DF_DIST_FINAL_fst %>%
     collapse::fsubset(!CONTROL %in% (DF_TEST[,1])) %>%
     collapse::fsubset(TEST %in% (DF_TEST[,1]))
@@ -146,11 +148,87 @@ match_numeric <- function ( df, n = 10 , test_list = NULL ) {
   # Run While loop over the list of duplicates, until no more dupes remain
   i = 0
 
+  # New Fast code from co-pilot
   while (nrow(DUPES_LIST) > 0) {
     # Count the number of iterations
     i = i + 1
     print(sprintf("The %sth de-duping iteration started", i))
-    # rank the duplicate control stores and keep the minimum rank
+    # rank the duplicate control group and keep the minimum rank
+
+    rank_dupes <- DUPES_LIST %>%
+      fjoin(CONTROL_STR_LIST) %>%
+      fgroup_by(CONTROL) %>%
+      fmutate(rank = frankv(DIST_Q, ties.method = "min")) %>%
+      fsubset(rank > 1)
+
+    rank_dupes_fst <- DUPES_LIST_fst %>%
+      fjoin(CONTROL_STR_LIST) %>%
+      fgroup_by(CONTROL) %>%
+      fmutate(rank = frankv(DIST_Q, ties.method = "min")) %>%
+      fsubset(rank > 1)
+
+    # Remove the duplicate from remaining distance list
+
+    DF_DIST_FINAL_TEMP <- fsetdiff(DF_DIST_REDUCED, rank_dupes, by = "CONTROL")
+
+    # Remove the duplicate data from CONTROL_STR_LIST distance list
+
+    CONTROL_STR_LIST_TEMP <- fleft_join(CONTROL_STR_LIST, rank_dupes)
+
+    CONTROL_STR_LIST_TEMP <- CONTROL_STR_LIST_TEMP %>%
+      fmutate(CONTROL = fifelse(is.na(rank), CONTROL, NULL),
+              DIST_Q = fifelse(is.na(rank), DIST_Q, NULL))
+
+    # select new minimum from the remaining list
+
+    TEST_DUPES_TEMP <- CONTROL_STR_LIST_TEMP %>%
+      fsubset(is.na(DIST_Q)) %>%
+      fselect(TEST)
+    CONT_DUPES_TEMP <- CONTROL_STR_LIST_TEMP %>%
+      fsubset(!is.na(CONTROL)) %>%
+      fselect(CONTROL)
+
+    DIST_REMAINING <- DF_DIST_FINAL_TEMP %>%
+      fjoin(TEST_DUPES_TEMP, by = 'TEST') %>%
+      fsetdiff(CONT_DUPES_TEMP, by = 'CONTROL') %>%
+      fgroup_by(TEST) %>%
+      farrange(TEST, DIST_Q) %>%
+      fmutate(rank = frankv(DIST_Q, ties.method = "min")) %>%
+      fsubset(rank == 1)
+
+    # Add new control to test group with missing controls group
+
+    CONTROL_STR_LIST <- CONTROL_STR_LIST_TEMP %>%
+      fleft_join(DIST_REMAINING, by = 'TEST') %>%
+      fmutate(CONTROL = fcoalesce(CONTROL.x, CONTROL.y),
+              DIST_Q  = fcoalesce(DIST_Q.x, DIST_Q.y)) %>%
+      fselect(CONTROL, TEST, DIST_Q, GROUP)
+
+    # re-move all test and control group from the current dist df
+    DF_DIST_FINAL <- fsetdiff(DF_DIST_FINAL_TEMP, CONTROL_STR_LIST, by = "CONTROL")
+
+    # re-build the Dupes_list
+
+    DUPES_LIST <- CONTROL_STR_LIST %>%
+      fgroup_by(CONTROL) %>%
+      fsummarise(control_cnt = n()) %>%
+      fsubset(control_cnt > 1)
+
+    # ends when DUPES_LIST is nrow() = 0
+    print(sprintf("The %sth de-duping iteration complete.", i))
+
+  }
+
+
+
+
+
+#### OLD CODE ####
+  while (nrow(DUPES_LIST) > 0) {
+    # Count the number of iterations
+    i = i + 1
+    print(sprintf("The %sth de-duping iteration started", i))
+    # rank the duplicate control group and keep the minimum rank
 
     rank_dupes <- DUPES_LIST %>%
       dplyr::inner_join(CONTROL_STR_LIST) %>%
@@ -188,14 +266,14 @@ match_numeric <- function ( df, n = 10 , test_list = NULL ) {
       dplyr::mutate(rank = dplyr::min_rank(.data$DIST_Q)) %>%
       dplyr::filter(.data$rank == 1)
 
-    # Add new control to test stores with missing controls stores
+    # Add new control to test group with missing controls group
 
     CONTROL_STR_LIST <- CONTROL_STR_LIST_TEMP %>% dplyr::left_join(DIST_REMAINING, by = 'TEST') %>%
       dplyr::mutate( CONTROL = dplyr::coalesce(.data$CONTROL.x, .data$CONTROL.y),
                      DIST_Q  = dplyr::coalesce(.data$DIST_Q.x, .data$DIST_Q.y)) %>%
       dplyr::select(.data$CONTROL, .data$TEST, .data$DIST_Q, .data$GROUP)
 
-    # re-move all test and control stores from the current dist df
+    # re-move all test and control group from the current dist df
     DF_DIST_FINAL <- DF_DIST_FINAL_TEMP %>% dplyr::anti_join(CONTROL_STR_LIST, by = "CONTROL")
 
     # re-build the Dupes_list
