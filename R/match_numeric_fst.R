@@ -28,6 +28,8 @@
 #' TEST_CONTROL_LIST <- TestContR::match_numeric(df, n = 15)
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
+#' @import collapse
+#'
 #' @export
 
 
@@ -39,6 +41,7 @@
 # Libraries loaded in BUILD_METRICS.R script
 #require(reshape2)
 #require(tidyverse)
+library(magrittr); library(rlang); library(collapse); library(tidyverse)
 df <- datasets::USArrests %>% dplyr::mutate(state = base::row.names(datasets::USArrests)) %>%
                               dplyr::select(state, dplyr::everything())
 
@@ -128,9 +131,9 @@ match_numeric <- function ( df, n = 10 , test_list = NULL ) {
   CONTROL_STR_LIST_fst <- DF_DIST_REDUCED_fst %>%
     collapse::fgroup_by(TEST) %>%
     collapse::fmutate(DIST_RANK = dplyr::min_rank(DIST_Q)) %>%
+    collapse::fungroup() %>%
     collapse::fsubset(DIST_RANK <= 1) %>%
     collapse::fselect(-DIST_RANK) %>%
-    collapse::fungroup() %>%
     collapse::fmutate(GROUP = dplyr::row_number(TEST))
 
   identical(CONTROL_STR_LIST, CONTROL_STR_LIST_fst) #  Failed only because of attribute
@@ -156,13 +159,13 @@ match_numeric <- function ( df, n = 10 , test_list = NULL ) {
     # rank the duplicate control group and keep the minimum rank
 
     rank_dupes <- DUPES_LIST %>%
-      fjoin(CONTROL_STR_LIST) %>%
+      join(CONTROL_STR_LIST, how = 'inner') %>% View()
       fgroup_by(CONTROL) %>%
       fmutate(rank = frankv(DIST_Q, ties.method = "min")) %>%
       fsubset(rank > 1)
 
     rank_dupes_fst <- DUPES_LIST_fst %>%
-      fjoin(CONTROL_STR_LIST) %>%
+      join(CONTROL_STR_LIST_fst, how = 'inner') %>%
       fgroup_by(CONTROL) %>%
       fmutate(rank = frankv(DIST_Q, ties.method = "min")) %>%
       fsubset(rank > 1)
