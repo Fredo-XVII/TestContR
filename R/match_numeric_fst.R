@@ -146,7 +146,9 @@ match_numeric <- function ( df, n = 10 , test_list = NULL ) {
 
   DUPES_LIST_fst <- CONTROL_STR_LIST_fst %>% collapse::fgroup_by(CONTROL) %>% #head()
     collapse::fnobs() %>%
-    collapse::fsubset(GROUP > 1)
+    collapse::fsubset(GROUP > 1) %>%
+    collapse::fselect(CONTROL, GROUP) %>%
+    collapse::frename(control_cnt = GROUP)
 
   # Run While loop over the list of duplicates, until no more dupes remain
   i = 0
@@ -159,24 +161,26 @@ match_numeric <- function ( df, n = 10 , test_list = NULL ) {
     # rank the duplicate control group and keep the minimum rank
 
     rank_dupes <- DUPES_LIST %>%
-      join(CONTROL_STR_LIST, how = 'inner') %>% View()
-      fgroup_by(CONTROL) %>%
-      fmutate(rank = frankv(DIST_Q, ties.method = "min")) %>%
-      fsubset(rank > 1)
+      dplyr::inner_join(CONTROL_STR_LIST) %>%
+      dplyr::group_by(.data$CONTROL) %>%
+      dplyr::mutate(rank = dplyr::min_rank(.data$DIST_Q)) %>%
+      dplyr::filter(.data$rank > 1)
 
     rank_dupes_fst <- DUPES_LIST_fst %>%
-      join(CONTROL_STR_LIST_fst, how = 'inner') %>%
+      join(CONTROL_STR_LIST_fst, on = 'CONTROL', how = 'inner', multiple = T) %>% #str()
       fgroup_by(CONTROL) %>%
+
+      rank_dupes_fst[, rank := frank(value, ties.method = "min")]
       fmutate(rank = frankv(DIST_Q, ties.method = "min")) %>%
       fsubset(rank > 1)
 
     # Remove the duplicate from remaining distance list
 
-    DF_DIST_FINAL_TEMP <- fsetdiff(DF_DIST_REDUCED, rank_dupes, by = "CONTROL")
+    DF_DIST_FINAL_TEMP <- fsetdiff(DF_DIST_REDUCED_fst, rank_dupes_fst, by = "CONTROL")
 
     # Remove the duplicate data from CONTROL_STR_LIST distance list
 
-    CONTROL_STR_LIST_TEMP <- fleft_join(CONTROL_STR_LIST, rank_dupes)
+    CONTROL_STR_LIST_TEMP <- fleft_join(CONTROL_STR_LIST, rank_dupes_fst)
 
     CONTROL_STR_LIST_TEMP <- CONTROL_STR_LIST_TEMP %>%
       fmutate(CONTROL = fifelse(is.na(rank), CONTROL, NULL),
@@ -234,24 +238,24 @@ match_numeric <- function ( df, n = 10 , test_list = NULL ) {
     # rank the duplicate control group and keep the minimum rank
 
     rank_dupes <- DUPES_LIST %>%
-      dplyr::inner_join(CONTROL_STR_LIST) %>%
+      dplyr::inner_join(CONTROL_STR_LIST) %>% str()
       dplyr::group_by(.data$CONTROL) %>%
       dplyr::mutate(rank = dplyr::min_rank(.data$DIST_Q)) %>% head()
       dplyr::filter(.data$rank > 1)
 
     rank_dupes_fst <- DUPES_LIST_fst %>%
-      dplyr::inner_join(CONTROL_STR_LIST) %>%
+      dplyr::inner_join(CONTROL_STR_LIST) %>% str()
       collapse::fgroup_by(CONTROL)
       dplyr::mutate(rank = dplyr::min_rank(.data$DIST_Q)) %>% head()
       dplyr::filter(.data$rank > 1)
 
     # Remove the duplicate from remaining distance list
 
-    DF_DIST_FINAL_TEMP <- DF_DIST_REDUCED %>% dplyr::anti_join(rank_dupes, by = "CONTROL")
+    DF_DIST_FINAL_TEMP <- DF_DIST_REDUCED %>% dplyr::anti_join(rank_dupes_fst, by = "CONTROL")
 
     # Remove the duplicate data from CONTROL_STR_LIST distance list
 
-    CONTROL_STR_LIST_TEMP <-CONTROL_STR_LIST %>% dplyr::left_join(rank_dupes)
+    CONTROL_STR_LIST_TEMP <-CONTROL_STR_LIST %>% dplyr::left_join(rank_dupes_fst)
 
     CONTROL_STR_LIST_TEMP <- CONTROL_STR_LIST_TEMP %>%
       dplyr::mutate(CONTROL = dplyr::if_else(is.na(rank) == TRUE, .data$CONTROL, NULL),
