@@ -169,9 +169,7 @@ match_numeric <- function ( df, n = 10 , test_list = NULL ) {
     rank_dupes_fst <- DUPES_LIST_fst %>%
       join(CONTROL_STR_LIST_fst, on = 'CONTROL', how = 'inner', multiple = T) %>% #str()
       fgroup_by(CONTROL) %>%
-
-      rank_dupes_fst[, rank := frank(value, ties.method = "min")]
-      fmutate(rank = frankv(DIST_Q, ties.method = "min")) %>%
+      fmutate(rank =  vec_rank(DIST_Q, ties = "min")) %>%
       fsubset(rank > 1)
 
     # Remove the duplicate from remaining distance list
